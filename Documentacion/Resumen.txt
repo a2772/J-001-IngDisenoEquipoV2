@@ -1,0 +1,1 @@
+En esta carpeta se almacenarán los archivos de la documentación del proyecto, los cuales serán archivos binarios.
