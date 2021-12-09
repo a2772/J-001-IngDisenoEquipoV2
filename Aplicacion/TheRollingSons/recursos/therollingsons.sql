@@ -7,7 +7,7 @@ create table catDia(
 	dia nvarchar(10) not null
 );
 create table catHorario(
-	idHorario int AUTO_INCREMENT primary key,
+	idCHorario int AUTO_INCREMENT primary key,
 	horaInicio time not null,
 	horaFin time not null,
 	idDiaInicio int not null,
@@ -27,10 +27,6 @@ create table catCategoria(
 	idCategoria int AUTO_INCREMENT primary key,
 	categoria nvarchar(70) not null
 );
-create table catCategoria(
-	idCategoria int AUTO_INCREMENT primary key,
-	categoria nvarchar(70) not null
-);
 create table catSeccion(
 	idSeccion int AUTO_INCREMENT primary key,
 	seccion nvarchar(70) not null
@@ -41,117 +37,206 @@ create table catProducto(
 	descripcionAlmacenar nvarchar(1000),
 	descripcion nvarchar (250),
 	precio decimal (6,2),
-	
+	color nvarchar (50),
+	idCategoria1 int,
+	idMarca1 int,
+	foreign key (idCategoria1) references catCategoria(idCategoria),
+	foreign key (idMarca1) references catMarca(idMarca)
 );
-create table 
-
-
-
-
-
-
-
-
-create table catPerfil(
-	idPerfil int AUTO_INCREMENT primary key,
-	perfil nvarchar (250) not null
-);
-create table catMateria(
-	idMateria int AUTO_INCREMENT primary key,
-	materia nvarchar(400) not null,
-	grado int,
-	horas int
-);
-create table catSalon(
-	idSalon int AUTO_INCREMENT primary key,
-	nomSalon nvarchar(150) not null unique,
-	cupo int not null,
-	piso nvarchar(100)
-);
-create table catTurno(
-	idTurno int AUTO_INCREMENT primary key,
-	turno nvarchar(100) not null unique
-);
-create table catGrupo(
-	idGrupo int AUTO_INCREMENT primary key,
-	grupo nvarchar(150) unique not null,
-	idTurno int,
-	foreign key (idTurno) references catTurno(idTurno)
-);
-create table catCalificacion(
-	idCalificacion int AUTO_INCREMENT primary key,
-	parcial nvarchar(150) unique not null
-);
-create table Datos(
-	idDatos int AUTO_INCREMENT primary key,
-	nombre nvarchar(255) not null,
-	apPat nvarchar(255),
-	apMat nvarchar(255),
-	fechNac date not null,
-	direccion nvarchar(1000) not null,
-	sexo nvarchar(15) not null,
-	curp nvarchar(18) unique not null
-);
-create table Alumno(
-	idAlumno int primary key,
-	fechaInscripcion date not null,
-	promedio decimal(2,2),
-	idDatos int, 
-	foreign key (idDatos) references Datos(idDatos)
-);
-create table Personal(
+create table personal(
 	idPersonal int AUTO_INCREMENT primary key,
-	sueldoHora decimal(13,2) not null,
-	rfc nvarchar(13) not null unique,
-	email nvarchar(200) not null unique,
-	idSalon int,
-	idDatos int,
-	idPerfil int,
-	foreign key (idSalon) references catSalon(idSalon),
-	foreign key (idDatos) references Datos(idDatos),
-	foreign key (idPerfil) references catPerfil(idPerfil)
+	nombre nvarchar(250) not null,
+	apPat nvarchar(100) not null,
+	apMat nvarchar(100) not null,
+	curp nvarchar(18) not null,
+	tel nvarchar(12) not null,
+	fechNac date not null,
+	correo nvarchar(150) not null,
+	idCPerfil1 int,
+	foreign key (idCPerfil1) references catPerfil(idCPerfil)
 );
-create table Horario(
+create table venta(
+	idVenta int AUTO_INCREMENT primary key,
+	iva decimal (9,2) not null,
+	total decimal (10,2) not null,
+	fecha datetime not null,
+	idPersonal1 int,
+	foreign key (idPersonal1) references personal(idPersonal)
+);
+create table productoVenta(
+	idProductoVenta int AUTO_INCREMENT primary key,
+	cantidad int not null,
+	precio decimal (6,2),
+	idVenta1 int,
+	idCProducto1 int,
+	foreign key (idVenta1) references venta(idVenta),
+	foreign key (idCProducto1) references catProducto(idCProducto)
+);
+create table inventario(
+	idInventario int AUTO_INCREMENT primary key,
+	cantidad int not null,
+	descripcion nvarchar(100),
+	idCProducto2 int,
+	idSeccion1 int,
+	foreign key (idCProducto2) references catProducto(idCProducto),
+	foreign key (idSeccion1) references catSeccion(idSeccion)
+);
+create table horario(
 	idHorario int AUTO_INCREMENT primary key,
-	horaInicio time not null,
-	horaFin time not null,
-	dia nvarchar(30) not null,
-	idMateria int,
-	idPersonal int,
-	idSalon int,
-	foreign key (idMateria) references catMateria(idMateria),
-	foreign key (idPersonal) references Personal(idPersonal),
-	foreign key (idSalon) references catSalon(idSalon)
+	idPersonal2 int,
+	idCHorario1 int,
+	foreign key (idPersonal2) references personal(idPersonal),
+	foreign key (idCHorario1) references catHorario(idCHorario)
 );
-create table Inscripcion(
-	idInscripcion int AUTO_INCREMENT primary key,
-	idGrupo int,
-	idHorario int,
-	foreign key (idGrupo) references catGrupo(idGrupo),
-	foreign key (idHorario) references Horario(idHorario)
+create table horarioPersonal(
+	idHorarioPersonal int AUTO_INCREMENT primary key,
+	idHorario1 int,
+	idPersonal3 int,
+	foreign key (idHorario1) references horario(idHorario),
+	foreign key (idPersonal3) references personal(idPersonal)
 );
-create table GrupoAlumno(
-	idInsAlumno int AUTO_INCREMENT primary key,
-	idAlumno int,
-	idInscripcion int,
-	foreign key (idAlumno) references Alumno(idAlumno),
-	foreign key (idInscripcion) references Inscripcion(idInscripcion)
-);
-create table CalAlumno(
-	idCalAlumno int AUTO_INCREMENT primary key,
-	idInsAlumno int,
-	idCalificacion int,
-	calificacion int,
-	foreign key (idInsAlumno) references GrupoAlumno(idInsAlumno),
-	foreign key (idCalificacion) references catCalificacion(idCalificacion)
-);
-create table Pass(
+-- Login
+create table pass(
 	idPass int AUTO_INCREMENT primary key,
 	pass nvarchar(50),
 	idPersonal int,
-	foreign key (idPersonal) references Personal (idPersonal)
+	foreign key (idPersonal) references personal(idPersonal)
 );
 -- Inserciones
+go
+	insert into catDia(dia) values ('Lunes'),('Martes'),('Miércoles'),('Jueves'),('Viernes'),('Sábado'),('Domingo');
+go
+	insert into catHorario(horaInicio,horaFin,idDiaInicio,idDiaFin) values ('12:00:00','15:00:00',2,7),('16:00:00','19:00',2,7);
+	insert into catHorario(horaInicio,horaFin,idDiaInicio,idDiaFin) values ('12:00:00','15:00:00',2,7),('16:00:00','20:00',2,7);
+	
+	insert into catPerfil(perfil) values ('Encargado'),('Vendedor');
+	
+	insert into catMarca(marca) values ('Nike');
+
+	insert into catCategoria(categoria) values ('Baleros'),('Repuestos'),('Eje'),('Patinetas'),('Ropa Hombre'),('Ropa Mujer'),('Ruedas'),('Tablas');
+
+	insert into catSeccion(seccion) values ('Estante 3, repisa 1');
+go
+	insert into catProducto(producto,descripcionAlmacenar,descripcion,precio,color,idCategoria1,idMarca1) values (
+		'Patineta Mediana',
+		'No exponer a la humedad y no colocar nada encima, producto delicado',
+		'Patineta color verde bandera de tamaño mediano con estampado de calavera',
+		1699.99,
+		'Verde bandera',
+		4,
+		1
+	);
+
+select * from catProducto;
+/*
+create table personal(
+	idPersonal int AUTO_INCREMENT primary key,
+	nombre nvarchar(250) not null,
+	apPat nvarchar(100) not null,
+	apPat nvarchar(100) not null,
+	curp nvarchar(18) not null,
+	tel nvarchar(12) not null,
+	fechNac date not null,
+	correo nvarchar(150) not null,
+	idCPerfil1 int,
+	foreign key (idCPerfil1) references catPerfil(idCPerfil)
+);
+create table venta(
+	idVenta int AUTO_INCREMENT primary key,
+	iva decimal (9,2) not null,
+	total decimal (10,2) not null,
+	fecha datetime not null,
+	foreign key (idPersonal1) references personal(idPersonal)
+);
+create table productoVenta(
+	idProductoVenta int AUTO_INCREMENT primary key,
+	cantidad int not null,
+	precio decimal (6,2),
+	idVenta1 int,
+	idCProducto1 int,
+	foreign key (idVenta1) references venta(idVenta),
+	foreign key (idCProducto1) references catProducto(idCProducto)
+);
+create table inventario(
+	idInventario int AUTO_INCREMENT primary key,
+	cantidad int not null,
+	descripcion nvarchar(100),
+	idCProducto2 int,
+	idSeccion1 int,
+	foreign key (idCProducto2) references catProducto(idCProducto),
+	foreign key (idSeccion1) references seccion(idSeccion)
+);
+create table horario(
+	idHorario int AUTO_INCREMENT primary key,
+	idPersonal2 int,
+	idCHorario1 int,
+	foreign key (idPersonal2) references personal(idPersonal),
+	foreign key (idCHorario1) references catHorario(idCHorario)
+);
+create table horarioPersonal(
+	idHorarioPersonal int AUTO_INCREMENT primary key,
+	idHorario1 int,
+	idPersonal3 int,
+	foreign key (idHorario1) references horario(idHorario),
+	foreign key (idPersonal3) references personal(idPersonal)
+);
+-- Login
+create table pass(
+	idPass int AUTO_INCREMENT primary key,
+	pass nvarchar(50),
+	idPersonal int,
+	foreign key (idPersonal) references personal(idPersonal)
+);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 go
 	-- Perfiles
 	insert into catPerfil(perfil) values ('EL ADMIN');
