@@ -35,5 +35,5 @@ public class ProductoVenta {
     }
     public void setCatProducto(CatProducto catProducto) {
         this.catProducto = catProducto;
-    }    
+    } 
 }
