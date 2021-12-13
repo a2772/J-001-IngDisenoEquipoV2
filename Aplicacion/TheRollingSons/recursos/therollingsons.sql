@@ -99,8 +99,8 @@ create table horarioPersonal(
 create table pass(
 	idPass int AUTO_INCREMENT primary key,
 	pass nvarchar(50),
-	idPersonal int,
-	foreign key (idPersonal) references personal(idPersonal)
+	idPersonal4 int,
+	foreign key (idPersonal4) references personal(idPersonal)
 );
 -- Inserciones
 go
@@ -126,133 +126,74 @@ go
 		4,
 		1
 	);
-
-select * from catProducto;
-/*
-create table personal(
-	idPersonal int AUTO_INCREMENT primary key,
-	nombre nvarchar(250) not null,
-	apPat nvarchar(100) not null,
-	apPat nvarchar(100) not null,
-	curp nvarchar(18) not null,
-	tel nvarchar(12) not null,
-	fechNac date not null,
-	correo nvarchar(150) not null,
-	idCPerfil1 int,
-	foreign key (idCPerfil1) references catPerfil(idCPerfil)
-);
-create table venta(
-	idVenta int AUTO_INCREMENT primary key,
-	iva decimal (9,2) not null,
-	total decimal (10,2) not null,
-	fecha datetime not null,
-	foreign key (idPersonal1) references personal(idPersonal)
-);
-create table productoVenta(
-	idProductoVenta int AUTO_INCREMENT primary key,
-	cantidad int not null,
-	precio decimal (6,2),
-	idVenta1 int,
-	idCProducto1 int,
-	foreign key (idVenta1) references venta(idVenta),
-	foreign key (idCProducto1) references catProducto(idCProducto)
-);
-create table inventario(
-	idInventario int AUTO_INCREMENT primary key,
-	cantidad int not null,
-	descripcion nvarchar(100),
-	idCProducto2 int,
-	idSeccion1 int,
-	foreign key (idCProducto2) references catProducto(idCProducto),
-	foreign key (idSeccion1) references seccion(idSeccion)
-);
-create table horario(
-	idHorario int AUTO_INCREMENT primary key,
-	idPersonal2 int,
-	idCHorario1 int,
-	foreign key (idPersonal2) references personal(idPersonal),
-	foreign key (idCHorario1) references catHorario(idCHorario)
-);
-create table horarioPersonal(
-	idHorarioPersonal int AUTO_INCREMENT primary key,
-	idHorario1 int,
-	idPersonal3 int,
-	foreign key (idHorario1) references horario(idHorario),
-	foreign key (idPersonal3) references personal(idPersonal)
-);
--- Login
-create table pass(
-	idPass int AUTO_INCREMENT primary key,
-	pass nvarchar(50),
-	idPersonal int,
-	foreign key (idPersonal) references personal(idPersonal)
-);
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 go
-	-- Perfiles
-	insert into catPerfil(perfil) values ('EL ADMIN');
-	insert into catPerfil(perfil) values ('Director');
-	insert into catPerfil(perfil) values ('Subdirector');
-	insert into catPerfil(perfil) values ('Profesor');
-	insert into catPerfil(perfil) values ('Secretaria/o');
-	insert into catPerfil(perfil) values ('Personal de limpieza');
-	insert into catPerfil(perfil) values ('Alumno');
-	-- Salones
-	insert into catSalon(nomSalon,cupo,piso) values ('Sin Salon', 0, 'Todo el edificio');
-	insert into catSalon(nomSalon,cupo,piso) values ('Cubiculo 002', 2, 'Primer Piso');
+	insert into personal(nombre,apPat,apMat,curp,tel,fechNac,correo,idCPerfil1) values (
+		'Paris',
+		'Ramirez',
+		'Saldaña',
+		'RASP010527HDFJLR9',
+		'55-9876-5432',
+		'2001-05-27',
+		'paris.140815@gmail.com',
+		1
+	);
 go
-	insert into Datos(nombre,apPat,apMat,fechNac,curp,direccion,sexo) values ('Soy','El','Admin','2001-01-01','AAAAAAAAAAAAAAAAAA','N/A','Hombre');
-	insert into Personal(rfc,email,sueldoHora,idDatos,idPerfil,idSalon) values ('BBBBBBBBBBBBB','admin',69420.69,1,1,1);
-	insert into Pass(idPersonal,pass) values (1,'admin');
+	insert into inventario(cantidad,descripcion,idCProducto2,idSeccion1) values (
+		15,
+		'Ingreso por compra a crédito del 16/12/2021',
+		1,
+		1
+	);
+go
+	insert into horario(idPersonal2,idCHorario1) values (1,1),(1,2);
+go
+	insert into pass(pass, idPersonal4) values ('paris72',1);
+-- Consultas de prueba
+go
 
 
-select ps.pass from Datos d, Personal p, Pass ps where d.idDatos=p.idDatos and ps.idPersonal=p.idPersonal and p.email='admin' and ps.pass='admin';
+--select ps.pass from personal p, pass ps where p.idPersonal=ps.idPersonal4 and p.correo='paris.140815@gmail.com' and ps.pass='paris72';
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -23,6 +23,5 @@ public class DataBase {
         public static String getPassword() {
             return PASSWORD;
         }
-
     }
 }
