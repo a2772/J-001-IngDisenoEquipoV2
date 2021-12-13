@@ -1,6 +1,18 @@
 package clases;
-public class Personal {
 
+import java.time.LocalDate;
+
+public class Personal {
+    private int     idPersonal;
+    private String  nombre;
+    private String  apPat;
+    private String  apMat;
+    private String  curp;
+    private String  tel;
+    private LocalDate  fechaNac;
+    private String  correo;
+    private CatPerfil catPerfil;
+    
     public int getIdPersonal() {
         return idPersonal;
     }
@@ -49,11 +61,11 @@ public class Personal {
         this.tel = tel;
     }
 
-    public String getFechaNac() {
+    public LocalDate getFechaNac() {
         return fechaNac;
     }
 
-    public void setFechaNac(String fechaNac) {
+    public void setFechaNac(LocalDate fechaNac) {
         this.fechaNac = fechaNac;
     }
 
@@ -64,22 +76,13 @@ public class Personal {
     public void setCorreo(String correo) {
         this.correo = correo;
     }
-
-    public int getIdCPerfil() {
-        return idCPerfil;
+    
+    public CatPerfil getCatPerfil() {
+        return catPerfil;
     }
-
-    public void setIdCPerfil(int idCPerfil) {
-        this.idCPerfil = idCPerfil;
+    
+    public void setCatPerfil(CatPerfil catPerfil) {
+        this.catPerfil = catPerfil;
     }
-    private int     idPersonal;
-    private String  nombre;
-    private String  apPat;
-    private String  apMat;
-    private String  curp;
-    private String  tel;
-    private String  fechaNac;
-    private String  correo;
-    private int     idCPerfil;
     
 }

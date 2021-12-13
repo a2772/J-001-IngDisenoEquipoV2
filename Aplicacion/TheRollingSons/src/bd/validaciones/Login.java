@@ -13,19 +13,18 @@ public class Login extends DataAccessObject{
         ResultSet rs = null;
         PreparedStatement stmt = null;
         boolean isValid = false;
-        String sql = "select ps.pass from Datos d, Personal p, Pass ps where d.idDatos=p.idDatos and ps.idPersonal=p.idPersonal and p.email=? and ps.pass=?";
+        String sql = "select ps.pass from personal p, pass ps where p.idPersonal=ps.idPersonal4 and p.correo=? and ps.pass=?";
         try {
             stmt = prepareStatement(sql);
             stmt.setString(1, email);
-            stmt.setString(2,pass);
+            stmt.setString(2, pass);
             rs = stmt.executeQuery();
-            System.out.println("Hola");
             if (rs.next()) {
-                System.out.println("Hola2");
+                System.out.println("Login correcto");
                 isValid = true;
             }
         } catch (DAOInitializationException | SQLException ex) {
-            System.out.println("Hola3");
+            System.out.println("Error 1");
         } finally {
             closeResultSet(rs);
             closeStatement(stmt);
