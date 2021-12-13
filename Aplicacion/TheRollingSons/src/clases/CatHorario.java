@@ -1,6 +1,11 @@
 package clases;
 public class CatHorario {
-
+    private int     idHorario;
+    private String  horaInicio;
+    private String  horaFin;
+    private int     idDiaInicio;
+    private int     idDiaFin;
+    
     public int getIdHorario() {
         return idHorario;
     }
@@ -40,9 +45,4 @@ public class CatHorario {
     public void setIdDiaFin(int idDiaFin) {
         this.idDiaFin = idDiaFin;
     }
-    private int     idHorario;
-    private String  horaInicio;
-    private String  horaFin;
-    private int     idDiaInicio;
-    private int     idDiaFin;
 }
