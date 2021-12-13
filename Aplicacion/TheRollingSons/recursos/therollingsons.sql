@@ -153,8 +153,8 @@ go
 
 
 -- select ps.pass from personal p, pass ps where p.idPersonal=ps.idPersonal4 and p.correo='paris.140815@gmail.com' and ps.pass='paris72';
-select * from personal p, catPerfil cp where p.idCPerfil1=cp.idCPerfil and p.idPersonal=1;
-
+-- select * from personal p, catPerfil cp where p.idCPerfil1=cp.idCPerfil and p.idPersonal=1;
+select p.idPersonal from personal p, pass ps where p.idPersonal=ps.idPersonal4 and p.correo='paris.140815@gmail.com' and ps.pass='paris72';
 
 
 

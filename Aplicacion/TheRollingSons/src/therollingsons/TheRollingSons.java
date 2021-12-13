@@ -1,6 +1,10 @@
 package therollingsons;
+
+import ui.PLogin;
+
 public class TheRollingSons {
     public static void main(String[] args) {
-        // TODO code application logic here
+        PLogin pLogin = new PLogin();
+        pLogin.setVisible(true);
     }    
 }
