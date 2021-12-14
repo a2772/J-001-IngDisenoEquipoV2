@@ -136,6 +136,24 @@ go
 		'2001-05-27',
 		'paris.140815@gmail.com',
 		1
+	),(
+		'Luis Antonio',
+		'Santiago',
+		'Martín',
+		'SAML990605HMCNRS01',
+		'55-1234-5678',
+		'1999-06-05',
+		'luisasantiagom.5699@gmail.com',
+		1
+	),(
+		'Fer',
+		'Oregón',
+		'Juárez',
+		'SMTHNG',
+		'99-1234-5678',
+		'1999-12-31',
+		'usr',
+		2
 	);
 go
 	insert into inventario(cantidad,descripcion,idCProducto2,idSeccion1) values (
@@ -147,7 +165,7 @@ go
 go
 	insert into horario(idPersonal2,idCHorario1) values (1,1),(1,2);
 go
-	insert into pass(pass, idPersonal4) values ('paris72',1);
+	insert into pass(pass, idPersonal4) values ('paris72',1),('luis5',2),('usr',3);
 -- Consultas de prueba
 go
 
