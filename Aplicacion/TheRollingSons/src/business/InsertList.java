@@ -7,6 +7,7 @@ import dao.DAOInitializationException;
 import java.sql.SQLException;
 
 public class InsertList {
+    
     public void registraVentaCarrito(Carrito carrito) throws ClassNotFoundException, SQLException, DAOInitializationException {
         //Contamos con un carrito el cual es determinado número de artículos
         //El carrito es una lista de Artículos quienes a su vez son un registro de CatProducto con una cantidad int

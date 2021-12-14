@@ -118,7 +118,7 @@ go
 	
 	insert into catPerfil(perfil) values ('Encargado'),('Vendedor');
 	
-	insert into catMarca(marca) values ('Nike');
+	insert into catMarca(marca) values ('Nike'),('El Apache');
 
 	insert into catCategoria(categoria) values ('Baleros'),('Repuestos'),('Eje'),('Patinetas'),('Ropa Hombre'),('Ropa Mujer'),('Ruedas'),('Tablas');
 

@@ -21,9 +21,8 @@ public class ConsultaCats extends DataAccessObject {
     public List<CatPerfil> getLCatPerfil() throws SQLException, DAOInitializationException {
         ResultSet rs = null;
         PreparedStatement stmt = null;
-        boolean isValid = false;
         List<CatPerfil> lista = new ArrayList<>();
-        CatPerfil catP = new CatPerfil();
+        CatPerfil catP;
 
         String sql = "select * from catPerfil";
 
@@ -31,7 +30,7 @@ public class ConsultaCats extends DataAccessObject {
             stmt = prepareStatement(sql);
             rs = stmt.executeQuery();
             while (rs.next()) {
-                isValid = true;
+                catP = new CatPerfil();
                 //Tabla trabajador
                 catP.setIdCPerfil(rs.getInt("idCPerfil"));
                 catP.setPerfil(rs.getString("perfil"));
@@ -50,9 +49,8 @@ public class ConsultaCats extends DataAccessObject {
     public List<CatCategoria> getLCatCategoria() throws SQLException, DAOInitializationException {
         ResultSet rs = null;
         PreparedStatement stmt = null;
-        boolean isValid = false;
         List<CatCategoria> lista = new ArrayList<>();
-        CatCategoria catC = new CatCategoria();
+        CatCategoria catC;
 
         String sql = "select * from catCategoria";
 
@@ -60,8 +58,8 @@ public class ConsultaCats extends DataAccessObject {
             stmt = prepareStatement(sql);
             rs = stmt.executeQuery();
             while (rs.next()) {
-                isValid = true;
                 //Tabla trabajador
+                catC = new CatCategoria();
                 catC.setIdCategoria(rs.getInt("idCategoria"));
                 catC.setCategoria(rs.getString("categoria"));
                 lista.add(catC);
@@ -79,9 +77,8 @@ public class ConsultaCats extends DataAccessObject {
     public List<CatDia> getLCatDia() throws SQLException, DAOInitializationException {
         ResultSet rs = null;
         PreparedStatement stmt = null;
-        boolean isValid = false;
         List<CatDia> lista = new ArrayList<>();
-        CatDia catP = new CatDia();
+        CatDia catP;
 
         String sql = "select * from catDia";
 
@@ -89,7 +86,7 @@ public class ConsultaCats extends DataAccessObject {
             stmt = prepareStatement(sql);
             rs = stmt.executeQuery();
             while (rs.next()) {
-                isValid = true;
+                catP = new CatDia();
                 //Tabla trabajador
                 catP.setIdDia(rs.getInt("idDia"));
                 catP.setDia(rs.getString("dia"));
@@ -108,7 +105,6 @@ public class ConsultaCats extends DataAccessObject {
     public List<CatHorario> getLCatHorario() throws SQLException, DAOInitializationException {
         ResultSet rs = null;
         PreparedStatement stmt = null;
-        boolean isValid = false;
         List<CatHorario> lista = new ArrayList<>();
         CatHorario catP = new CatHorario();
         CatDia cd = new CatDia();
@@ -119,7 +115,7 @@ public class ConsultaCats extends DataAccessObject {
             stmt = prepareStatement(sql);
             rs = stmt.executeQuery();
             while (rs.next()) {
-                isValid = true;
+                catP = new CatHorario();
                 //Tabla trabajador
                 catP.setIdHorario(rs.getInt("idCHorario"));
                 catP.setHoraInicio(rs.getObject("horaInicio", LocalTime.class));
@@ -144,15 +140,14 @@ public class ConsultaCats extends DataAccessObject {
             //Día inicio
             rs = null;
             stmt = null;
-            isValid = false;
-            CatDia cdi = new CatDia();
+            CatDia cdi;
             try {
                 stmt = prepareStatement(sql);
                 stmt.setInt(1, ch.getCatDiaIni().getIdDia());
                 rs = stmt.executeQuery();
                 while (rs.next()) {
-                    isValid = true;
                     //Tabla dia
+                    cdi = new CatDia();
                     cdi.setIdDia(ch.getCatDiaIni().getIdDia());
                     cdi.setDia(rs.getString("dia"));
                     catP.setCatDiaIni(cdi);
@@ -167,14 +162,13 @@ public class ConsultaCats extends DataAccessObject {
             //Día Fin
             rs = null;
             stmt = null;
-            isValid = false;
             cdi = new CatDia();
             try {
                 stmt = prepareStatement(sql);
                 stmt.setInt(1, ch.getCatDiaFin().getIdDia());
                 rs = stmt.executeQuery();
                 while (rs.next()) {
-                    isValid = true;
+                    cdi = new CatDia();
                     //Tabla dia
                     cdi.setIdDia(ch.getCatDiaFin().getIdDia());
                     cdi.setDia(rs.getString("dia"));
@@ -195,9 +189,8 @@ public class ConsultaCats extends DataAccessObject {
     public List<CatMarca> getLCatMarca() throws SQLException, DAOInitializationException {
         ResultSet rs = null;
         PreparedStatement stmt = null;
-        boolean isValid = false;
         List<CatMarca> lista = new ArrayList<>();
-        CatMarca catP = new CatMarca();
+        CatMarca catP;
 
         String sql = "select * from catMarca";
 
@@ -205,7 +198,7 @@ public class ConsultaCats extends DataAccessObject {
             stmt = prepareStatement(sql);
             rs = stmt.executeQuery();
             while (rs.next()) {
-                isValid = true;
+                catP = new CatMarca();
                 //Tabla trabajador
                 catP.setIdMarca(rs.getInt("idMarca"));
                 catP.setMarca(rs.getString("marca"));
@@ -226,9 +219,9 @@ public class ConsultaCats extends DataAccessObject {
         PreparedStatement stmt = null;
         boolean isValid = false;
         List<CatProducto> lista = new ArrayList<>();
-        CatProducto catP = new CatProducto();
-        CatMarca cM = new CatMarca();
-        CatCategoria cC = new CatCategoria();
+        CatProducto catP;
+        CatMarca cM;
+        CatCategoria cC;
 
         String sql = "select * from catProducto cp, catMarca cm, catCategoria cc where cp.idCategoria1=cc.idCategoria and cp.idMarca1=cm.idMarca";
 
@@ -236,7 +229,7 @@ public class ConsultaCats extends DataAccessObject {
             stmt = prepareStatement(sql);
             rs = stmt.executeQuery();
             while (rs.next()) {
-                isValid = true;
+                catP = new CatProducto();
                 //Tabla trabajador
                 catP.setIdCProducto(rs.getInt("idCProducto"));
                 catP.setProducto(rs.getString("producto"));
@@ -245,9 +238,11 @@ public class ConsultaCats extends DataAccessObject {
                 catP.setDescripcion(rs.getString("descripcio"));
                 catP.setDescripcionAlmacenar(rs.getString("descripcionAlmacenar"));
                 //CatMarca
+                cM = new CatMarca();
                 cM.setIdMarca(rs.getInt("idMarca"));
                 cM.setMarca(rs.getString("marca"));
                 //CatCategoria
+                cC = new CatCategoria();
                 cC.setIdCategoria(rs.getInt("idCategoria"));
                 cC.setCategoria(rs.getString("categoria"));
                 //Añadiendo objetos
@@ -269,9 +264,8 @@ public class ConsultaCats extends DataAccessObject {
     public List<CatSeccion> getLCatSeccion() throws SQLException, DAOInitializationException {
         ResultSet rs = null;
         PreparedStatement stmt = null;
-        boolean isValid = false;
         List<CatSeccion> lista = new ArrayList<>();
-        CatSeccion catP = new CatSeccion();
+        CatSeccion catP;
 
         String sql = "select * from catSeccion";
 
@@ -279,7 +273,7 @@ public class ConsultaCats extends DataAccessObject {
             stmt = prepareStatement(sql);
             rs = stmt.executeQuery();
             while (rs.next()) {
-                isValid = true;
+                catP = new CatSeccion();
                 //Tabla trabajador
                 catP.setIdSeccion(rs.getInt("idSeccion"));
                 catP.setSeccion(rs.getString("seccion"));
@@ -298,9 +292,8 @@ public class ConsultaCats extends DataAccessObject {
     public List<CatSexo> getLCatSexo() throws SQLException, DAOInitializationException {
         ResultSet rs = null;
         PreparedStatement stmt = null;
-        boolean isValid = false;
         List<CatSexo> lista = new ArrayList<>();
-        CatSexo catP = new CatSexo();
+        CatSexo catP;
 
         String sql = "select * from catSexo";
 
@@ -308,7 +301,7 @@ public class ConsultaCats extends DataAccessObject {
             stmt = prepareStatement(sql);
             rs = stmt.executeQuery();
             while (rs.next()) {
-                isValid = true;
+                catP = new CatSexo();
                 //Tabla trabajador
                 catP.setIdSexo(rs.getInt("idSexo"));
                 catP.setSexo(rs.getString("sexo"));

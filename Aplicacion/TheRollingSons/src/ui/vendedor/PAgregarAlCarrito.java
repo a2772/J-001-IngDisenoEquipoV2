@@ -1,6 +1,8 @@
 package ui.vendedor;
 
+import business.GetListas;
 import clases.CatCategoria;
+import clases.CatMarca;
 import clases.Personal;
 import clases.util.Carrito;
 import dao.DAOInitializationException;
@@ -46,7 +48,9 @@ public class PAgregarAlCarrito extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setLocation(new java.awt.Point(500, 300));
-        setMinimumSize(new java.awt.Dimension(1252, 652));
+        setMaximumSize(new java.awt.Dimension(1252, 683));
+        setMinimumSize(new java.awt.Dimension(1252, 683));
+        setSize(new java.awt.Dimension(1252, 683));
         getContentPane().setLayout(null);
 
         lblCarrito.setBackground(new java.awt.Color(0, 102, 204));
@@ -281,24 +285,36 @@ public class PAgregarAlCarrito extends javax.swing.JFrame {
         this.personal = personal;
     }
 
-    public void preCarga() {//Datos previos a mostrar el JFRAME pero posteriores al constructor
+    public void preCarga() throws ClassNotFoundException, SQLException, DAOInitializationException {//Datos previos a mostrar el JFRAME pero posteriores al constructor
         //llenamos los combo box
         if(this.carrito!=null){//Si el carrito no es nulo, llenamos la tabla de
             
         }
         //Llenamos los filtros desde la BD
-        
+        fillCategoria();
+        fillMarca();
     }
     public void reloadCarrito(){//Recarga el carrito cada que se haga un cambio
         
     }
     private void fillCategoria() throws ClassNotFoundException, SQLException, SQLException, DAOInitializationException {
         List<CatCategoria> lista;
-        Consultas con = new Consultas();
-        obj = con.getLCatSexo();
-        cboSexo.removeAllItems();
-        for (int i = 0; i < obj.size(); i++) {
-            cboSexo.addItem(obj.get(i).getSexo());
+        GetListas getListas = new GetListas();
+        lista = getListas.fillLCatCategoria();
+        cboCat.removeAllItems();
+        cboCat.addItem("No aplicar" + lista.get(0).getCategoria() + lista.get(1).getCategoria());
+        for (int i = 0; i < lista.size(); i++) {
+            cboCat.addItem(lista.get(i).getCategoria());
+        }
+    }
+    private void fillMarca() throws ClassNotFoundException, SQLException, SQLException, DAOInitializationException {
+        List<CatMarca> lista;
+        GetListas getListas = new GetListas();
+        lista = getListas.fillLCatMarca();
+        cboMar.removeAllItems();
+        cboMar.addItem("No aplicar");
+        for (int i = 0; i < lista.size(); i++) {
+            cboMar.addItem(lista.get(i).getMarca());
         }
     }
 
