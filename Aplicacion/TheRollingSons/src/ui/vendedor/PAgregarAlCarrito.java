@@ -1,7 +1,11 @@
 package ui.vendedor;
 
+import clases.CatCategoria;
 import clases.Personal;
 import clases.util.Carrito;
+import dao.DAOInitializationException;
+import java.sql.SQLException;
+import java.util.List;
 import javax.swing.JOptionPane;
 
 public class PAgregarAlCarrito extends javax.swing.JFrame {
@@ -279,11 +283,23 @@ public class PAgregarAlCarrito extends javax.swing.JFrame {
 
     public void preCarga() {//Datos previos a mostrar el JFRAME pero posteriores al constructor
         //llenamos los combo box
-        if(this.carrito!=null){//Si el carrito no es nulo
+        if(this.carrito!=null){//Si el carrito no es nulo, llenamos la tabla de
             
         }
         //Llenamos los filtros desde la BD
         
+    }
+    public void reloadCarrito(){//Recarga el carrito cada que se haga un cambio
+        
+    }
+    private void fillCategoria() throws ClassNotFoundException, SQLException, SQLException, DAOInitializationException {
+        List<CatCategoria> lista;
+        Consultas con = new Consultas();
+        obj = con.getLCatSexo();
+        cboSexo.removeAllItems();
+        for (int i = 0; i < obj.size(); i++) {
+            cboSexo.addItem(obj.get(i).getSexo());
+        }
     }
 
     /**

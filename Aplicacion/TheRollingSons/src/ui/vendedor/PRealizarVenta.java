@@ -1,8 +1,13 @@
 package ui.vendedor;
 
+import business.InsertList;
 import clases.Personal;
 import clases.util.Articulo;
 import clases.util.Carrito;
+import dao.DAOInitializationException;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import ui.PLogin;
@@ -59,7 +64,7 @@ public class PRealizarVenta extends javax.swing.JFrame {
             }
         });
         getContentPane().add(btnCompraCarrito);
-        btnCompraCarrito.setBounds(1010, 560, 200, 70);
+        btnCompraCarrito.setBounds(1020, 560, 200, 70);
 
         btnSalir.setBackground(new java.awt.Color(153, 0, 51));
         btnSalir.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
@@ -94,7 +99,7 @@ public class PRealizarVenta extends javax.swing.JFrame {
             }
         });
         getContentPane().add(btnBorrar1);
-        btnBorrar1.setBounds(580, 560, 200, 70);
+        btnBorrar1.setBounds(550, 560, 200, 70);
 
         jLabel2.setBackground(new java.awt.Color(255, 153, 51));
         jLabel2.setFont(new java.awt.Font("DialogInput", 3, 36)); // NOI18N
@@ -278,6 +283,7 @@ public class PRealizarVenta extends javax.swing.JFrame {
         PConsultaProductos pConsultaProductos = new PConsultaProductos();
         //Iniciamos el primer formulario, si es Encargado
         pConsultaProductos.setPersonal(personal);
+        pConsultaProductos.setCarrito(carrito);
         pConsultaProductos.preCarga();
         pConsultaProductos.setVisible(true);
         dispose();
@@ -294,11 +300,32 @@ public class PRealizarVenta extends javax.swing.JFrame {
     }//GEN-LAST:event_btnSalirActionPerformed
 
     private void btnCompraCarritoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCompraCarritoActionPerformed
-        // TODO add your handling code here:
+        if (this.carrito == null) {
+            JOptionPane.showConfirmDialog(null, "No hay nada en el carrito", "Error 402", JOptionPane.DEFAULT_OPTION);
+        } else {
+            int opcion = JOptionPane.showConfirmDialog(null, "¿Deseas registrar la compra?", "Comprando el Carrito", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+            if (opcion == 0) {
+                //Agregar la venta mandando el carrito
+                InsertList insertList = new InsertList();
+                try {
+                    insertList.registraVentaCarrito(this.carrito);
+                    JOptionPane.showMessageDialog(null, "¡Compra realizada!");
+                } catch (ClassNotFoundException | SQLException | DAOInitializationException ex) {
+                    Logger.getLogger(PRealizarVenta.class.getName()).log(Level.SEVERE, null, ex);
+                    JOptionPane.showMessageDialog(null, "¡Error al realizar la compra!");
+                }
+            }
+        }
     }//GEN-LAST:event_btnCompraCarritoActionPerformed
 
     private void btnIrCarrito1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIrCarrito1ActionPerformed
-        // TODO add your handling code here:
+        PAgregarAlCarrito pAgregarAlCarrito = new PAgregarAlCarrito();
+        //Iniciamos el primer formulario, si es Encargado
+        pAgregarAlCarrito.setPersonal(personal);
+        pAgregarAlCarrito.setCarrito(carrito);
+        pAgregarAlCarrito.preCarga();
+        pAgregarAlCarrito.setVisible(true);
+        dispose();
     }//GEN-LAST:event_btnIrCarrito1ActionPerformed
 
     private void btnBorrar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBorrar1ActionPerformed
