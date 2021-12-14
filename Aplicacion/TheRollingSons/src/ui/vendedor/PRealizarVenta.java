@@ -314,6 +314,7 @@ public class PRealizarVenta extends javax.swing.JFrame {
                     Logger.getLogger(PRealizarVenta.class.getName()).log(Level.SEVERE, null, ex);
                     JOptionPane.showMessageDialog(null, "¡Error al realizar la compra!");
                 }
+                
             }
         }
     }//GEN-LAST:event_btnCompraCarritoActionPerformed
@@ -323,7 +324,11 @@ public class PRealizarVenta extends javax.swing.JFrame {
         //Iniciamos el primer formulario, si es Encargado
         pAgregarAlCarrito.setPersonal(personal);
         pAgregarAlCarrito.setCarrito(carrito);
-        pAgregarAlCarrito.preCarga();
+        try {
+            pAgregarAlCarrito.preCarga();
+        } catch (ClassNotFoundException | SQLException | DAOInitializationException ex) {
+            Logger.getLogger(PRealizarVenta.class.getName()).log(Level.SEVERE, null, ex);
+        }
         pAgregarAlCarrito.setVisible(true);
         dispose();
     }//GEN-LAST:event_btnIrCarrito1ActionPerformed
