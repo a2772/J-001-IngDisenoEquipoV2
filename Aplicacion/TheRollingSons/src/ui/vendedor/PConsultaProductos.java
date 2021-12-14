@@ -45,7 +45,6 @@ public class PConsultaProductos extends javax.swing.JFrame {
         rbtnVenta.setBackground(new java.awt.Color(127, 248, 248));
         rbtnVenta.setFont(new java.awt.Font("Dialog", 1, 19)); // NOI18N
         rbtnVenta.setForeground(new java.awt.Color(255, 153, 51));
-        rbtnVenta.setSelected(true);
         rbtnVenta.setText("Realizar Venta");
         rbtnVenta.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -56,7 +55,13 @@ public class PConsultaProductos extends javax.swing.JFrame {
         rbtnConsProd.setBackground(new java.awt.Color(127, 248, 248));
         rbtnConsProd.setFont(new java.awt.Font("Dialog", 1, 19)); // NOI18N
         rbtnConsProd.setForeground(new java.awt.Color(255, 153, 51));
+        rbtnConsProd.setSelected(true);
         rbtnConsProd.setText("Consultar Productos");
+        rbtnConsProd.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                rbtnConsProdActionPerformed(evt);
+            }
+        });
 
         rbtnCRUDUsr.setBackground(new java.awt.Color(127, 248, 248));
         rbtnCRUDUsr.setFont(new java.awt.Font("Dialog", 1, 19)); // NOI18N
@@ -178,6 +183,10 @@ public class PConsultaProductos extends javax.swing.JFrame {
         
     }//GEN-LAST:event_rbtnVentaActionPerformed
 
+    private void rbtnConsProdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbtnConsProdActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_rbtnConsProdActionPerformed
+
     /*public static void main(String args[]) {
         java.awt.EventQueue.invokeLater(new Runnable() {
             private Personal personal;
@@ -220,7 +229,6 @@ public class PConsultaProductos extends javax.swing.JFrame {
     }
 
     public void preCarga() {//Datos previos a mostrar el JFRAME pero posteriores al constructor
-        JOptionPane.showMessageDialog(null, this.personal.getNombre());
         int spndt = 0;
         String txt = "            ¡Bienvenid";
         if (this.personal.getCatSexo().getIdSexo() != 1) {

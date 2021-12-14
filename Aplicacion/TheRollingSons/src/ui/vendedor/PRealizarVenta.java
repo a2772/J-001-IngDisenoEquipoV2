@@ -1,13 +1,17 @@
 package ui.vendedor;
 
 import clases.Personal;
-import javax.swing.JOptionPane;
+import clases.util.Articulo;
+import clases.util.Carrito;
+import javax.swing.table.DefaultTableModel;
 
 public class PRealizarVenta extends javax.swing.JFrame {
 
     private Personal personal;
+    private Carrito carrito;
 
     public PRealizarVenta() {
+        this.carrito = null;
         initComponents();
     }
 
@@ -15,6 +19,11 @@ public class PRealizarVenta extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        btnCompraCarrito = new javax.swing.JButton();
+        btnIrCarrito = new javax.swing.JButton();
+        jLabel2 = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jtCarrito = new javax.swing.JTable();
         jpMenu = new javax.swing.JPanel();
         lblMss1 = new javax.swing.JLabel();
         rbtnVenta = new javax.swing.JRadioButton();
@@ -32,6 +41,47 @@ public class PRealizarVenta extends javax.swing.JFrame {
         setLocation(new java.awt.Point(500, 300));
         setMinimumSize(new java.awt.Dimension(1252, 652));
         getContentPane().setLayout(null);
+
+        btnCompraCarrito.setText("Confirmar Compra");
+        btnCompraCarrito.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCompraCarritoActionPerformed(evt);
+            }
+        });
+        getContentPane().add(btnCompraCarrito);
+        btnCompraCarrito.setBounds(680, 560, 170, 70);
+
+        btnIrCarrito.setText("Cambiar Carrito");
+        btnIrCarrito.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnIrCarritoActionPerformed(evt);
+            }
+        });
+        getContentPane().add(btnIrCarrito);
+        btnIrCarrito.setBounds(420, 560, 170, 70);
+
+        jLabel2.setBackground(new java.awt.Color(255, 153, 51));
+        jLabel2.setFont(new java.awt.Font("DialogInput", 3, 36)); // NOI18N
+        jLabel2.setText("       Carrito Actual     ");
+        jLabel2.setOpaque(true);
+        getContentPane().add(jLabel2);
+        jLabel2.setBounds(340, 40, 600, 60);
+
+        jtCarrito.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {},
+                {},
+                {},
+                {}
+            },
+            new String [] {
+
+            }
+        ));
+        jScrollPane1.setViewportView(jtCarrito);
+
+        getContentPane().add(jScrollPane1);
+        jScrollPane1.setBounds(310, 120, 690, 420);
 
         jpMenu.setBackground(new java.awt.Color(204, 255, 255));
 
@@ -57,6 +107,11 @@ public class PRealizarVenta extends javax.swing.JFrame {
         rbtnConsProd.setFont(new java.awt.Font("Dialog", 1, 19)); // NOI18N
         rbtnConsProd.setForeground(new java.awt.Color(255, 153, 51));
         rbtnConsProd.setText("Consultar Productos");
+        rbtnConsProd.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                rbtnConsProdActionPerformed(evt);
+            }
+        });
 
         rbtnCRUDUsr.setBackground(new java.awt.Color(127, 248, 248));
         rbtnCRUDUsr.setFont(new java.awt.Font("Dialog", 1, 19)); // NOI18N
@@ -157,7 +212,7 @@ public class PRealizarVenta extends javax.swing.JFrame {
         jLBackground.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         jLBackground.setIcon(new javax.swing.ImageIcon(getClass().getResource("/binarios/images/Degradado1.jpg"))); // NOI18N
         getContentPane().add(jLBackground);
-        jLBackground.setBounds(0, 0, 1250, 650);
+        jLBackground.setBounds(10, 10, 1250, 650);
 
         jLabel1.setText("jLabel1");
         getContentPane().add(jLabel1);
@@ -175,8 +230,30 @@ public class PRealizarVenta extends javax.swing.JFrame {
     }//GEN-LAST:event_rbtnCRUDHorActionPerformed
 
     private void rbtnVentaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbtnVentaActionPerformed
-        
+
     }//GEN-LAST:event_rbtnVentaActionPerformed
+
+    private void rbtnConsProdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbtnConsProdActionPerformed
+        PConsultaProductos pConsultaProductos = new PConsultaProductos();
+        //Iniciamos el primer formulario, si es Encargado
+        pConsultaProductos.setPersonal(personal);
+        pConsultaProductos.preCarga();
+        pConsultaProductos.setVisible(true);
+        dispose();
+    }//GEN-LAST:event_rbtnConsProdActionPerformed
+
+    private void btnIrCarritoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIrCarritoActionPerformed
+        PAgregarAlCarrito pAgregarAlCarrito = new PAgregarAlCarrito();
+        pAgregarAlCarrito.setCarrito(this.getCarrito());
+        pAgregarAlCarrito.setPersonal(this.personal);
+        pAgregarAlCarrito.preCarga();
+        pAgregarAlCarrito.setVisible(true);
+        dispose();
+    }//GEN-LAST:event_btnIrCarritoActionPerformed
+
+    private void btnCompraCarritoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCompraCarritoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnCompraCarritoActionPerformed
 
     /*public static void main(String args[]) {
         java.awt.EventQueue.invokeLater(new Runnable() {
@@ -188,9 +265,14 @@ public class PRealizarVenta extends javax.swing.JFrame {
     }*/
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnCompraCarrito;
+    private javax.swing.JButton btnIrCarrito;
     private javax.swing.JLabel jLBackground;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JPanel jpMenu;
+    private javax.swing.JTable jtCarrito;
     private javax.swing.JLabel lblMss1;
     private javax.swing.JLabel lblMss2;
     private javax.swing.JLabel lblMss3;
@@ -220,7 +302,6 @@ public class PRealizarVenta extends javax.swing.JFrame {
     }
 
     public void preCarga() {//Datos previos a mostrar el JFRAME pero posteriores al constructor
-        JOptionPane.showMessageDialog(null, this.personal.getNombre());
         int spndt = 0;
         String txt = "            ¡Bienvenid";
         if (this.personal.getCatSexo().getIdSexo() != 1) {
@@ -252,5 +333,50 @@ public class PRealizarVenta extends javax.swing.JFrame {
             rbtnCRUDUsr.setVisible(false);
             jpMenu.setSize(270, 305);
         }
+        if (this.getCarrito() != null) {
+            fillCarrito();
+        }
+    }
+
+    //Fill table
+    public void fillCarrito() {
+        DefaultTableModel modelo = new DefaultTableModel();
+
+        modelo.addColumn("Id del artículo");
+        modelo.addColumn("Producto");
+        modelo.addColumn("Descripción");
+        modelo.addColumn("Precio $");
+        modelo.addColumn("Color");
+        modelo.addColumn("Categoría");
+        modelo.addColumn("Marca");
+
+        String registro[] = new String[7];
+        for (int i = 0; i < getCarrito().getlArticulo().size(); i++) {
+            Articulo ar = getCarrito().getlArticulo().get(i);
+
+            registro[0] = String.valueOf(ar.getCatProducto().getIdCProducto());
+            registro[1] = String.valueOf(ar.getCatProducto().getProducto());
+            registro[2] = String.valueOf(ar.getCatProducto().getDescripcion());
+            registro[3] = String.valueOf("$" + Math.round(ar.getCatProducto().getPrecio() * 100) / 100);
+            registro[4] = String.valueOf(ar.getCatProducto().getColor());
+            registro[5] = String.valueOf(ar.getCatProducto().getCatCategoria().getCategoria());
+            registro[6] = String.valueOf(ar.getCatProducto().getCatMarca().getMarca());
+            modelo.addRow(registro);
+        }
+        jtCarrito.setModel(modelo);
+    }
+
+    /**
+     * @return the carrito
+     */
+    public Carrito getCarrito() {
+        return carrito;
+    }
+
+    /**
+     * @param carrito the carrito to set
+     */
+    public void setCarrito(Carrito carrito) {
+        this.carrito = carrito;
     }
 }
