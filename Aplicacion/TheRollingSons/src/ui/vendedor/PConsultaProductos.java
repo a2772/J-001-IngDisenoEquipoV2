@@ -1,11 +1,13 @@
 package ui.vendedor;
 
 import clases.Personal;
+import clases.util.Carrito;
 import javax.swing.JOptionPane;
 
 public class PConsultaProductos extends javax.swing.JFrame {
 
     private Personal personal;
+    private Carrito carrito;
 
     public PConsultaProductos() {
         initComponents();
@@ -260,5 +262,19 @@ public class PConsultaProductos extends javax.swing.JFrame {
             rbtnCRUDUsr.setVisible(false);
             jpMenu.setSize(270, 305);
         }
+    }
+
+    /**
+     * @return the carrito
+     */
+    public Carrito getCarrito() {
+        return carrito;
+    }
+
+    /**
+     * @param carrito the carrito to set
+     */
+    public void setCarrito(Carrito carrito) {
+        this.carrito = carrito;
     }
 }
