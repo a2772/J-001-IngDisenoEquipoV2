@@ -16,6 +16,18 @@ public class PCRUDHorarios extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jRadioButton1 = new javax.swing.JRadioButton();
+        jRadioButton2 = new javax.swing.JRadioButton();
+        jLabelHorario = new javax.swing.JLabel();
+        jButtonAplicar = new javax.swing.JButton();
+        jButtonSalir1 = new javax.swing.JButton();
+        jButtonLimpiar = new javax.swing.JButton();
+        jComboBoxHorario = new javax.swing.JComboBox<>();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jTable1 = new javax.swing.JTable();
+        jTextFieldIDEmpleado = new javax.swing.JTextField();
+        jLabelID = new javax.swing.JLabel();
+        jLabelTitulo = new javax.swing.JLabel();
         jpMenu = new javax.swing.JPanel();
         lblMss1 = new javax.swing.JLabel();
         rbtnVenta = new javax.swing.JRadioButton();
@@ -27,12 +39,100 @@ public class PCRUDHorarios extends javax.swing.JFrame {
         lblMss3 = new javax.swing.JLabel();
         lblMss2 = new javax.swing.JLabel();
         jLBackground = new javax.swing.JLabel();
-        jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setLocation(new java.awt.Point(500, 300));
         setMinimumSize(new java.awt.Dimension(1252, 652));
         getContentPane().setLayout(null);
+
+        jRadioButton1.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        jRadioButton1.setText("Asignar");
+        jRadioButton1.setOpaque(false);
+        getContentPane().add(jRadioButton1);
+        jRadioButton1.setBounds(340, 180, 120, 31);
+
+        jRadioButton2.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        jRadioButton2.setText("Consultar");
+        jRadioButton2.setOpaque(false);
+        getContentPane().add(jRadioButton2);
+        jRadioButton2.setBounds(340, 140, 120, 31);
+
+        jLabelHorario.setBackground(new java.awt.Color(0, 153, 153));
+        jLabelHorario.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabelHorario.setText("Horario");
+        getContentPane().add(jLabelHorario);
+        jLabelHorario.setBounds(540, 190, 170, 30);
+
+        jButtonAplicar.setBackground(new java.awt.Color(0, 204, 51));
+        jButtonAplicar.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        jButtonAplicar.setText("Aplicar");
+        jButtonAplicar.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        getContentPane().add(jButtonAplicar);
+        jButtonAplicar.setBounds(1020, 240, 90, 40);
+
+        jButtonSalir1.setBackground(new java.awt.Color(204, 0, 0));
+        jButtonSalir1.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        jButtonSalir1.setText("Salir");
+        jButtonSalir1.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        jButtonSalir1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonSalir1ActionPerformed(evt);
+            }
+        });
+        getContentPane().add(jButtonSalir1);
+        jButtonSalir1.setBounds(1020, 70, 90, 40);
+
+        jButtonLimpiar.setBackground(new java.awt.Color(0, 255, 255));
+        jButtonLimpiar.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        jButtonLimpiar.setText("Limpiar");
+        jButtonLimpiar.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        jButtonLimpiar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonLimpiarActionPerformed(evt);
+            }
+        });
+        getContentPane().add(jButtonLimpiar);
+        jButtonLimpiar.setBounds(1020, 150, 90, 40);
+
+        jComboBoxHorario.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "12:00pm - 7:00pm", "12:00pm - 8:00pm" }));
+        getContentPane().add(jComboBoxHorario);
+        jComboBoxHorario.setBounds(720, 190, 220, 30);
+
+        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null}
+            },
+            new String [] {
+                "ID", "Nombre", "Primer Apellido", "Segundo Apellido", "Horario"
+            }
+        ));
+        jScrollPane1.setViewportView(jTable1);
+
+        getContentPane().add(jScrollPane1);
+        jScrollPane1.setBounds(330, 322, 880, 290);
+        getContentPane().add(jTextFieldIDEmpleado);
+        jTextFieldIDEmpleado.setBounds(720, 140, 220, 30);
+
+        jLabelID.setBackground(new java.awt.Color(0, 153, 153));
+        jLabelID.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabelID.setText("ID del Empleado");
+        getContentPane().add(jLabelID);
+        jLabelID.setBounds(540, 140, 170, 30);
+
+        jLabelTitulo.setBackground(new java.awt.Color(0, 153, 153));
+        jLabelTitulo.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
+        jLabelTitulo.setText("CRUD Horarios");
+        getContentPane().add(jLabelTitulo);
+        jLabelTitulo.setBounds(340, 40, 220, 40);
 
         jpMenu.setBackground(new java.awt.Color(204, 255, 255));
 
@@ -46,7 +146,6 @@ public class PCRUDHorarios extends javax.swing.JFrame {
         rbtnVenta.setBackground(new java.awt.Color(127, 248, 248));
         rbtnVenta.setFont(new java.awt.Font("Dialog", 1, 19)); // NOI18N
         rbtnVenta.setForeground(new java.awt.Color(255, 153, 51));
-        rbtnVenta.setSelected(true);
         rbtnVenta.setText("Realizar Venta");
         rbtnVenta.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -82,6 +181,7 @@ public class PCRUDHorarios extends javax.swing.JFrame {
         rbtnCRUDHor.setBackground(new java.awt.Color(127, 248, 248));
         rbtnCRUDHor.setFont(new java.awt.Font("Dialog", 1, 19)); // NOI18N
         rbtnCRUDHor.setForeground(new java.awt.Color(255, 153, 51));
+        rbtnCRUDHor.setSelected(true);
         rbtnCRUDHor.setText("CRUD Horarios");
         rbtnCRUDHor.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -126,7 +226,7 @@ public class PCRUDHorarios extends javax.swing.JFrame {
                             .addComponent(rbtnConsProd, javax.swing.GroupLayout.PREFERRED_SIZE, 228, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(rbtnVenta, javax.swing.GroupLayout.PREFERRED_SIZE, 228, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(rbtnCRUDHor, javax.swing.GroupLayout.PREFERRED_SIZE, 228, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(14, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jpMenuLayout.setVerticalGroup(
             jpMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -149,7 +249,7 @@ public class PCRUDHorarios extends javax.swing.JFrame {
                 .addComponent(rbtnCRUDPM)
                 .addGap(18, 18, 18)
                 .addComponent(rbtnCRUDHor)
-                .addContainerGap(35, Short.MAX_VALUE))
+                .addContainerGap(68, Short.MAX_VALUE))
         );
 
         getContentPane().add(jpMenu);
@@ -159,10 +259,6 @@ public class PCRUDHorarios extends javax.swing.JFrame {
         jLBackground.setIcon(new javax.swing.ImageIcon(getClass().getResource("/binarios/images/Degradado1.jpg"))); // NOI18N
         getContentPane().add(jLBackground);
         jLBackground.setBounds(0, 0, 1250, 650);
-
-        jLabel1.setText("jLabel1");
-        getContentPane().add(jLabel1);
-        jLabel1.setBounds(50, 20, 220, 40);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -179,6 +275,14 @@ public class PCRUDHorarios extends javax.swing.JFrame {
         
     }//GEN-LAST:event_rbtnVentaActionPerformed
 
+    private void jButtonSalir1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSalir1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButtonSalir1ActionPerformed
+
+    private void jButtonLimpiarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonLimpiarActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButtonLimpiarActionPerformed
+
     /*public static void main(String args[]) {
         java.awt.EventQueue.invokeLater(new Runnable() {
             private Personal personal;
@@ -189,8 +293,19 @@ public class PCRUDHorarios extends javax.swing.JFrame {
     }*/
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton jButtonAplicar;
+    private javax.swing.JButton jButtonLimpiar;
+    private javax.swing.JButton jButtonSalir1;
+    private javax.swing.JComboBox<String> jComboBoxHorario;
     private javax.swing.JLabel jLBackground;
-    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabelHorario;
+    private javax.swing.JLabel jLabelID;
+    private javax.swing.JLabel jLabelTitulo;
+    private javax.swing.JRadioButton jRadioButton1;
+    private javax.swing.JRadioButton jRadioButton2;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTable jTable1;
+    private javax.swing.JTextField jTextFieldIDEmpleado;
     private javax.swing.JPanel jpMenu;
     private javax.swing.JLabel lblMss1;
     private javax.swing.JLabel lblMss2;
