@@ -3,11 +3,11 @@ package ui.vendedor;
 import clases.Personal;
 import javax.swing.JOptionPane;
 
-public class PRealizarVenta extends javax.swing.JFrame {
+public class PConsultaProductos extends javax.swing.JFrame {
 
     private Personal personal;
 
-    public PRealizarVenta() {
+    public PConsultaProductos() {
         initComponents();
     }
 

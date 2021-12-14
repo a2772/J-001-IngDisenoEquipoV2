@@ -1,13 +1,14 @@
-package ui.vendedor;
+package ui;
 
+import ui.vendedor.*;
 import clases.Personal;
 import javax.swing.JOptionPane;
 
-public class PRealizarVenta extends javax.swing.JFrame {
+public class PRecuperaPass extends javax.swing.JFrame {
 
     private Personal personal;
 
-    public PRealizarVenta() {
+    public PRecuperaPass() {
         initComponents();
     }
 

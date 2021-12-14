@@ -1,13 +1,14 @@
-package ui.vendedor;
+package ui.encargado;
 
+import ui.vendedor.*;
 import clases.Personal;
 import javax.swing.JOptionPane;
 
-public class PRealizarVenta extends javax.swing.JFrame {
+public class PCRUDHorarios extends javax.swing.JFrame {
 
     private Personal personal;
 
-    public PRealizarVenta() {
+    public PCRUDHorarios() {
         initComponents();
     }
 

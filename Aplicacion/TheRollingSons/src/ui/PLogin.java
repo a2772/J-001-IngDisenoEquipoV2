@@ -125,7 +125,7 @@ public class PLogin extends javax.swing.JFrame {
             }
         });
 
-        btnSalir.setBackground(new java.awt.Color(204, 51, 0));
+        btnSalir.setBackground(new java.awt.Color(153, 0, 51));
         btnSalir.setFont(new java.awt.Font("Dialog", 0, 20)); // NOI18N
         btnSalir.setForeground(new java.awt.Color(255, 255, 255));
         btnSalir.setText("Salir");
