@@ -38,6 +38,7 @@ public class PLogin extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Login");
+        setLocation(new java.awt.Point(500, 300));
         setMinimumSize(new java.awt.Dimension(1048, 589));
         addComponentListener(new java.awt.event.ComponentAdapter() {
             public void componentResized(java.awt.event.ComponentEvent evt) {
@@ -255,18 +256,13 @@ public class PLogin extends javax.swing.JFrame {
                 personal = getById.getPersonalById(setId.setIdPersonal(usuario));
                 
                 //Mensaje de bienvenida
-                JOptionPane.showMessageDialog(null, "¡Bienveni@ " + personal.getCatPerfil().getPerfil()+ " " + personal.getNombre() + "!");
-                
+                JOptionPane.showMessageDialog(null, "¡Bienveni@ " + personal.getCatPerfil().getPerfil()+ " " + personal.getNombre() + "!" + personal.getCatSexo().getSexo());
+                PRealizarVenta prv = new PRealizarVenta();
                 //Iniciamos el primer formulario, si es Encargado
-                if(personal.getCatPerfil().getIdCPerfil()==1){
-                    PRealizarVenta pRealizarVenta = new PRealizarVenta(personal);
-                    pRealizarVenta.setVisible(true);
-                    dispose();
-                } else if(personal.getCatPerfil().getIdCPerfil()==2){
-                    PRealizarVenta pRealizarVenta = new PRealizarVenta(personal);
-                    pRealizarVenta.setVisible(true);
-                    dispose();
-                }
+                prv.setPersonal(personal);
+                prv.preCarga();
+                prv.setVisible(true);
+                dispose();
             }else{
                 JOptionPane.showMessageDialog(null, "Credenciales incorrectas, intenta de nuevo" + ". Usuario: " + usuario.getCorreo() + ". Contraseña: " + usuario.getPass());
             }
@@ -311,14 +307,14 @@ public class PLogin extends javax.swing.JFrame {
     }//GEN-LAST:event_btnSalirMouseEntered
 
     private void btnSalirMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnSalirMouseExited
-        btnSalir.setBackground(new Color(204,51,0));
+        btnSalir.setBackground(new Color(153,0,51));
         Font font = new Font("Dialog", Font.PLAIN, 20);
         btnSalir.setFont(font);
         btnSalir.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
     }//GEN-LAST:event_btnSalirMouseExited
 
     private void pnlLoginMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pnlLoginMouseEntered
-        pnlLogin.setBackground(new Color(204,153,0));
+        pnlLogin.setBackground(new Color(204,21,21));
         lblLogin.setForeground(Color.BLACK);
         lblPass.setForeground(Color.BLACK);
         lblUsuario.setForeground(Color.BLACK);
@@ -332,28 +328,28 @@ public class PLogin extends javax.swing.JFrame {
     }//GEN-LAST:event_pnlLoginMouseExited
 
     private void lblLoginMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblLoginMouseEntered
-        pnlLogin.setBackground(new Color(204,153,0));
+        pnlLogin.setBackground(new Color(204,21,21));
         lblLogin.setForeground(Color.BLACK);
         lblPass.setForeground(Color.BLACK);
         lblUsuario.setForeground(Color.BLACK);
     }//GEN-LAST:event_lblLoginMouseEntered
 
     private void lblUsuarioMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblUsuarioMouseEntered
-        pnlLogin.setBackground(new Color(204,153,0));
+        pnlLogin.setBackground(new Color(204,21,21));
         lblLogin.setForeground(Color.BLACK);
         lblPass.setForeground(Color.BLACK);
         lblUsuario.setForeground(Color.BLACK);
     }//GEN-LAST:event_lblUsuarioMouseEntered
 
     private void lblPassMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblPassMouseEntered
-        pnlLogin.setBackground(new Color(204,153,0));
+        pnlLogin.setBackground(new Color(204,21,21));
         lblLogin.setForeground(Color.BLACK);
         lblPass.setForeground(Color.BLACK);
         lblUsuario.setForeground(Color.BLACK);
     }//GEN-LAST:event_lblPassMouseEntered
 
     private void txtUsuarioMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtUsuarioMouseEntered
-        pnlLogin.setBackground(new Color(204,153,0));
+        pnlLogin.setBackground(new Color(204,21,21));
         lblLogin.setForeground(Color.BLACK);
         lblPass.setForeground(Color.BLACK);
         lblUsuario.setForeground(Color.BLACK);
