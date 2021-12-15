@@ -54,7 +54,7 @@ public class InsertaCarrito extends DataAccessObject {
                 pStmt.setFloat(2, art.getProductoVenta().getPrecio());
                 pStmt.setInt(3, idVenta);
                 pStmt.setInt(4, art.getProductoVenta().getCatProducto().getIdCProducto());
-                System.out.println("C: " + art.getProductoVenta().getCantidad() +"; $:" + art.getProductoVenta().getPrecio() +"; ID: " +  idVenta + "; IDCP: " + art.getProductoVenta().getCatProducto().getIdCProducto() );
+                //System.out.println("C: " + art.getProductoVenta().getCantidad() +"; $:" + art.getProductoVenta().getPrecio() +"; ID: " +  idVenta + "; IDCP: " + art.getProductoVenta().getCatProducto().getIdCProducto() );
 
                 pStmt.executeUpdate();
             } catch (SQLException ex) {

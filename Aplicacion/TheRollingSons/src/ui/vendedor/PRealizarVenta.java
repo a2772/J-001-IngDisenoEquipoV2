@@ -109,8 +109,9 @@ public class PRealizarVenta extends javax.swing.JFrame {
         jLabel2.setText("       Carrito Actual     ");
         jLabel2.setOpaque(true);
         getContentPane().add(jLabel2);
-        jLabel2.setBounds(350, 40, 600, 60);
+        jLabel2.setBounds(390, 40, 600, 60);
 
+        jtCarrito.setBackground(new java.awt.Color(102, 255, 204));
         jtCarrito.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
