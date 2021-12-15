@@ -21,8 +21,9 @@ public class ConsultaConId extends DataAccessObject {
         Personal p = new Personal();
         //Objetos
         CatPerfil cp =new CatPerfil();
+        CatSexo cs = new CatSexo();
         
-        String sql = "select * from personal p, catPerfil cp where p.idCPerfil1=cp.idCPerfil and p.idPersonal=?";
+        String sql = "select * from personal p, catPerfil cp, catSexo cs where p.idCPerfil1=cp.idCPerfil and cs.idSexo=p.idSexo1 and p.idPersonal=?";
         
         try {
             stmt = prepareStatement(sql);
@@ -42,9 +43,12 @@ public class ConsultaConId extends DataAccessObject {
                 //Parte del CatPerfil
                 cp.setIdCPerfil(rs.getInt("idCPerfil"));
                 cp.setPerfil(rs.getString("perfil"));
-                
+                //Parte CatSexo
+                cs.setIdSexo(rs.getInt("idSexo"));
+                cs.setSexo(rs.getString("sexo"));
                 //Pasando los objetos
                 p.setCatPerfil(cp);
+                p.setCatSexo(cs);
             }
         } catch (DAOInitializationException | SQLException ex) {
             isValid = false;

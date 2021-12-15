@@ -12,6 +12,7 @@ public class Personal {
     private LocalDate  fechaNac;
     private String  correo;
     private CatPerfil catPerfil;
+    private CatSexo catSexo;
     
     public int getIdPersonal() {
         return idPersonal;
@@ -83,6 +84,14 @@ public class Personal {
     
     public void setCatPerfil(CatPerfil catPerfil) {
         this.catPerfil = catPerfil;
+    }
+    
+    public CatSexo getCatSexo() {
+        return catSexo;
+    }
+    
+    public void setCatSexo(CatSexo catSexo) {
+        this.catSexo = catSexo;
     }
     
 }

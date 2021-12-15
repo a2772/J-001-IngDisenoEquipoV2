@@ -1,24 +1,14 @@
-package ui.vendedor;
+package ui.encargado;
 
-import business.InsertList;
+import ui.vendedor.*;
 import clases.Personal;
-import clases.util.Articulo;
-import clases.util.Carrito;
-import dao.DAOInitializationException;
-import java.sql.SQLException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JOptionPane;
-import javax.swing.table.DefaultTableModel;
-import ui.PLogin;
 
-public class PRealizarVenta extends javax.swing.JFrame {
+public class PCRUDHorarios extends javax.swing.JFrame {
 
     private Personal personal;
-    private Carrito carrito;
 
-    public PRealizarVenta() {
-        this.carrito = null;
+    public PCRUDHorarios() {
         initComponents();
     }
 
@@ -26,13 +16,18 @@ public class PRealizarVenta extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        btnCompraCarrito = new javax.swing.JButton();
-        btnSalir = new javax.swing.JButton();
-        btnIrCarrito1 = new javax.swing.JButton();
-        btnBorrar1 = new javax.swing.JButton();
-        jLabel2 = new javax.swing.JLabel();
+        jRadioButton1 = new javax.swing.JRadioButton();
+        jRadioButton2 = new javax.swing.JRadioButton();
+        jLabelHorario = new javax.swing.JLabel();
+        jButtonAplicar = new javax.swing.JButton();
+        jButtonSalir1 = new javax.swing.JButton();
+        jButtonLimpiar = new javax.swing.JButton();
+        jComboBoxHorario = new javax.swing.JComboBox<>();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jtCarrito = new javax.swing.JTable();
+        jTable1 = new javax.swing.JTable();
+        jTextFieldIDEmpleado = new javax.swing.JTextField();
+        jLabelID = new javax.swing.JLabel();
+        jLabelTitulo = new javax.swing.JLabel();
         jpMenu = new javax.swing.JPanel();
         lblMss1 = new javax.swing.JLabel();
         rbtnVenta = new javax.swing.JRadioButton();
@@ -44,90 +39,100 @@ public class PRealizarVenta extends javax.swing.JFrame {
         lblMss3 = new javax.swing.JLabel();
         lblMss2 = new javax.swing.JLabel();
         jLBackground = new javax.swing.JLabel();
-        jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setLocation(new java.awt.Point(500, 300));
-        setMaximumSize(new java.awt.Dimension(1240, 683));
-        setMinimumSize(new java.awt.Dimension(1252, 683));
-        setResizable(false);
-        setSize(new java.awt.Dimension(1252, 683));
+        setMinimumSize(new java.awt.Dimension(1252, 652));
         getContentPane().setLayout(null);
 
-        btnCompraCarrito.setBackground(new java.awt.Color(51, 204, 0));
-        btnCompraCarrito.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
-        btnCompraCarrito.setForeground(new java.awt.Color(255, 255, 255));
-        btnCompraCarrito.setText("Confirmar Compra");
-        btnCompraCarrito.addActionListener(new java.awt.event.ActionListener() {
+        jRadioButton1.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        jRadioButton1.setText("Asignar");
+        jRadioButton1.setOpaque(false);
+        getContentPane().add(jRadioButton1);
+        jRadioButton1.setBounds(340, 180, 120, 31);
+
+        jRadioButton2.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        jRadioButton2.setText("Consultar");
+        jRadioButton2.setOpaque(false);
+        getContentPane().add(jRadioButton2);
+        jRadioButton2.setBounds(340, 140, 120, 31);
+
+        jLabelHorario.setBackground(new java.awt.Color(0, 153, 153));
+        jLabelHorario.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabelHorario.setText("Horario");
+        getContentPane().add(jLabelHorario);
+        jLabelHorario.setBounds(540, 190, 170, 30);
+
+        jButtonAplicar.setBackground(new java.awt.Color(0, 204, 51));
+        jButtonAplicar.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        jButtonAplicar.setText("Aplicar");
+        jButtonAplicar.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        getContentPane().add(jButtonAplicar);
+        jButtonAplicar.setBounds(1020, 240, 90, 40);
+
+        jButtonSalir1.setBackground(new java.awt.Color(204, 0, 0));
+        jButtonSalir1.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        jButtonSalir1.setText("Salir");
+        jButtonSalir1.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        jButtonSalir1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnCompraCarritoActionPerformed(evt);
+                jButtonSalir1ActionPerformed(evt);
             }
         });
-        getContentPane().add(btnCompraCarrito);
-        btnCompraCarrito.setBounds(1020, 560, 200, 70);
+        getContentPane().add(jButtonSalir1);
+        jButtonSalir1.setBounds(1020, 70, 90, 40);
 
-        btnSalir.setBackground(new java.awt.Color(153, 0, 51));
-        btnSalir.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
-        btnSalir.setForeground(new java.awt.Color(255, 255, 255));
-        btnSalir.setText("SALIR");
-        btnSalir.addActionListener(new java.awt.event.ActionListener() {
+        jButtonLimpiar.setBackground(new java.awt.Color(0, 255, 255));
+        jButtonLimpiar.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        jButtonLimpiar.setText("Limpiar");
+        jButtonLimpiar.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        jButtonLimpiar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnSalirActionPerformed(evt);
+                jButtonLimpiarActionPerformed(evt);
             }
         });
-        getContentPane().add(btnSalir);
-        btnSalir.setBounds(30, 590, 90, 50);
+        getContentPane().add(jButtonLimpiar);
+        jButtonLimpiar.setBounds(1020, 150, 90, 40);
 
-        btnIrCarrito1.setBackground(new java.awt.Color(0, 255, 204));
-        btnIrCarrito1.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
-        btnIrCarrito1.setText("Cambiar Carrito");
-        btnIrCarrito1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnIrCarrito1ActionPerformed(evt);
-            }
-        });
-        getContentPane().add(btnIrCarrito1);
-        btnIrCarrito1.setBounds(790, 560, 200, 70);
+        jComboBoxHorario.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "12:00pm - 7:00pm", "12:00pm - 8:00pm" }));
+        getContentPane().add(jComboBoxHorario);
+        jComboBoxHorario.setBounds(720, 190, 220, 30);
 
-        btnBorrar1.setBackground(new java.awt.Color(255, 102, 102));
-        btnBorrar1.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
-        btnBorrar1.setForeground(new java.awt.Color(255, 255, 255));
-        btnBorrar1.setText("BORRAR");
-        btnBorrar1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnBorrar1ActionPerformed(evt);
-            }
-        });
-        getContentPane().add(btnBorrar1);
-        btnBorrar1.setBounds(550, 560, 200, 70);
-
-        jLabel2.setBackground(new java.awt.Color(255, 153, 51));
-        jLabel2.setFont(new java.awt.Font("DialogInput", 3, 36)); // NOI18N
-        jLabel2.setText("       Carrito Actual     ");
-        jLabel2.setOpaque(true);
-        getContentPane().add(jLabel2);
-        jLabel2.setBounds(350, 40, 600, 60);
-
-        jScrollPane1.setBackground(new java.awt.Color(204, 255, 204));
-
-        jtCarrito.setAutoCreateColumnsFromModel(false);
-        jtCarrito.setBackground(new java.awt.Color(255, 204, 153));
-        jtCarrito.setModel(new javax.swing.table.DefaultTableModel(
+        jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {},
-                {},
-                {},
-                {}
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null}
             },
             new String [] {
-
+                "ID", "Nombre", "Primer Apellido", "Segundo Apellido", "Horario"
             }
         ));
-        jtCarrito.setGridColor(new java.awt.Color(255, 255, 204));
-        jScrollPane1.setViewportView(jtCarrito);
+        jScrollPane1.setViewportView(jTable1);
 
         getContentPane().add(jScrollPane1);
-        jScrollPane1.setBounds(310, 120, 690, 420);
+        jScrollPane1.setBounds(330, 322, 880, 290);
+        getContentPane().add(jTextFieldIDEmpleado);
+        jTextFieldIDEmpleado.setBounds(720, 140, 220, 30);
+
+        jLabelID.setBackground(new java.awt.Color(0, 153, 153));
+        jLabelID.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabelID.setText("ID del Empleado");
+        getContentPane().add(jLabelID);
+        jLabelID.setBounds(540, 140, 170, 30);
+
+        jLabelTitulo.setBackground(new java.awt.Color(0, 153, 153));
+        jLabelTitulo.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
+        jLabelTitulo.setText("CRUD Horarios");
+        getContentPane().add(jLabelTitulo);
+        jLabelTitulo.setBounds(340, 40, 220, 40);
 
         jpMenu.setBackground(new java.awt.Color(204, 255, 255));
 
@@ -141,7 +146,6 @@ public class PRealizarVenta extends javax.swing.JFrame {
         rbtnVenta.setBackground(new java.awt.Color(127, 248, 248));
         rbtnVenta.setFont(new java.awt.Font("Dialog", 1, 19)); // NOI18N
         rbtnVenta.setForeground(new java.awt.Color(255, 153, 51));
-        rbtnVenta.setSelected(true);
         rbtnVenta.setText("Realizar Venta");
         rbtnVenta.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -153,11 +157,6 @@ public class PRealizarVenta extends javax.swing.JFrame {
         rbtnConsProd.setFont(new java.awt.Font("Dialog", 1, 19)); // NOI18N
         rbtnConsProd.setForeground(new java.awt.Color(255, 153, 51));
         rbtnConsProd.setText("Consultar Productos");
-        rbtnConsProd.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                rbtnConsProdActionPerformed(evt);
-            }
-        });
 
         rbtnCRUDUsr.setBackground(new java.awt.Color(127, 248, 248));
         rbtnCRUDUsr.setFont(new java.awt.Font("Dialog", 1, 19)); // NOI18N
@@ -182,6 +181,7 @@ public class PRealizarVenta extends javax.swing.JFrame {
         rbtnCRUDHor.setBackground(new java.awt.Color(127, 248, 248));
         rbtnCRUDHor.setFont(new java.awt.Font("Dialog", 1, 19)); // NOI18N
         rbtnCRUDHor.setForeground(new java.awt.Color(255, 153, 51));
+        rbtnCRUDHor.setSelected(true);
         rbtnCRUDHor.setText("CRUD Horarios");
         rbtnCRUDHor.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -226,7 +226,7 @@ public class PRealizarVenta extends javax.swing.JFrame {
                             .addComponent(rbtnConsProd, javax.swing.GroupLayout.PREFERRED_SIZE, 228, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(rbtnVenta, javax.swing.GroupLayout.PREFERRED_SIZE, 228, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(rbtnCRUDHor, javax.swing.GroupLayout.PREFERRED_SIZE, 228, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(14, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jpMenuLayout.setVerticalGroup(
             jpMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -249,20 +249,16 @@ public class PRealizarVenta extends javax.swing.JFrame {
                 .addComponent(rbtnCRUDPM)
                 .addGap(18, 18, 18)
                 .addComponent(rbtnCRUDHor)
-                .addContainerGap(25, Short.MAX_VALUE))
+                .addContainerGap(68, Short.MAX_VALUE))
         );
 
         getContentPane().add(jpMenu);
-        jpMenu.setBounds(20, 40, 270, 540);
+        jpMenu.setBounds(20, 40, 270, 550);
 
         jLBackground.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         jLBackground.setIcon(new javax.swing.ImageIcon(getClass().getResource("/binarios/images/Degradado1.jpg"))); // NOI18N
         getContentPane().add(jLBackground);
-        jLBackground.setBounds(0, 0, 1240, 650);
-
-        jLabel1.setText("jLabel1");
-        getContentPane().add(jLabel1);
-        jLabel1.setBounds(50, 20, 220, 40);
+        jLBackground.setBounds(0, 0, 1250, 650);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -276,74 +272,16 @@ public class PRealizarVenta extends javax.swing.JFrame {
     }//GEN-LAST:event_rbtnCRUDHorActionPerformed
 
     private void rbtnVentaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbtnVentaActionPerformed
-
+        
     }//GEN-LAST:event_rbtnVentaActionPerformed
 
-    private void rbtnConsProdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbtnConsProdActionPerformed
-        PConsultaProductos pConsultaProductos = new PConsultaProductos();
-        //Iniciamos el primer formulario, si es Encargado
-        pConsultaProductos.setPersonal(personal);
-        pConsultaProductos.setCarrito(carrito);
-        pConsultaProductos.preCarga();
-        pConsultaProductos.setVisible(true);
-        dispose();
-    }//GEN-LAST:event_rbtnConsProdActionPerformed
+    private void jButtonSalir1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSalir1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButtonSalir1ActionPerformed
 
-    private void btnSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalirActionPerformed
-        int opcion = JOptionPane.showConfirmDialog(null, "¿Realmente desea salir de su sesión?", "Cerrando Sesión...", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
-        if (opcion == 0) {
-            JOptionPane.showMessageDialog(null, "        Cerrando sesión        \n     Ten un excelente día\n          " + personal.getNombre());
-            PLogin pLogin = new PLogin();
-            pLogin.setVisible(true);
-            dispose();
-        }
-    }//GEN-LAST:event_btnSalirActionPerformed
-
-    private void btnCompraCarritoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCompraCarritoActionPerformed
-        if (this.carrito == null) {
-            JOptionPane.showConfirmDialog(null, "No hay nada en el carrito", "Error 402", JOptionPane.DEFAULT_OPTION);
-        } else {
-            int opcion = JOptionPane.showConfirmDialog(null, "¿Deseas registrar la compra?", "Comprando el Carrito", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
-            if (opcion == 0) {
-                //Agregar la venta mandando el carrito
-                InsertList insertList = new InsertList();
-                try {
-                    insertList.registraVentaCarrito(this.carrito);
-                    JOptionPane.showMessageDialog(null, "¡Compra realizada!");
-                } catch (ClassNotFoundException | SQLException | DAOInitializationException ex) {
-                    Logger.getLogger(PRealizarVenta.class.getName()).log(Level.SEVERE, null, ex);
-                    JOptionPane.showMessageDialog(null, "¡Error al realizar la compra!");
-                }
-                
-            }
-        }
-    }//GEN-LAST:event_btnCompraCarritoActionPerformed
-
-    private void btnIrCarrito1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIrCarrito1ActionPerformed
-        PAgregarAlCarrito pAgregarAlCarrito = new PAgregarAlCarrito();
-        //Iniciamos el primer formulario, si es Encargado
-        pAgregarAlCarrito.setPersonal(personal);
-        pAgregarAlCarrito.setCarrito(carrito);
-        try {
-            pAgregarAlCarrito.preCarga();
-        } catch (ClassNotFoundException | SQLException | DAOInitializationException ex) {
-            Logger.getLogger(PRealizarVenta.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        pAgregarAlCarrito.setVisible(true);
-        dispose();
-    }//GEN-LAST:event_btnIrCarrito1ActionPerformed
-
-    private void btnBorrar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBorrar1ActionPerformed
-        if (this.carrito == null) {
-            JOptionPane.showConfirmDialog(null, "No hay nada en el carrito", "Error 401", JOptionPane.DEFAULT_OPTION);
-        } else {
-            int opcion = JOptionPane.showConfirmDialog(null, "¿Realmente deseas eliminar la selección?", "Borrar Carrito", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
-            if (opcion == 0) {
-                JOptionPane.showMessageDialog(null, "     Selección borrada exitosamente    ");
-                this.carrito=null;
-            }
-        }
-    }//GEN-LAST:event_btnBorrar1ActionPerformed
+    private void jButtonLimpiarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonLimpiarActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButtonLimpiarActionPerformed
 
     /*public static void main(String args[]) {
         java.awt.EventQueue.invokeLater(new Runnable() {
@@ -355,16 +293,20 @@ public class PRealizarVenta extends javax.swing.JFrame {
     }*/
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnBorrar1;
-    private javax.swing.JButton btnCompraCarrito;
-    private javax.swing.JButton btnIrCarrito1;
-    private javax.swing.JButton btnSalir;
+    private javax.swing.JButton jButtonAplicar;
+    private javax.swing.JButton jButtonLimpiar;
+    private javax.swing.JButton jButtonSalir1;
+    private javax.swing.JComboBox<String> jComboBoxHorario;
     private javax.swing.JLabel jLBackground;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabelHorario;
+    private javax.swing.JLabel jLabelID;
+    private javax.swing.JLabel jLabelTitulo;
+    private javax.swing.JRadioButton jRadioButton1;
+    private javax.swing.JRadioButton jRadioButton2;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTable jTable1;
+    private javax.swing.JTextField jTextFieldIDEmpleado;
     private javax.swing.JPanel jpMenu;
-    private javax.swing.JTable jtCarrito;
     private javax.swing.JLabel lblMss1;
     private javax.swing.JLabel lblMss2;
     private javax.swing.JLabel lblMss3;
@@ -394,6 +336,7 @@ public class PRealizarVenta extends javax.swing.JFrame {
     }
 
     public void preCarga() {//Datos previos a mostrar el JFRAME pero posteriores al constructor
+        JOptionPane.showMessageDialog(null, this.personal.getNombre());
         int spndt = 0;
         String txt = "            ¡Bienvenid";
         if (this.personal.getCatSexo().getIdSexo() != 1) {
@@ -425,50 +368,5 @@ public class PRealizarVenta extends javax.swing.JFrame {
             rbtnCRUDUsr.setVisible(false);
             jpMenu.setSize(270, 305);
         }
-        if (this.getCarrito() != null) {
-            fillCarrito();
-        }
-    }
-
-    //Fill table
-    public void fillCarrito() {
-        DefaultTableModel modelo = new DefaultTableModel();
-
-        modelo.addColumn("Id del artículo");
-        modelo.addColumn("Producto");
-        modelo.addColumn("Descripción");
-        modelo.addColumn("Precio $");
-        modelo.addColumn("Color");
-        modelo.addColumn("Categoría");
-        modelo.addColumn("Marca");
-
-        String registro[] = new String[7];
-        for (int i = 0; i < getCarrito().getlArticulo().size(); i++) {
-            Articulo ar = getCarrito().getlArticulo().get(i);
-
-            registro[0] = String.valueOf(ar.getCatProducto().getIdCProducto());
-            registro[1] = String.valueOf(ar.getCatProducto().getProducto());
-            registro[2] = String.valueOf(ar.getCatProducto().getDescripcion());
-            registro[3] = String.valueOf("$" + Math.round(ar.getCatProducto().getPrecio() * 100) / 100);
-            registro[4] = String.valueOf(ar.getCatProducto().getColor());
-            registro[5] = String.valueOf(ar.getCatProducto().getCatCategoria().getCategoria());
-            registro[6] = String.valueOf(ar.getCatProducto().getCatMarca().getMarca());
-            modelo.addRow(registro);
-        }
-        jtCarrito.setModel(modelo);
-    }
-
-    /**
-     * @return the carrito
-     */
-    public Carrito getCarrito() {
-        return carrito;
-    }
-
-    /**
-     * @param carrito the carrito to set
-     */
-    public void setCarrito(Carrito carrito) {
-        this.carrito = carrito;
     }
 }

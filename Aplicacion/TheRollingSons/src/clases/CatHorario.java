@@ -1,10 +1,13 @@
 package clases;
+
+import java.time.LocalTime;
+
 public class CatHorario {
-    private int     idHorario;
-    private String  horaInicio;
-    private String  horaFin;
-    private int     idDiaInicio;
-    private int     idDiaFin;
+    private int idHorario;
+    private LocalTime  horaInicio;
+    private LocalTime  horaFin;
+    private CatDia catDiaIni;
+    private CatDia catDiaFin;
     
     public int getIdHorario() {
         return idHorario;
@@ -14,35 +17,35 @@ public class CatHorario {
         this.idHorario = idHorario;
     }
 
-    public String getHoraInicio() {
+    public LocalTime getHoraInicio() {
         return horaInicio;
     }
 
-    public void setHoraInicio(String horaInicio) {
+    public void setHoraInicio(LocalTime horaInicio) {
         this.horaInicio = horaInicio;
     }
 
-    public String getHoraFin() {
+    public LocalTime getHoraFin() {
         return horaFin;
     }
 
-    public void setHoraFin(String horaFin) {
+    public void setHoraFin(LocalTime horaFin) {
         this.horaFin = horaFin;
     }
 
-    public int getIdDiaInicio() {
-        return idDiaInicio;
+    public CatDia getCatDiaIni() {
+        return catDiaIni;
     }
 
-    public void setIdDiaInicio(int idDiaInicio) {
-        this.idDiaInicio = idDiaInicio;
+    public void setCatDiaIni(CatDia catDiaIni) {
+        this.catDiaIni = catDiaIni;
     }
 
-    public int getIdDiaFin() {
-        return idDiaFin;
+    public CatDia getCatDiaFin() {
+        return catDiaFin;
     }
 
-    public void setIdDiaFin(int idDiaFin) {
-        this.idDiaFin = idDiaFin;
+    public void setCatDiaFin(CatDia catDiaFin) {
+        this.catDiaFin = catDiaFin;
     }
 }
