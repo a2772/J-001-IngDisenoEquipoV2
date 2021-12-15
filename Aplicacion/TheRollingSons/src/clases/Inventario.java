@@ -1,6 +1,12 @@
 package clases;
 public class Inventario {
 
+    private int     idInventario;
+    private int     cantidad;
+    private String  descripcion;
+    private CatProducto catProducto;
+    private CatSeccion catSeccion;
+    
     public int getIdInventario() {
         return idInventario;
     }
@@ -25,25 +31,32 @@ public class Inventario {
         this.descripcion = descripcion;
     }
 
-    public int getIdCProducto() {
-        return idCProducto;
+    /**
+     * @return the catProducto
+     */
+    public CatProducto getCatProducto() {
+        return catProducto;
     }
 
-    public void setIdCProducto(int idCProducto) {
-        this.idCProducto = idCProducto;
+    /**
+     * @param catProducto the catProducto to set
+     */
+    public void setCatProducto(CatProducto catProducto) {
+        this.catProducto = catProducto;
     }
 
-    public int getIdSeccion() {
-        return idSeccion;
+    /**
+     * @return the catSeccion
+     */
+    public CatSeccion getCatSeccion() {
+        return catSeccion;
     }
 
-    public void setIdSeccion(int idSeccion) {
-        this.idSeccion = idSeccion;
+    /**
+     * @param catSeccion the catSeccion to set
+     */
+    public void setCatSeccion(CatSeccion catSeccion) {
+        this.catSeccion = catSeccion;
     }
-    private int     idInventario;
-    private int     cantidad;
-    private String  descripcion;
-    private int     idCProducto;
-    private int     idSeccion;
     
 }

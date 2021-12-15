@@ -8,7 +8,6 @@ import clases.util.Carrito;
 import dao.DAOInitializationException;
 import java.sql.SQLException;
 import java.util.List;
-import javax.swing.JOptionPane;
 
 public class PAgregarAlCarrito extends javax.swing.JFrame {
 
@@ -286,15 +285,16 @@ public class PAgregarAlCarrito extends javax.swing.JFrame {
     }
 
     public void preCarga() throws ClassNotFoundException, SQLException, DAOInitializationException {//Datos previos a mostrar el JFRAME pero posteriores al constructor
-        //llenamos los combo box
+        //Llenamos la tabla de produtos basándonos en inventario
+        
         if(this.carrito!=null){//Si el carrito no es nulo, llenamos la tabla de
-            
+            reloadCarrito();
         }
         //Llenamos los filtros desde la BD
         fillCategoria();
         fillMarca();
     }
-    public void reloadCarrito(){//Recarga el carrito cada que se haga un cambio
+    public void reloadCarrito(){//Recarga el carrito cada que se haga un cambio, inventarios se quedan iguales
         
     }
     private void fillCategoria() throws ClassNotFoundException, SQLException, SQLException, DAOInitializationException {
