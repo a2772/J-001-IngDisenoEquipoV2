@@ -1,6 +1,7 @@
 package business;
 
 import bd.r.ConsultaCats;
+import bd.r.ConsultaGeneral;
 import clases.CatCategoria;
 import clases.CatDia;
 import clases.CatHorario;
@@ -9,6 +10,7 @@ import clases.CatPerfil;
 import clases.CatProducto;
 import clases.CatSeccion;
 import clases.CatSexo;
+import clases.Inventario;
 import dao.DAOInitializationException;
 import java.sql.SQLException;
 import java.util.List;
@@ -61,5 +63,14 @@ public class GetListas {
         ConsultaCats consultaCats = new ConsultaCats();
         list = consultaCats.getLCatSeccion();
         return list;
-    }    
+    }
+    
+    //Obteniendo listas distintas a los CAT
+    
+    public List<Inventario> fillLInventario() throws ClassNotFoundException, ClassNotFoundException, SQLException, DAOInitializationException{
+        List<Inventario> list;
+        ConsultaGeneral consultaGeneral = new ConsultaGeneral();
+        list = consultaGeneral.getLInventario();
+        return list;
+    }
 }

@@ -20,7 +20,7 @@ public class InsertaCarrito extends DataAccessObject {
         Connection con = DriverManager.getConnection(URL, USER, PASSWORD);
         PreparedStatement pStmt = null;
         String sql;
-        for (Articulo art : carrito.getlArticulo()) {
+        for (Articulo art : carrito.getlArticulo()) {//Por cada artícuol del carrito
             try {
                 sql = "insert into productoVenta(cantidad, precio, idVenta1, idCProducto1) values(?,?,?,?)";
 
@@ -39,5 +39,24 @@ public class InsertaCarrito extends DataAccessObject {
                 }
             }
         }
+        //Ahora procedemos a insertar la parte de Venta
+        pStmt = null;
+            try {
+                sql = "insert into Venta(iva, total, fecha, idPersonal1) values(?,?,?,?)";
+
+                pStmt = con.prepareStatement(sql);
+                pStmt.setFloat(1, carrito.getVenta().getIva());
+                pStmt.setFloat(2, carrito.getVenta().getTotal());
+                pStmt.setObject(3, carrito.getVenta().getFecha());
+                pStmt.setInt(4, carrito.getVenta().getPersonal().getIdPersonal());
+
+                pStmt.executeUpdate();
+            } catch (SQLException ex) {
+                
+            } finally {
+                if (pStmt != null) {
+                    pStmt.close();
+                }
+            }
     }
 }

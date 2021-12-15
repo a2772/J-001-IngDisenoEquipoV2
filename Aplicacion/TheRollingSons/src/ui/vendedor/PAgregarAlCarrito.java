@@ -3,11 +3,15 @@ package ui.vendedor;
 import business.GetListas;
 import clases.CatCategoria;
 import clases.CatMarca;
+import clases.Inventario;
 import clases.Personal;
+import clases.util.Articulo;
 import clases.util.Carrito;
 import dao.DAOInitializationException;
 import java.sql.SQLException;
 import java.util.List;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 
 public class PAgregarAlCarrito extends javax.swing.JFrame {
 
@@ -286,7 +290,7 @@ public class PAgregarAlCarrito extends javax.swing.JFrame {
 
     public void preCarga() throws ClassNotFoundException, SQLException, DAOInitializationException {//Datos previos a mostrar el JFRAME pero posteriores al constructor
         //Llenamos la tabla de produtos basándonos en inventario
-        
+        fillTablaProductos();
         if(this.carrito!=null){//Si el carrito no es nulo, llenamos la tabla de
             reloadCarrito();
         }
@@ -302,7 +306,7 @@ public class PAgregarAlCarrito extends javax.swing.JFrame {
         GetListas getListas = new GetListas();
         lista = getListas.fillLCatCategoria();
         cboCat.removeAllItems();
-        cboCat.addItem("No aplicar" + lista.get(0).getCategoria() + lista.get(1).getCategoria());
+        cboCat.addItem("No aplicar");
         for (int i = 0; i < lista.size(); i++) {
             cboCat.addItem(lista.get(i).getCategoria());
         }
@@ -316,6 +320,44 @@ public class PAgregarAlCarrito extends javax.swing.JFrame {
         for (int i = 0; i < lista.size(); i++) {
             cboMar.addItem(lista.get(i).getMarca());
         }
+    }
+    private  void fillTablaProductos() throws ClassNotFoundException, SQLException, DAOInitializationException{
+        GetListas getListas = new GetListas();
+        List<Inventario> lista;
+        lista = getListas.fillLInventario();
+        DefaultTableModel modelo = new DefaultTableModel();
+
+        modelo.addColumn("Id del registro");
+        modelo.addColumn("ID de Sección");
+        modelo.addColumn("Sección");
+        modelo.addColumn("Id del artículo");
+        modelo.addColumn("Producto");
+        modelo.addColumn("Descripción");
+        modelo.addColumn("Precio $");
+        modelo.addColumn("Color");
+        modelo.addColumn("Categoría");
+        modelo.addColumn("Marca");
+        modelo.addColumn("Existencias");
+        JOptionPane.showMessageDialog(null, lista.size());
+        
+        String registro[] = new String[11];
+        for (int i = 0; i < lista.size(); i++) {
+            Inventario in = lista.get(i);
+
+            registro[0] = String.valueOf(in.getIdInventario());
+            registro[1] = String.valueOf(in.getCatSeccion().getIdSeccion());
+            registro[2] = String.valueOf(in.getCatSeccion().getSeccion());
+            registro[3] = String.valueOf(in.getCatProducto().getIdCProducto());
+            registro[4] = String.valueOf(in.getCatProducto().getProducto());
+            registro[5] = String.valueOf(in.getCatProducto().getDescripcion());
+            registro[6] = String.valueOf("$" + Math.round(in.getCatProducto().getPrecio() * 100) / 100);
+            registro[7] = String.valueOf(in.getCatProducto().getColor());
+            registro[8] = String.valueOf(in.getCatProducto().getCatCategoria().getCategoria());
+            registro[9] = String.valueOf(in.getCatProducto().getCatMarca().getMarca());
+            registro[10] = String.valueOf(in.getCantidad());
+            modelo.addRow(registro);
+        }
+        jtCarrito.setModel(modelo);
     }
 
     /**

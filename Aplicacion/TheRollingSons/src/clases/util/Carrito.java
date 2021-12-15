@@ -1,10 +1,12 @@
 package clases.util;
 
+import clases.Venta;
 import java.util.ArrayList;
 import java.util.List;
 
 public class Carrito {
     private List<Articulo> lArticulo;
+    private Venta venta;//Se usa una vez se concreta la venta
     public Carrito(){
         lArticulo = new ArrayList<>();
     }
@@ -18,6 +20,14 @@ public class Carrito {
     }
     
     public void pushArticulo(Articulo articulo){
-        this.lArticulo.add(articulo);
+        this.getlArticulo().add(articulo);
+    }
+    
+    public Venta getVenta() {
+        return venta;
+    }
+    
+    public void setVenta(Venta venta) {
+        this.venta = venta;
     }
 }

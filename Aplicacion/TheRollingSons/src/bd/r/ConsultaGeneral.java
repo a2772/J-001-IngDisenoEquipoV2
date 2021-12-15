@@ -45,8 +45,9 @@ public class ConsultaGeneral extends DataAccessObject {
                 //Tabla trabajador
                 inventario.setIdInventario(rs.getInt("idInventario"));
                 inventario.setCantidad(rs.getInt("cantidad"));
-                inventario.setDescripcion(rs.getString("precio"));
+                inventario.setDescripcion(rs.getString("descripcion"));
                 //Cat Producto
+                
                 catProducto=new CatProducto();
                 catProducto.setIdCProducto(rs.getInt("idCProducto"));
                 catProducto.setColor(rs.getString("color"));
@@ -66,7 +67,7 @@ public class ConsultaGeneral extends DataAccessObject {
                 catProducto.setCatMarca(cm);
                 //CatSeccion
                 catSeccion = new CatSeccion();
-                catSeccion.setIdSeccion(rs.getInt("isSeccion"));
+                catSeccion.setIdSeccion(rs.getInt("idSeccion"));
                 catSeccion.setSeccion(rs.getString("seccion"));
                 
                 inventario.setCatProducto(catProducto);
