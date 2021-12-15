@@ -2,10 +2,13 @@ package ui.vendedor;
 
 import business.InsertList;
 import clases.Personal;
+import clases.ProductoVenta;
+import clases.Venta;
 import clases.util.Articulo;
 import clases.util.Carrito;
 import dao.DAOInitializationException;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
@@ -31,7 +34,7 @@ public class PRealizarVenta extends javax.swing.JFrame {
         btnIrCarrito1 = new javax.swing.JButton();
         btnBorrar1 = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
-        jScrollPane1 = new javax.swing.JScrollPane();
+        jspCarrito = new javax.swing.JScrollPane();
         jtCarrito = new javax.swing.JTable();
         jpMenu = new javax.swing.JPanel();
         lblMss1 = new javax.swing.JLabel();
@@ -106,28 +109,21 @@ public class PRealizarVenta extends javax.swing.JFrame {
         jLabel2.setText("       Carrito Actual     ");
         jLabel2.setOpaque(true);
         getContentPane().add(jLabel2);
-        jLabel2.setBounds(350, 40, 600, 60);
+        jLabel2.setBounds(390, 40, 600, 60);
 
-        jScrollPane1.setBackground(new java.awt.Color(204, 255, 204));
-
-        jtCarrito.setAutoCreateColumnsFromModel(false);
-        jtCarrito.setBackground(new java.awt.Color(255, 204, 153));
+        jtCarrito.setBackground(new java.awt.Color(102, 255, 204));
         jtCarrito.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {},
-                {},
-                {},
-                {}
+
             },
             new String [] {
 
             }
         ));
-        jtCarrito.setGridColor(new java.awt.Color(255, 255, 204));
-        jScrollPane1.setViewportView(jtCarrito);
+        jspCarrito.setViewportView(jtCarrito);
 
-        getContentPane().add(jScrollPane1);
-        jScrollPane1.setBounds(310, 120, 690, 420);
+        getContentPane().add(jspCarrito);
+        jspCarrito.setBounds(340, 120, 700, 402);
 
         jpMenu.setBackground(new java.awt.Color(204, 255, 255));
 
@@ -305,6 +301,32 @@ public class PRealizarVenta extends javax.swing.JFrame {
         } else {
             int opcion = JOptionPane.showConfirmDialog(null, "¿Deseas registrar la compra?", "Comprando el Carrito", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
             if (opcion == 0) {
+                //Añadiendo datos de la venta a carrito Venta
+                Venta venta = new Venta();
+                ProductoVenta pv;
+                venta.setIdVenta(0);//Como no la vamos a insertar la dejamos en 0, pero al insertarla la recuperamos para mostrar el número de tiquet
+                //obtenemos el total
+                float total=0;
+                for (Articulo ar : this.carrito.getlArticulo()) {
+                    total+=ar.getCatProducto().getPrecio()*ar.getInventario().getCantidad();
+                }
+                venta.setTotal(total);
+                venta.setIva((float) ((total/1.16)*0.16));
+                venta.setFecha(LocalDate.now());
+                venta.setPersonal(this.personal);
+                
+                this.carrito.setVenta(venta); //Añadiendo los datos que le faltan al carrito: ProductoVenta
+                for (Articulo ar : this.carrito.getlArticulo()) {
+                    pv = new ProductoVenta();
+                    pv.setIdProductoVenta(0);
+                    pv.setPrecio(ar.getCatProducto().getPrecio()*ar.getCantidad());
+                    pv.setCantidad(ar.getCantidad());
+                    pv.setCatProducto(ar.getCatProducto());
+                    pv.setVenta(venta);
+                    
+                    ar.setProductoVenta(pv);
+                }
+
                 //Agregar la venta mandando el carrito
                 InsertList insertList = new InsertList();
                 try {
@@ -314,7 +336,7 @@ public class PRealizarVenta extends javax.swing.JFrame {
                     Logger.getLogger(PRealizarVenta.class.getName()).log(Level.SEVERE, null, ex);
                     JOptionPane.showMessageDialog(null, "¡Error al realizar la compra!");
                 }
-                
+
             }
         }
     }//GEN-LAST:event_btnCompraCarritoActionPerformed
@@ -340,7 +362,8 @@ public class PRealizarVenta extends javax.swing.JFrame {
             int opcion = JOptionPane.showConfirmDialog(null, "¿Realmente deseas eliminar la selección?", "Borrar Carrito", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
             if (opcion == 0) {
                 JOptionPane.showMessageDialog(null, "     Selección borrada exitosamente    ");
-                this.carrito=null;
+                this.carrito = null;
+                jtCarrito.setModel(new DefaultTableModel());
             }
         }
     }//GEN-LAST:event_btnBorrar1ActionPerformed
@@ -362,8 +385,8 @@ public class PRealizarVenta extends javax.swing.JFrame {
     private javax.swing.JLabel jLBackground;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JPanel jpMenu;
+    private javax.swing.JScrollPane jspCarrito;
     private javax.swing.JTable jtCarrito;
     private javax.swing.JLabel lblMss1;
     private javax.swing.JLabel lblMss2;
@@ -425,34 +448,32 @@ public class PRealizarVenta extends javax.swing.JFrame {
             rbtnCRUDUsr.setVisible(false);
             jpMenu.setSize(270, 305);
         }
-        if (this.getCarrito() != null) {
-            fillCarrito();
+        if (this.carrito != null) {
+            JOptionPane.showMessageDialog(null, "EA");
+            reloadCarrito();
         }
     }
 
     //Fill table
-    public void fillCarrito() {
+    public void reloadCarrito() {//Recarga el carrito cada que se haga un cambio, inventarios se quedan iguales
+        //Recargamos con la información actualizada del objeto carrito
         DefaultTableModel modelo = new DefaultTableModel();
 
-        modelo.addColumn("Id del artículo");
+        modelo.addColumn("Id del registro");
+        modelo.addColumn("Id del producto");
         modelo.addColumn("Producto");
-        modelo.addColumn("Descripción");
         modelo.addColumn("Precio $");
-        modelo.addColumn("Color");
-        modelo.addColumn("Categoría");
-        modelo.addColumn("Marca");
+        modelo.addColumn("Cantidad");
 
-        String registro[] = new String[7];
-        for (int i = 0; i < getCarrito().getlArticulo().size(); i++) {
-            Articulo ar = getCarrito().getlArticulo().get(i);
+        String registro[] = new String[5];
+        for (int i = 0; i < this.carrito.getlArticulo().size(); i++) {
+            Articulo ar = this.carrito.getlArticulo().get(i);
 
-            registro[0] = String.valueOf(ar.getCatProducto().getIdCProducto());
-            registro[1] = String.valueOf(ar.getCatProducto().getProducto());
-            registro[2] = String.valueOf(ar.getCatProducto().getDescripcion());
-            registro[3] = String.valueOf("$" + Math.round(ar.getCatProducto().getPrecio() * 100) / 100);
-            registro[4] = String.valueOf(ar.getCatProducto().getColor());
-            registro[5] = String.valueOf(ar.getCatProducto().getCatCategoria().getCategoria());
-            registro[6] = String.valueOf(ar.getCatProducto().getCatMarca().getMarca());
+            registro[0] = String.valueOf(ar.getInventario().getIdInventario());
+            registro[1] = String.valueOf(ar.getCatProducto().getIdCProducto());
+            registro[2] = String.valueOf(ar.getCatProducto().getProducto());//Ruta corta a CatProducto
+            registro[3] = String.valueOf("$" + Math.round(ar.getInventario().getCatProducto().getPrecio() * 100) / 100);//Ruta larga a CatProducto
+            registro[4] = String.valueOf(ar.getCantidad());
             modelo.addRow(registro);
         }
         jtCarrito.setModel(modelo);

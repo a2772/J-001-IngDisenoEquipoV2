@@ -39,4 +39,23 @@ public class ConsultaBuscandoId extends DataAccessObject {
         }
         return p.getIdPersonal();
     }
+    public int getIdMaxVenta() throws SQLException, DAOInitializationException {
+        ResultSet rs = null;
+        int id=0;
+        PreparedStatement stmt = null;
+        String sql = "SELECT MAX(idVenta) AS biggest from venta";
+        try {
+            stmt = prepareStatement(sql);
+            rs = stmt.executeQuery();
+            while (rs.next()) {
+                id = rs.getInt("biggest");
+            }
+        } catch (DAOInitializationException | SQLException ex) {
+            id=0;
+        } finally {
+            closeResultSet(rs);
+            closeStatement(stmt);
+        }
+        return id;
+    }
 }

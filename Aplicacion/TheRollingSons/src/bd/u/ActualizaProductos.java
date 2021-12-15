@@ -1,16 +1,13 @@
 package bd.u;
 
-import clases.*;
 import clases.util.Articulo;
 import clases.util.Carrito;
-import clases.util.Usuario;
 import dao.DAOInitializationException;
 import dao.DataAccessObject;
 import java.sql.Connection;
 import java.sql.DriverManager;
 
 import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class ActualizaProductos extends DataAccessObject {
@@ -28,7 +25,7 @@ public class ActualizaProductos extends DataAccessObject {
                 sql = "update inventario set cantidad=? where idInventario=?";
 
                 pStmt = con.prepareStatement(sql);
-                pStmt.setInt(1, art.getInventario().getIdInventario()-art.getCantidad());//Cantidad en existencia menos la vendida
+                pStmt.setInt(1, art.getInventario().getCantidad()-art.getCantidad());//Cantidad en existencia menos la vendida
                 pStmt.setInt(2, art.getInventario().getIdInventario());
 
                 pStmt.executeUpdate();

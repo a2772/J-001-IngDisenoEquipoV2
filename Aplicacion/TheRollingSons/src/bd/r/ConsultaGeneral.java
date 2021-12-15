@@ -4,7 +4,6 @@ import clases.CatCategoria;
 import clases.CatMarca;
 import clases.CatProducto;
 import clases.CatSeccion;
-import clases.CatSexo;
 import clases.Inventario;
 import dao.DAOInitializationException;
 import dao.DataAccessObject;

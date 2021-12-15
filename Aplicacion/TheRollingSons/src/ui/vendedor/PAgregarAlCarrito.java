@@ -8,8 +8,11 @@ import clases.Personal;
 import clases.util.Articulo;
 import clases.util.Carrito;
 import dao.DAOInitializationException;
+import java.awt.event.KeyEvent;
 import java.sql.SQLException;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
@@ -31,24 +34,34 @@ public class PAgregarAlCarrito extends javax.swing.JFrame {
         lblInstrucciones = new javax.swing.JLabel();
         lblProductos2 = new javax.swing.JLabel();
         lblSeleccion = new javax.swing.JLabel();
+        lblProductos7 = new javax.swing.JLabel();
+        lblProductos8 = new javax.swing.JLabel();
+        lblProductos9 = new javax.swing.JLabel();
+        lblProductos10 = new javax.swing.JLabel();
+        lblProductos11 = new javax.swing.JLabel();
+        btnQuitar = new javax.swing.JButton();
+        btnAdd = new javax.swing.JButton();
+        txtDisponibles = new javax.swing.JTextField();
+        txtIdRegistro1 = new javax.swing.JTextField();
+        txtCantAnadir = new javax.swing.JTextField();
+        cboElimina = new javax.swing.JComboBox<>();
+        lblInstrucciones1 = new javax.swing.JLabel();
+        jspDescription = new javax.swing.JScrollPane();
+        txtDescripcion = new javax.swing.JTextArea();
         jspCarrito = new javax.swing.JScrollPane();
         jtCarrito = new javax.swing.JTable();
         jspProductos = new javax.swing.JScrollPane();
         jtProductos = new javax.swing.JTable();
-        btnGuardar = new javax.swing.JButton();
         jpMenu = new javax.swing.JPanel();
         lblProductos = new javax.swing.JLabel();
         cboCat = new javax.swing.JComboBox<>();
         lblProductos1 = new javax.swing.JLabel();
         lblProductos3 = new javax.swing.JLabel();
         cboMar = new javax.swing.JComboBox<>();
-        lblProductos4 = new javax.swing.JLabel();
-        txtPrecMin = new javax.swing.JTextField();
-        txtPrecMax = new javax.swing.JTextField();
-        lblProductos5 = new javax.swing.JLabel();
-        lblProductos6 = new javax.swing.JLabel();
+        btnGuardar = new javax.swing.JButton();
         jLBackground = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
+        txtDisponibles1 = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setLocation(new java.awt.Point(500, 300));
@@ -63,22 +76,22 @@ public class PAgregarAlCarrito extends javax.swing.JFrame {
         lblCarrito.setText(" Mi Carrito");
         lblCarrito.setOpaque(true);
         getContentPane().add(lblCarrito);
-        lblCarrito.setBounds(620, 30, 120, 40);
+        lblCarrito.setBounds(550, 30, 120, 40);
 
         lblInstrucciones.setBackground(new java.awt.Color(0, 102, 204));
         lblInstrucciones.setFont(new java.awt.Font("Dialog", 0, 24)); // NOI18N
         lblInstrucciones.setForeground(new java.awt.Color(255, 255, 255));
-        lblInstrucciones.setText(" Seleccionado");
+        lblInstrucciones.setText("Elimina Producto");
         lblInstrucciones.setOpaque(true);
         getContentPane().add(lblInstrucciones);
-        lblInstrucciones.setBounds(1050, 30, 160, 40);
+        lblInstrucciones.setBounds(70, 30, 200, 40);
 
         lblProductos2.setBackground(new java.awt.Color(0, 204, 204));
         lblProductos2.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
-        lblProductos2.setText("Toca un producto para añadirlo al carrito");
+        lblProductos2.setText("Añadir al carrito:");
         lblProductos2.setOpaque(true);
         getContentPane().add(lblProductos2);
-        lblProductos2.setBounds(680, 330, 290, 19);
+        lblProductos2.setBounds(860, 270, 110, 19);
 
         lblSeleccion.setBackground(new java.awt.Color(0, 102, 204));
         lblSeleccion.setFont(new java.awt.Font("Dialog", 0, 24)); // NOI18N
@@ -87,6 +100,106 @@ public class PAgregarAlCarrito extends javax.swing.JFrame {
         lblSeleccion.setOpaque(true);
         getContentPane().add(lblSeleccion);
         lblSeleccion.setBounds(520, 320, 120, 40);
+
+        lblProductos7.setBackground(new java.awt.Color(0, 204, 204));
+        lblProductos7.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
+        lblProductos7.setText("Toca un producto para visualizar");
+        lblProductos7.setOpaque(true);
+        getContentPane().add(lblProductos7);
+        lblProductos7.setBounds(680, 330, 230, 19);
+
+        lblProductos8.setBackground(new java.awt.Color(0, 204, 204));
+        lblProductos8.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
+        lblProductos8.setText("Id del Registro:");
+        lblProductos8.setOpaque(true);
+        getContentPane().add(lblProductos8);
+        lblProductos8.setBounds(20, 90, 110, 19);
+
+        lblProductos9.setBackground(new java.awt.Color(0, 204, 204));
+        lblProductos9.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
+        lblProductos9.setText("Disponibles:");
+        lblProductos9.setOpaque(true);
+        getContentPane().add(lblProductos9);
+        lblProductos9.setBounds(860, 130, 110, 19);
+
+        lblProductos10.setBackground(new java.awt.Color(0, 204, 204));
+        lblProductos10.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
+        lblProductos10.setText("Descripción:");
+        lblProductos10.setOpaque(true);
+        getContentPane().add(lblProductos10);
+        lblProductos10.setBounds(860, 170, 110, 19);
+
+        lblProductos11.setBackground(new java.awt.Color(0, 204, 204));
+        lblProductos11.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
+        lblProductos11.setText("Id del Registro:");
+        lblProductos11.setOpaque(true);
+        getContentPane().add(lblProductos11);
+        lblProductos11.setBounds(860, 90, 110, 19);
+
+        btnQuitar.setBackground(new java.awt.Color(204, 0, 0));
+        btnQuitar.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        btnQuitar.setForeground(new java.awt.Color(255, 255, 255));
+        btnQuitar.setText("Quitar");
+        btnQuitar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnQuitarActionPerformed(evt);
+            }
+        });
+        getContentPane().add(btnQuitar);
+        btnQuitar.setBounds(90, 170, 120, 40);
+
+        btnAdd.setBackground(new java.awt.Color(0, 204, 0));
+        btnAdd.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        btnAdd.setText("Añadir");
+        btnAdd.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAddActionPerformed(evt);
+            }
+        });
+        getContentPane().add(btnAdd);
+        btnAdd.setBounds(1040, 320, 120, 40);
+
+        txtDisponibles.setBackground(new java.awt.Color(255, 204, 102));
+        getContentPane().add(txtDisponibles);
+        txtDisponibles.setBounds(1000, 120, 120, 30);
+
+        txtIdRegistro1.setBackground(new java.awt.Color(255, 204, 102));
+        txtIdRegistro1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtIdRegistro1ActionPerformed(evt);
+            }
+        });
+        getContentPane().add(txtIdRegistro1);
+        txtIdRegistro1.setBounds(1000, 80, 120, 30);
+
+        txtCantAnadir.setBackground(new java.awt.Color(255, 204, 102));
+        txtCantAnadir.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtCantAnadirKeyTyped(evt);
+            }
+        });
+        getContentPane().add(txtCantAnadir);
+        txtCantAnadir.setBounds(1000, 263, 120, 30);
+
+        cboElimina.setBackground(new java.awt.Color(255, 204, 153));
+        cboElimina.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        getContentPane().add(cboElimina);
+        cboElimina.setBounds(160, 90, 150, 22);
+
+        lblInstrucciones1.setBackground(new java.awt.Color(0, 102, 204));
+        lblInstrucciones1.setFont(new java.awt.Font("Dialog", 0, 24)); // NOI18N
+        lblInstrucciones1.setForeground(new java.awt.Color(255, 255, 255));
+        lblInstrucciones1.setText("Añade producto");
+        lblInstrucciones1.setOpaque(true);
+        getContentPane().add(lblInstrucciones1);
+        lblInstrucciones1.setBounds(960, 20, 180, 40);
+
+        txtDescripcion.setColumns(20);
+        txtDescripcion.setRows(5);
+        jspDescription.setViewportView(txtDescripcion);
+
+        getContentPane().add(jspDescription);
+        jspDescription.setBounds(990, 170, 210, 80);
 
         jtCarrito.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -102,8 +215,10 @@ public class PAgregarAlCarrito extends javax.swing.JFrame {
         jspCarrito.setViewportView(jtCarrito);
 
         getContentPane().add(jspCarrito);
-        jspCarrito.setBounds(370, 80, 600, 220);
+        jspCarrito.setBounds(370, 80, 470, 220);
 
+        jtProductos.setBackground(new java.awt.Color(153, 255, 204));
+        jtProductos.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
         jtProductos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {},
@@ -115,19 +230,15 @@ public class PAgregarAlCarrito extends javax.swing.JFrame {
 
             }
         ));
+        jtProductos.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jtProductosMouseClicked(evt);
+            }
+        });
         jspProductos.setViewportView(jtProductos);
 
         getContentPane().add(jspProductos);
-        jspProductos.setBounds(360, 370, 760, 260);
-
-        btnGuardar.setText("Guardar");
-        btnGuardar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnGuardarActionPerformed(evt);
-            }
-        });
-        getContentPane().add(btnGuardar);
-        btnGuardar.setBounds(1140, 580, 110, 60);
+        jspProductos.setBounds(360, 370, 830, 230);
 
         jpMenu.setBackground(new java.awt.Color(51, 102, 255));
 
@@ -136,6 +247,7 @@ public class PAgregarAlCarrito extends javax.swing.JFrame {
         lblProductos.setText("  Filtros de productos");
         lblProductos.setOpaque(true);
 
+        cboCat.setBackground(new java.awt.Color(102, 153, 255));
         cboCat.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
         cboCat.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
@@ -149,61 +261,40 @@ public class PAgregarAlCarrito extends javax.swing.JFrame {
         lblProductos3.setText("Marca");
         lblProductos3.setOpaque(true);
 
+        cboMar.setBackground(new java.awt.Color(102, 153, 255));
         cboMar.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
         cboMar.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
-        lblProductos4.setBackground(new java.awt.Color(0, 204, 204));
-        lblProductos4.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
-        lblProductos4.setText("Precio");
-        lblProductos4.setOpaque(true);
-
-        txtPrecMin.setText("jTextField1");
-
-        txtPrecMax.setText("jTextField2");
-
-        lblProductos5.setBackground(new java.awt.Color(51, 255, 153));
-        lblProductos5.setText("Mínimo");
-        lblProductos5.setOpaque(true);
-
-        lblProductos6.setBackground(new java.awt.Color(51, 255, 153));
-        lblProductos6.setText("Máximo");
-        lblProductos6.setOpaque(true);
+        btnGuardar.setBackground(new java.awt.Color(0, 204, 0));
+        btnGuardar.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        btnGuardar.setText("Guardar Carrito");
+        btnGuardar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnGuardarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jpMenuLayout = new javax.swing.GroupLayout(jpMenu);
         jpMenu.setLayout(jpMenuLayout);
         jpMenuLayout.setHorizontalGroup(
             jpMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jpMenuLayout.createSequentialGroup()
-                .addGap(48, 48, 48)
-                .addComponent(lblProductos5)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(lblProductos6)
-                .addGap(65, 65, 65))
-            .addGroup(jpMenuLayout.createSequentialGroup()
                 .addGroup(jpMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jpMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                        .addGroup(jpMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jpMenuLayout.createSequentialGroup()
-                                .addGap(114, 114, 114)
-                                .addComponent(lblProductos1))
-                            .addGroup(jpMenuLayout.createSequentialGroup()
-                                .addGap(23, 23, 23)
-                                .addGroup(jpMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(lblProductos, javax.swing.GroupLayout.DEFAULT_SIZE, 250, Short.MAX_VALUE)
-                                    .addComponent(cboCat, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(cboMar, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
-                        .addGroup(jpMenuLayout.createSequentialGroup()
-                            .addGap(15, 15, 15)
-                            .addComponent(txtPrecMin, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(txtPrecMax, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGap(9, 9, 9)))
                     .addGroup(jpMenuLayout.createSequentialGroup()
-                        .addGap(123, 123, 123)
-                        .addComponent(lblProductos4))
+                        .addGap(114, 114, 114)
+                        .addComponent(lblProductos1))
+                    .addGroup(jpMenuLayout.createSequentialGroup()
+                        .addGap(23, 23, 23)
+                        .addGroup(jpMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(lblProductos, javax.swing.GroupLayout.DEFAULT_SIZE, 250, Short.MAX_VALUE)
+                            .addComponent(cboCat, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(cboMar, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                     .addGroup(jpMenuLayout.createSequentialGroup()
                         .addGap(125, 125, 125)
-                        .addComponent(lblProductos3)))
+                        .addComponent(lblProductos3))
+                    .addGroup(jpMenuLayout.createSequentialGroup()
+                        .addGap(73, 73, 73)
+                        .addComponent(btnGuardar, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(27, Short.MAX_VALUE))
         );
         jpMenuLayout.setVerticalGroup(
@@ -219,21 +310,13 @@ public class PAgregarAlCarrito extends javax.swing.JFrame {
                 .addComponent(lblProductos3)
                 .addGap(18, 18, 18)
                 .addComponent(cboMar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(32, 32, 32)
-                .addComponent(lblProductos4)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jpMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblProductos5)
-                    .addComponent(lblProductos6))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jpMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtPrecMax, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtPrecMin, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(195, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addComponent(btnGuardar, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(20, Short.MAX_VALUE))
         );
 
         getContentPane().add(jpMenu);
-        jpMenu.setBounds(30, 60, 300, 570);
+        jpMenu.setBounds(20, 220, 300, 350);
 
         jLBackground.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         jLBackground.setIcon(new javax.swing.ImageIcon(getClass().getResource("/binarios/images/Degradado4.jpg"))); // NOI18N
@@ -243,6 +326,11 @@ public class PAgregarAlCarrito extends javax.swing.JFrame {
         jLabel1.setText("jLabel1");
         getContentPane().add(jLabel1);
         jLabel1.setBounds(50, 20, 220, 40);
+
+        txtDisponibles1.setBackground(new java.awt.Color(255, 204, 102));
+        txtDisponibles1.setText("SP/NODATA");
+        getContentPane().add(txtDisponibles1);
+        txtDisponibles1.setBounds(1000, 120, 120, 30);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -256,6 +344,115 @@ public class PAgregarAlCarrito extends javax.swing.JFrame {
         dispose();
     }//GEN-LAST:event_btnGuardarActionPerformed
 
+    private boolean cantValid(int addQuit){//Valida si la cantidad ingresada es valida en tipo y rango
+        boolean val=true;
+        if(addQuit==0){//Si validamos cantidad a añadir
+            //Restamos lo de inventario menos el carrito menos lo que se quiere ingresar
+            int disponibles;
+            if(this.carrito!=null){//buscamos si en el carrito hay algo del registro seleccionado
+                
+            }
+            
+        }else{
+            
+        }
+        return val;
+    }
+    
+    private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed
+        if (!"".equals(txtIdRegistro1.getText())||cantValid(0)) {
+            int opcion = JOptionPane.showConfirmDialog(null, "¿Añadir " + txtCantAnadir.getText() + " unidades?", "Añade item", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+            if (opcion == 0) {
+                //El carrito deja de ser nulo en caso de que lo fuera antes
+                if (carrito == null) {
+                    this.carrito = new Carrito();
+                }
+                //Antes de añadir, comprobamos que no se haya insertado antes ese registro, en cuyo caso solo actualizaríamos las existencias
+                boolean existArticle = false;
+                int posArt = 0;
+                for (Articulo articulo : carrito.getlArticulo()) {
+                    if (articulo.getInventario().getIdInventario() == (Integer.parseInt(txtIdRegistro1.getText()))) {//Si ya existe
+                        existArticle = true;
+                        break;
+                    }
+                    posArt++;
+                }
+
+                if (!existArticle) {
+                    Articulo ar = new Articulo();
+                    Inventario inventario = new Inventario();
+                    ar.setCantidad(Integer.parseInt(txtCantAnadir.getText()));
+                    inventario.setIdInventario(Integer.parseInt(txtIdRegistro1.getText()));
+                    ar.setInventario(inventario);
+
+                    //Fase de pasar el inventario, ya lo tenemos pues con ese llenamos la tabla
+                    GetListas getListas = new GetListas();
+                    List<Inventario> lista = null;
+                    try {
+                        lista = getListas.fillLInventario();
+                    } catch (ClassNotFoundException | SQLException | DAOInitializationException ex) {
+                        Logger.getLogger(PAgregarAlCarrito.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                    //Buscamos la ID correspondiente y se la pasamos a artículo
+                    for (Inventario in : lista) {
+                        if (in.getIdInventario() == ar.getInventario().getIdInventario()) {
+                            ar.setInventario(in);
+                            break;
+                        }
+                    }
+
+                    //Ahora añadimos el catProducto que está dentro del inventario para accesibilidad más sencilla
+                    ar.setCatProducto(ar.getInventario().getCatProducto());
+
+                    //La parte de producto Venta será añadida cuando se concrete la venta, por el momento solo dejamos ese atributo faltante.
+                    //Añadimos el artículo
+                    this.carrito.pushArticulo(ar);
+                    JOptionPane.showMessageDialog(null, "Añadidas " + ar.getCantidad() + " unidades");
+                } else {
+                    //Si ya existe solo actualizamos las existencias sumándolas
+                    int existentes = this.carrito.getlArticulo().get(posArt).getCantidad();
+                    int ingresadas = Integer.parseInt(txtCantAnadir.getText());
+                    this.carrito.getlArticulo().get(posArt).setCantidad(existentes + ingresadas);
+                    JOptionPane.showMessageDialog(null, "Añadidas " + ingresadas + " unidades más");
+                }
+                //Actualizamos carrito
+                reloadCarrito();
+            }
+        }else{//Sino, no se ha seleccionado registro válido
+            JOptionPane.showMessageDialog(null, "No has seleccionado un producto de la tabla Productos", "Warning!", JOptionPane.WARNING_MESSAGE);
+        }
+    }//GEN-LAST:event_btnAddActionPerformed
+
+    private void jtProductosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jtProductosMouseClicked
+        int sel = jtProductos.rowAtPoint(evt.getPoint());
+        txtIdRegistro1.setText(String.valueOf(jtProductos.getValueAt(sel, 0)));
+        txtDisponibles.setText(String.valueOf(jtProductos.getValueAt(sel, 8)));
+        String d = "";
+        d += "Descripición: " + String.valueOf(jtProductos.getValueAt(sel, 3));
+        d += "\n\nNombre: " + String.valueOf(jtProductos.getValueAt(sel, 2));
+        d += "\nSección: " + String.valueOf(jtProductos.getValueAt(sel, 1));
+        d += "\nMarca: " + String.valueOf(jtProductos.getValueAt(sel, 7));
+        d += "\nCategoría: " + String.valueOf(jtProductos.getValueAt(sel, 6));
+        d += "\nColor: " + String.valueOf(jtProductos.getValueAt(sel, 5));
+        d += "\nPrecio unitario: " + String.valueOf(jtProductos.getValueAt(sel, 4));
+
+        txtDescripcion.setText(d);
+    }//GEN-LAST:event_jtProductosMouseClicked
+
+    private void txtCantAnadirKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCantAnadirKeyTyped
+        char c = evt.getKeyChar();
+        if(!Character.isDigit(c) && c!= KeyEvent.VK_BACK_SPACE)
+            evt.consume();
+    }//GEN-LAST:event_txtCantAnadirKeyTyped
+
+    private void btnQuitarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnQuitarActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnQuitarActionPerformed
+
+    private void txtIdRegistro1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtIdRegistro1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtIdRegistro1ActionPerformed
+
     /*public static void main(String args[]) {
         java.awt.EventQueue.invokeLater(new Runnable() {
             private Personal personal;
@@ -266,28 +463,38 @@ public class PAgregarAlCarrito extends javax.swing.JFrame {
     }*/
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnAdd;
     private javax.swing.JButton btnGuardar;
+    private javax.swing.JButton btnQuitar;
     private javax.swing.JComboBox<String> cboCat;
+    private javax.swing.JComboBox<String> cboElimina;
     private javax.swing.JComboBox<String> cboMar;
     private javax.swing.JLabel jLBackground;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jpMenu;
     private javax.swing.JScrollPane jspCarrito;
+    private javax.swing.JScrollPane jspDescription;
     private javax.swing.JScrollPane jspProductos;
     private javax.swing.JTable jtCarrito;
     private javax.swing.JTable jtProductos;
     private javax.swing.JLabel lblCarrito;
     private javax.swing.JLabel lblInstrucciones;
+    private javax.swing.JLabel lblInstrucciones1;
     private javax.swing.JLabel lblProductos;
     private javax.swing.JLabel lblProductos1;
+    private javax.swing.JLabel lblProductos10;
+    private javax.swing.JLabel lblProductos11;
     private javax.swing.JLabel lblProductos2;
     private javax.swing.JLabel lblProductos3;
-    private javax.swing.JLabel lblProductos4;
-    private javax.swing.JLabel lblProductos5;
-    private javax.swing.JLabel lblProductos6;
+    private javax.swing.JLabel lblProductos7;
+    private javax.swing.JLabel lblProductos8;
+    private javax.swing.JLabel lblProductos9;
     private javax.swing.JLabel lblSeleccion;
-    private javax.swing.JTextField txtPrecMax;
-    private javax.swing.JTextField txtPrecMin;
+    private javax.swing.JTextField txtCantAnadir;
+    private javax.swing.JTextArea txtDescripcion;
+    private javax.swing.JTextField txtDisponibles;
+    private javax.swing.JTextField txtDisponibles1;
+    private javax.swing.JTextField txtIdRegistro1;
     // End of variables declaration//GEN-END:variables
 
     public Personal getPersonal() {
@@ -301,16 +508,42 @@ public class PAgregarAlCarrito extends javax.swing.JFrame {
     public void preCarga() throws ClassNotFoundException, SQLException, DAOInitializationException {//Datos previos a mostrar el JFRAME pero posteriores al constructor
         //Llenamos la tabla de produtos basándonos en inventario
         fillTablaProductos();
-        if(this.carrito!=null){//Si el carrito no es nulo, llenamos la tabla de
+        //Inicializamos
+        txtIdRegistro1.setEditable(false);
+        txtDescripcion.setEditable(false);
+        txtDisponibles.setEditable(false);
+        if (this.carrito != null) {//Si el carrito no es nulo, llenamos la tabla de
             reloadCarrito();
         }
         //Llenamos los filtros desde la BD
         fillCategoria();
         fillMarca();
     }
-    public void reloadCarrito(){//Recarga el carrito cada que se haga un cambio, inventarios se quedan iguales
-        
+
+    public void reloadCarrito() {//Recarga el carrito cada que se haga un cambio, inventarios se quedan iguales
+        //Recargamos con la información actualizada del objeto carrito
+        DefaultTableModel modelo = new DefaultTableModel();
+
+        modelo.addColumn("Id del registro");
+        modelo.addColumn("Id del producto");
+        modelo.addColumn("Producto");
+        modelo.addColumn("Precio $");
+        modelo.addColumn("Cantidad");
+
+        String registro[] = new String[5];
+        for (int i = 0; i < this.carrito.getlArticulo().size(); i++) {
+            Articulo ar = this.carrito.getlArticulo().get(i);
+
+            registro[0] = String.valueOf(ar.getInventario().getIdInventario());
+            registro[1] = String.valueOf(ar.getCatProducto().getIdCProducto());
+            registro[2] = String.valueOf(ar.getCatProducto().getProducto());//Ruta corta a CatProducto
+            registro[3] = String.valueOf("$" + Math.round(ar.getInventario().getCatProducto().getPrecio() * 100) / 100);//Ruta larga a CatProducto
+            registro[4] = String.valueOf(ar.getCantidad());
+            modelo.addRow(registro);
+        }
+        jtCarrito.setModel(modelo);
     }
+
     private void fillCategoria() throws ClassNotFoundException, SQLException, SQLException, DAOInitializationException {
         List<CatCategoria> lista;
         GetListas getListas = new GetListas();
@@ -321,6 +554,7 @@ public class PAgregarAlCarrito extends javax.swing.JFrame {
             cboCat.addItem(lista.get(i).getCategoria());
         }
     }
+
     private void fillMarca() throws ClassNotFoundException, SQLException, SQLException, DAOInitializationException {
         List<CatMarca> lista;
         GetListas getListas = new GetListas();
@@ -331,7 +565,18 @@ public class PAgregarAlCarrito extends javax.swing.JFrame {
             cboMar.addItem(lista.get(i).getMarca());
         }
     }
-    private  void fillTablaProductos() throws ClassNotFoundException, SQLException, DAOInitializationException{
+    private void fillElimina(){
+        /*List<CatMarca> lista;
+        GetListas getListas = new GetListas();
+        lista = getListas.fillLCatMarca();
+        cboMar.removeAllItems();
+        cboMar.addItem("No aplicar");
+        for (int i = 0; i < lista.size(); i++) {
+            cboMar.addItem(lista.get(i).getMarca());
+        }*/
+    }
+
+    private void fillTablaProductos() throws ClassNotFoundException, SQLException, DAOInitializationException {
         GetListas getListas = new GetListas();
         List<Inventario> lista;
         lista = getListas.fillLInventario();
@@ -346,26 +591,23 @@ public class PAgregarAlCarrito extends javax.swing.JFrame {
         modelo.addColumn("Categoría");
         modelo.addColumn("Marca");
         modelo.addColumn("Existencias");
-        JOptionPane.showMessageDialog(null, lista.size());
-        
-        String registro[] = new String[11];
+
+        String registro[] = new String[9];
         for (int i = 0; i < lista.size(); i++) {
             Inventario in = lista.get(i);
 
             registro[0] = String.valueOf(in.getIdInventario());
-            registro[1] = String.valueOf(in.getCatSeccion().getIdSeccion());
             registro[1] = String.valueOf(in.getCatSeccion().getSeccion());
-            registro[2] = String.valueOf(in.getCatProducto().getIdCProducto());
-            registro[3] = String.valueOf(in.getCatProducto().getProducto());
-            registro[4] = String.valueOf(in.getCatProducto().getDescripcion());
-            registro[5] = String.valueOf("$" + Math.round(in.getCatProducto().getPrecio() * 100) / 100);
-            registro[6] = String.valueOf(in.getCatProducto().getColor());
-            registro[7] = String.valueOf(in.getCatProducto().getCatCategoria().getCategoria());
-            registro[8] = String.valueOf(in.getCatProducto().getCatMarca().getMarca());
-            registro[9] = String.valueOf(in.getCantidad());
+            registro[2] = String.valueOf(in.getCatProducto().getProducto());
+            registro[3] = String.valueOf(in.getCatProducto().getDescripcion());
+            registro[4] = String.valueOf("$" + Math.round(in.getCatProducto().getPrecio() * 100) / 100);
+            registro[5] = String.valueOf(in.getCatProducto().getColor());
+            registro[6] = String.valueOf(in.getCatProducto().getCatCategoria().getCategoria());
+            registro[7] = String.valueOf(in.getCatProducto().getCatMarca().getMarca());
+            registro[8] = String.valueOf(in.getCantidad());
             modelo.addRow(registro);
         }
-        jtCarrito.setModel(modelo);
+        jtProductos.setModel(modelo);
     }
 
     /**

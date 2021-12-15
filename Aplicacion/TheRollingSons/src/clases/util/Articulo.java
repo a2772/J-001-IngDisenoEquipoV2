@@ -6,7 +6,7 @@ import clases.ProductoVenta;
 
 public class Articulo {
     private int cantidad; //Cantidad de compra
-    private CatProducto catProducto;
+    private CatProducto catProducto; //Copiar de Inventario o viceversa
     private Inventario inventario;//Contiene cantidades disponibles
     private ProductoVenta productoVenta;//Contiene un registro de cómo fue vendido
 
