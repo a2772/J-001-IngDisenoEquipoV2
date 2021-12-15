@@ -254,7 +254,7 @@ public class PLogin extends javax.swing.JFrame {
                 SetId setId = new SetId();
                 GetById getById = new GetById();
                 personal = getById.getPersonalById(setId.setIdPersonal(usuario));
-                
+                //JOptionPane.showMessageDialog(null, "¡Bienveni@ " + setId.setIdPersonal(usuario)+ "!");
                 //Mensaje de bienvenida
                 JOptionPane.showMessageDialog(null, "¡Bienveni@ " + personal.getCatPerfil().getPerfil()+ " " + personal.getNombre() + "!");
                 PRealizarVenta prv = new PRealizarVenta();

@@ -30,6 +30,7 @@ public class PAgregarAlCarrito extends javax.swing.JFrame {
         lblCarrito = new javax.swing.JLabel();
         lblInstrucciones = new javax.swing.JLabel();
         lblProductos2 = new javax.swing.JLabel();
+        lblSeleccion = new javax.swing.JLabel();
         jspCarrito = new javax.swing.JScrollPane();
         jtCarrito = new javax.swing.JTable();
         jspProductos = new javax.swing.JScrollPane();
@@ -67,17 +68,25 @@ public class PAgregarAlCarrito extends javax.swing.JFrame {
         lblInstrucciones.setBackground(new java.awt.Color(0, 102, 204));
         lblInstrucciones.setFont(new java.awt.Font("Dialog", 0, 24)); // NOI18N
         lblInstrucciones.setForeground(new java.awt.Color(255, 255, 255));
-        lblInstrucciones.setText(" Productos");
+        lblInstrucciones.setText(" Seleccionado");
         lblInstrucciones.setOpaque(true);
         getContentPane().add(lblInstrucciones);
-        lblInstrucciones.setBounds(620, 320, 120, 40);
+        lblInstrucciones.setBounds(1050, 30, 160, 40);
 
         lblProductos2.setBackground(new java.awt.Color(0, 204, 204));
         lblProductos2.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
         lblProductos2.setText("Toca un producto para añadirlo al carrito");
         lblProductos2.setOpaque(true);
         getContentPane().add(lblProductos2);
-        lblProductos2.setBounds(360, 380, 290, 19);
+        lblProductos2.setBounds(680, 330, 290, 19);
+
+        lblSeleccion.setBackground(new java.awt.Color(0, 102, 204));
+        lblSeleccion.setFont(new java.awt.Font("Dialog", 0, 24)); // NOI18N
+        lblSeleccion.setForeground(new java.awt.Color(255, 255, 255));
+        lblSeleccion.setText(" Productos");
+        lblSeleccion.setOpaque(true);
+        getContentPane().add(lblSeleccion);
+        lblSeleccion.setBounds(520, 320, 120, 40);
 
         jtCarrito.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -109,7 +118,7 @@ public class PAgregarAlCarrito extends javax.swing.JFrame {
         jspProductos.setViewportView(jtProductos);
 
         getContentPane().add(jspProductos);
-        jspProductos.setBounds(360, 410, 600, 220);
+        jspProductos.setBounds(360, 370, 760, 260);
 
         btnGuardar.setText("Guardar");
         btnGuardar.addActionListener(new java.awt.event.ActionListener() {
@@ -118,7 +127,7 @@ public class PAgregarAlCarrito extends javax.swing.JFrame {
             }
         });
         getContentPane().add(btnGuardar);
-        btnGuardar.setBounds(1130, 580, 110, 60);
+        btnGuardar.setBounds(1140, 580, 110, 60);
 
         jpMenu.setBackground(new java.awt.Color(51, 102, 255));
 
@@ -276,6 +285,7 @@ public class PAgregarAlCarrito extends javax.swing.JFrame {
     private javax.swing.JLabel lblProductos4;
     private javax.swing.JLabel lblProductos5;
     private javax.swing.JLabel lblProductos6;
+    private javax.swing.JLabel lblSeleccion;
     private javax.swing.JTextField txtPrecMax;
     private javax.swing.JTextField txtPrecMin;
     // End of variables declaration//GEN-END:variables
@@ -328,9 +338,7 @@ public class PAgregarAlCarrito extends javax.swing.JFrame {
         DefaultTableModel modelo = new DefaultTableModel();
 
         modelo.addColumn("Id del registro");
-        modelo.addColumn("ID de Sección");
         modelo.addColumn("Sección");
-        modelo.addColumn("Id del artículo");
         modelo.addColumn("Producto");
         modelo.addColumn("Descripción");
         modelo.addColumn("Precio $");
@@ -346,15 +354,15 @@ public class PAgregarAlCarrito extends javax.swing.JFrame {
 
             registro[0] = String.valueOf(in.getIdInventario());
             registro[1] = String.valueOf(in.getCatSeccion().getIdSeccion());
-            registro[2] = String.valueOf(in.getCatSeccion().getSeccion());
-            registro[3] = String.valueOf(in.getCatProducto().getIdCProducto());
-            registro[4] = String.valueOf(in.getCatProducto().getProducto());
-            registro[5] = String.valueOf(in.getCatProducto().getDescripcion());
-            registro[6] = String.valueOf("$" + Math.round(in.getCatProducto().getPrecio() * 100) / 100);
-            registro[7] = String.valueOf(in.getCatProducto().getColor());
-            registro[8] = String.valueOf(in.getCatProducto().getCatCategoria().getCategoria());
-            registro[9] = String.valueOf(in.getCatProducto().getCatMarca().getMarca());
-            registro[10] = String.valueOf(in.getCantidad());
+            registro[1] = String.valueOf(in.getCatSeccion().getSeccion());
+            registro[2] = String.valueOf(in.getCatProducto().getIdCProducto());
+            registro[3] = String.valueOf(in.getCatProducto().getProducto());
+            registro[4] = String.valueOf(in.getCatProducto().getDescripcion());
+            registro[5] = String.valueOf("$" + Math.round(in.getCatProducto().getPrecio() * 100) / 100);
+            registro[6] = String.valueOf(in.getCatProducto().getColor());
+            registro[7] = String.valueOf(in.getCatProducto().getCatCategoria().getCategoria());
+            registro[8] = String.valueOf(in.getCatProducto().getCatMarca().getMarca());
+            registro[9] = String.valueOf(in.getCantidad());
             modelo.addRow(registro);
         }
         jtCarrito.setModel(modelo);
