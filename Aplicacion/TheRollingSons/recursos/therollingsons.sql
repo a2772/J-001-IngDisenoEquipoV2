@@ -6,10 +6,6 @@ create table catDia(
 	idDia int AUTO_INCREMENT primary key,
 	dia nvarchar(10) not null
 );
-create table catSexo(
-	idSexo int AUTO_INCREMENT primary key,
-	sexo nvarchar(10) not null
-);
 create table catHorario(
 	idCHorario int AUTO_INCREMENT primary key,
 	horaInicio time not null,
@@ -57,9 +53,7 @@ create table personal(
 	fechNac date not null,
 	correo nvarchar(150) not null,
 	idCPerfil1 int,
-	idSexo1 int,
-	foreign key (idCPerfil1) references catPerfil(idCPerfil),
-	foreign key (idSexo1) references catSexo(idSexo)
+	foreign key (idCPerfil1) references catPerfil(idCPerfil)
 );
 create table venta(
 	idVenta int AUTO_INCREMENT primary key,
@@ -109,21 +103,20 @@ create table pass(
 	foreign key (idPersonal4) references personal(idPersonal)
 );
 -- Inserciones
-go
+
 	insert into catDia(dia) values ('Lunes'),('Martes'),('Miércoles'),('Jueves'),('Viernes'),('Sábado'),('Domingo');
-	insert into catSexo (sexo) values ('Hombre'),('Mujer');
-go
+
 	insert into catHorario(horaInicio,horaFin,idDiaInicio,idDiaFin) values ('12:00:00','15:00:00',2,7),('16:00:00','19:00',2,7);
 	insert into catHorario(horaInicio,horaFin,idDiaInicio,idDiaFin) values ('12:00:00','15:00:00',2,7),('16:00:00','20:00',2,7);
 	
 	insert into catPerfil(perfil) values ('Encargado'),('Vendedor');
 	
-	insert into catMarca(marca) values ('Nike'),('El Apache');
+	insert into catMarca(marca) values ('Awaken'), ('Blazer'), ('Hondar'), ('Catrina'), ('Santa Cruz'), ('Roller Derby'), ('Candi Grl'), ('Chicago'), ("Sector 9"), ("TRS"), ("Giro");
 
-	insert into catCategoria(categoria) values ('Baleros'),('Repuestos'),('Eje'),('Patinetas'),('Ropa Hombre'),('Ropa Mujer'),('Ruedas'),('Tablas');
+	insert into catCategoria(categoria) values ('Baleros'),('Aceite'),('Trucks'),('Patinetas'),("Patines"),('Ropa Hombre'),('Ropa Mujer'),('Ruedas para Patin'), ("Ruedas para patineta"),('Tablas');
 
 	insert into catSeccion(seccion) values ('Estante 3, repisa 1');
-go
+
 	insert into catProducto(producto,descripcionAlmacenar,descripcion,precio,color,idCategoria1,idMarca1) values (
 		'Patineta Mediana',
 		'No exponer a la humedad y no colocar nada encima, producto delicado',
@@ -133,8 +126,108 @@ go
 		4,
 		1
 	);
-go
-	insert into personal(nombre,apPat,apMat,curp,tel,fechNac,correo,idCPerfil1,idSexo1) values (
+    
+	insert into catProducto(producto,descripcionAlmacenar,descripcion,precio,color,idCategoria1,idMarca1) values (
+		'Patineta Basica',
+		'No exponer a la humedad y no colocar nada encima, producto delicado',
+		'Patineta de madera de maple color rojo con detalles japoneses, Medida 8"',
+		1100.00,
+		'Rojo',
+		4,
+		2
+	);    
+  
+	insert into catProducto(producto,descripcionAlmacenar,descripcion,precio,color,idCategoria1,idMarca1) values (
+		'Patines Carlin Peach',
+		'No exponer a la humedad y no colocar nada encima, producto delicado',
+		'Patines de gamusa con guia de aluminio, Medida 5 US',
+		3300.00,
+		'Durazno',
+		5,
+		7
+	);    
+  
+	insert into catProducto(producto,descripcionAlmacenar,descripcion,precio,color,idCategoria1,idMarca1) values (
+		'Baleros Genericos',
+		'No exponer a la humedad, producto delicado',
+		'Juego de 8 baleros ABEC 7',
+		280.00,
+		'Gris',
+		1,
+		2
+	);   
+    
+	insert into catProducto(producto,descripcionAlmacenar,descripcion,precio,color,idCategoria1,idMarca1) values (
+		'Trucks Tornasol',
+		'Producto delicado',
+		'Par de trucks Catrina para tabla de 8"-8.5"',
+		750.00,
+		'Tornasol',
+		3,
+		4
+	);  
+    
+	insert into catProducto(producto,descripcionAlmacenar,descripcion,precio,color,idCategoria1,idMarca1) values (
+		'Aceite',
+		'No dejar en lugares calientes, producto delicado',
+		'Envase de aceite para baleros, 250ml',
+		150.00,
+		'Transparente',
+		2,
+		9
+	); 
+  
+	insert into catProducto(producto,descripcionAlmacenar,descripcion,precio,color,idCategoria1,idMarca1) values (
+		'Playera TRS',
+		'Colgar correctamente en ganchos y evitar mancharla',
+		'Playera con logo de la tienda, talla M',
+		150.00,
+		'Blanca',
+		6,
+		10
+	);
+
+	insert into catProducto(producto,descripcionAlmacenar,descripcion,precio,color,idCategoria1,idMarca1) values (
+		'Playera TRS',
+		'Colgar correctamente en ganchos y evitar mancharla',
+		'Playera con logo de la tienda, talla S',
+		150.00,
+		'Blanca',
+		7,
+		10
+	);
+    
+	insert into catProducto(producto,descripcionAlmacenar,descripcion,precio,color,idCategoria1,idMarca1) values (
+		'Rueda 76MM',
+		'No dejar en lugares calientes, acomodar en juegos de 4 ruedas',
+		'Juego de 4 ruedas para patin, medida 76MM',
+		380.00,
+		'Negro',
+		8,
+		3
+	);    
+    
+	insert into catProducto(producto,descripcionAlmacenar,descripcion,precio,color,idCategoria1,idMarca1) values (
+		'Rueda 54MM',
+		'No dejar en lugares calientes, acomodar en juegos de 4 ruedas',
+		'Juego de 4 ruedas para patineta, medida 54MM',
+		280.00,
+		'Blanco',
+		9,
+		3
+	); 
+    
+    	insert into catProducto(producto,descripcionAlmacenar,descripcion,precio,color,idCategoria1,idMarca1) values (
+		'Tabla Giro',
+		'No exponer a la humedad y no colocar nada encima, producto delicado',
+		'Tabla Giro con diseño de Charlie Brown, medida 8.2" ',
+		680.00,
+		'Azul',
+		10,
+		11
+	); 
+    
+	insert into personal(nombre,apPat,apMat,curp,tel,fechNac,correo,idCPerfil1) values (
 		'Paris',
 		'Ramirez',
 		'Saldaña',
@@ -142,7 +235,6 @@ go
 		'55-9876-5432',
 		'2001-05-27',
 		'paris.140815@gmail.com',
-		1,
 		1
 	),(
 		'Luis Antonio',
@@ -152,45 +244,38 @@ go
 		'55-1234-5678',
 		'1999-06-05',
 		'luisasantiagom.5699@gmail.com',
-		1,
 		1
 	),(
-		'Fernanda',
+		'Fer',
 		'Oregón',
 		'Juárez',
 		'SMTHNG',
 		'99-1234-5678',
 		'1999-12-31',
 		'usr',
-		2,
 		2
 	);
-go
+
 	insert into inventario(cantidad,descripcion,idCProducto2,idSeccion1) values (
 		15,
 		'Ingreso por compra a crédito del 16/12/2021',
 		1,
 		1
 	);
-go
+
 	insert into horario(idPersonal2,idCHorario1) values (1,1),(1,2);
-go
+
 	insert into pass(pass, idPersonal4) values ('paris72',1),('luis5',2),('usr',3);
 -- Consultas de prueba
-go
+
 
 
 -- select ps.pass from personal p, pass ps where p.idPersonal=ps.idPersonal4 and p.correo='paris.140815@gmail.com' and ps.pass='paris72';
 -- select * from personal p, catPerfil cp where p.idCPerfil1=cp.idCPerfil and p.idPersonal=1;
--- select p.idPersonal from personal p, pass ps where p.idPersonal=ps.idPersonal4 and p.correo='paris.140815@gmail.com' and ps.pass='paris72';
--- select * from personal p, catPerfil cp, catSexo cs where p.idCPerfil1=cp.idCPerfil and cs.idSexo=p.idSexo1 and p.idPersonal='3';
--- select * from inventario i, catProducto cp, catSeccion cs where i.idCProducto2=cp.idCProducto and i.idSeccion1=cs.idSeccion;
-select * from inventario i, catProducto cp, catSeccion cs, catMarca cm, catCategoria cc where i.idCProducto2=cp.idCProducto and i.idSeccion1=cs.idSeccion and cm.idMarca=cp.idMarca1 and cc.idCategoria=cp.idCategoria1
-
-
-
-
-
+select p.idPersonal from personal p, pass ps where p.idPersonal=ps.idPersonal4 and p.correo='paris.140815@gmail.com' and ps.pass='paris72';
+select * from CatMarca;
+select * from CatProducto;
+select * from catCategoria;
 
 
 
