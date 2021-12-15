@@ -217,7 +217,7 @@ create table pass(
 		3
 	); 
     
-    	insert into catProducto(producto,descripcionAlmacenar,descripcion,precio,color,idCategoria1,idMarca1) values (
+    insert into catProducto(producto,descripcionAlmacenar,descripcion,precio,color,idCategoria1,idMarca1) values (
 		'Tabla Giro',
 		'No exponer a la humedad y no colocar nada encima, producto delicado',
 		'Tabla Giro con diseño de Charlie Brown, medida 8.2" ',
@@ -272,10 +272,11 @@ create table pass(
 
 -- select ps.pass from personal p, pass ps where p.idPersonal=ps.idPersonal4 and p.correo='paris.140815@gmail.com' and ps.pass='paris72';
 -- select * from personal p, catPerfil cp where p.idCPerfil1=cp.idCPerfil and p.idPersonal=1;
-select p.idPersonal from personal p, pass ps where p.idPersonal=ps.idPersonal4 and p.correo='paris.140815@gmail.com' and ps.pass='paris72';
-select * from CatMarca;
-select * from CatProducto;
-select * from catCategoria;
+-- select p.idPersonal from personal p, pass ps where p.idPersonal=ps.idPersonal4 and p.correo='usr' and ps.pass='usr';
+-- select * from CatMarca;
+-- select * from CatProducto;
+-- select * from catCategoria;
+
 
 
 

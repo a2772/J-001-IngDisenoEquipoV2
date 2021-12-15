@@ -33,7 +33,7 @@ public class ConsultaConId extends DataAccessObject {
                 isValid = true;
                 //Tabla trabajador
                 p.setIdPersonal(rs.getInt("idPersonal"));
-                p.setNombre(rs.getString("nombre"));
+                /*p.setNombre(rs.getString("nombre"));
                 p.setApPat(rs.getString("apPat"));
                 p.setApMat(rs.getString("apMat"));
                 p.setCorreo(rs.getString("correo"));
@@ -48,7 +48,7 @@ public class ConsultaConId extends DataAccessObject {
                 cs.setSexo(rs.getString("sexo"));
                 //Pasando los objetos
                 p.setCatPerfil(cp);
-                p.setCatSexo(cs);
+                p.setCatSexo(cs);*/
             }
         } catch (DAOInitializationException | SQLException ex) {
             isValid = false;

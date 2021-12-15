@@ -254,15 +254,15 @@ public class PLogin extends javax.swing.JFrame {
                 SetId setId = new SetId();
                 GetById getById = new GetById();
                 personal = getById.getPersonalById(setId.setIdPersonal(usuario));
-                
+                JOptionPane.showMessageDialog(null, "¡Bienveni@ " + setId.setIdPersonal(usuario)+ "!");
                 //Mensaje de bienvenida
-                JOptionPane.showMessageDialog(null, "¡Bienveni@ " + personal.getCatPerfil().getPerfil()+ " " + personal.getNombre() + "!");
+                /*JOptionPane.showMessageDialog(null, "¡Bienveni@ " + personal.getCatPerfil().getPerfil()+ " " + personal.getNombre() + "!");
                 PRealizarVenta prv = new PRealizarVenta();
                 //Iniciamos el primer formulario, si es Encargado
                 prv.setPersonal(personal);
                 prv.preCarga();
                 prv.setVisible(true);
-                dispose();
+                dispose();*/
             }else{
                 JOptionPane.showMessageDialog(null, "Credenciales incorrectas, intenta de nuevo" + ". Usuario: " + usuario.getCorreo() + ". Contraseña: " + usuario.getPass());
             }
