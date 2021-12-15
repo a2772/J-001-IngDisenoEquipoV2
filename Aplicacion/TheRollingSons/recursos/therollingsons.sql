@@ -247,7 +247,7 @@ create table pass(
 	),(
 		'Luis Antonio',
 		'Santiago',
-		'Martín',
+		'Martin',
 		'SAML990605HMCNRS01',
 		'55-1234-5678',
 		'1999-06-05',
@@ -256,8 +256,8 @@ create table pass(
 		1
 	),(
 		'Fernanda',
-		'Oregón',
-		'Juárez',
+		'Oregon',
+		'Juarez',
 		'SMTHNG',
 		'99-1234-5678',
 		'1999-12-31',
@@ -268,7 +268,7 @@ create table pass(
 
 	insert into inventario(cantidad,descripcion,idCProducto2,idSeccion1) values (
 		15,
-		'Ingreso por compra a crédito del 16/12/2021',
+		'Ingreso por compra a credito del 16/12/2021',
 		1,
 		1
 	);
