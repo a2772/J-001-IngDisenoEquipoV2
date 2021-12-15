@@ -9,7 +9,9 @@ USE therollingsons;
 -- select * from inventario i, catProducto cp, catSeccion cs, catMarca cm, catCategoria cc where i.idCProducto2=cp.idCProducto and i.idSeccion1=cs.idSeccion and cm.idMarca=cp.idMarca1 and cc.idCategoria=cp.idCategoria1
 -- select * from inventario i, catProducto cp, catSeccion cs, catMarca cm, catCategoria cc where i.idCProducto2=cp.idCProducto and i.idSeccion1=cs.idSeccion and cm.idMarca=cp.idMarca1 and cc.idCategoria=cp.idCategoria1
 -- select * from personal p, catPerfil cp, catSexo cs where p.idCPerfil1=cp.idCPerfil and cs.idSexo=p.idSexo1 and p.idPersonal=3
-select * from inventario;
+
+select * from venta;
+insert into productoVenta(cantidad, precio, idVenta1, idCProducto1) values(1,1,1,1);
 select * from productoVenta;
 
 

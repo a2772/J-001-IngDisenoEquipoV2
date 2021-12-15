@@ -2,10 +2,13 @@ package ui.vendedor;
 
 import business.InsertList;
 import clases.Personal;
+import clases.ProductoVenta;
+import clases.Venta;
 import clases.util.Articulo;
 import clases.util.Carrito;
 import dao.DAOInitializationException;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
@@ -110,13 +113,10 @@ public class PRealizarVenta extends javax.swing.JFrame {
 
         jtCarrito.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+
             }
         ));
         jspCarrito.setViewportView(jtCarrito);
@@ -300,6 +300,32 @@ public class PRealizarVenta extends javax.swing.JFrame {
         } else {
             int opcion = JOptionPane.showConfirmDialog(null, "¿Deseas registrar la compra?", "Comprando el Carrito", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
             if (opcion == 0) {
+                //Añadiendo datos de la venta a carrito Venta
+                Venta venta = new Venta();
+                ProductoVenta pv;
+                venta.setIdVenta(0);//Como no la vamos a insertar la dejamos en 0, pero al insertarla la recuperamos para mostrar el número de tiquet
+                //obtenemos el total
+                float total=0;
+                for (Articulo ar : this.carrito.getlArticulo()) {
+                    total+=ar.getCatProducto().getPrecio()*ar.getInventario().getCantidad();
+                }
+                venta.setTotal(total);
+                venta.setIva((float) ((total/1.16)*0.16));
+                venta.setFecha(LocalDate.now());
+                venta.setPersonal(this.personal);
+                
+                this.carrito.setVenta(venta); //Añadiendo los datos que le faltan al carrito: ProductoVenta
+                for (Articulo ar : this.carrito.getlArticulo()) {
+                    pv = new ProductoVenta();
+                    pv.setIdProductoVenta(0);
+                    pv.setPrecio(ar.getCatProducto().getPrecio()*ar.getCantidad());
+                    pv.setCantidad(ar.getCantidad());
+                    pv.setCatProducto(ar.getCatProducto());
+                    pv.setVenta(venta);
+                    
+                    ar.setProductoVenta(pv);
+                }
+
                 //Agregar la venta mandando el carrito
                 InsertList insertList = new InsertList();
                 try {
@@ -309,7 +335,7 @@ public class PRealizarVenta extends javax.swing.JFrame {
                     Logger.getLogger(PRealizarVenta.class.getName()).log(Level.SEVERE, null, ex);
                     JOptionPane.showMessageDialog(null, "¡Error al realizar la compra!");
                 }
-                
+
             }
         }
     }//GEN-LAST:event_btnCompraCarritoActionPerformed
@@ -335,7 +361,8 @@ public class PRealizarVenta extends javax.swing.JFrame {
             int opcion = JOptionPane.showConfirmDialog(null, "¿Realmente deseas eliminar la selección?", "Borrar Carrito", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
             if (opcion == 0) {
                 JOptionPane.showMessageDialog(null, "     Selección borrada exitosamente    ");
-                this.carrito=null;
+                this.carrito = null;
+                jtCarrito.setModel(new DefaultTableModel());
             }
         }
     }//GEN-LAST:event_btnBorrar1ActionPerformed
