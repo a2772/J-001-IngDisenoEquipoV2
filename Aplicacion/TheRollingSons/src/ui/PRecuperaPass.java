@@ -238,7 +238,7 @@ public class PRecuperaPass extends javax.swing.JFrame {
         }
         lblMss2.setText(txt + personal.getNombre());
         txt = "";
-        for (int i = 0; i < 22; i++) {
+        for (int i = 0; i < 20; i++) {
             txt += " ";
         }
         lblMss3.setText(txt + personal.getCatPerfil().getPerfil());
