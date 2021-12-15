@@ -31,7 +31,7 @@ public class PRealizarVenta extends javax.swing.JFrame {
         btnIrCarrito1 = new javax.swing.JButton();
         btnBorrar1 = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
-        jScrollPane1 = new javax.swing.JScrollPane();
+        jspCarrito = new javax.swing.JScrollPane();
         jtCarrito = new javax.swing.JTable();
         jpMenu = new javax.swing.JPanel();
         lblMss1 = new javax.swing.JLabel();
@@ -108,26 +108,21 @@ public class PRealizarVenta extends javax.swing.JFrame {
         getContentPane().add(jLabel2);
         jLabel2.setBounds(350, 40, 600, 60);
 
-        jScrollPane1.setBackground(new java.awt.Color(204, 255, 204));
-
-        jtCarrito.setAutoCreateColumnsFromModel(false);
-        jtCarrito.setBackground(new java.awt.Color(255, 204, 153));
         jtCarrito.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {},
-                {},
-                {},
-                {}
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
             },
             new String [] {
-
+                "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        jtCarrito.setGridColor(new java.awt.Color(255, 255, 204));
-        jScrollPane1.setViewportView(jtCarrito);
+        jspCarrito.setViewportView(jtCarrito);
 
-        getContentPane().add(jScrollPane1);
-        jScrollPane1.setBounds(310, 120, 690, 420);
+        getContentPane().add(jspCarrito);
+        jspCarrito.setBounds(340, 120, 700, 402);
 
         jpMenu.setBackground(new java.awt.Color(204, 255, 255));
 
@@ -362,8 +357,8 @@ public class PRealizarVenta extends javax.swing.JFrame {
     private javax.swing.JLabel jLBackground;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JPanel jpMenu;
+    private javax.swing.JScrollPane jspCarrito;
     private javax.swing.JTable jtCarrito;
     private javax.swing.JLabel lblMss1;
     private javax.swing.JLabel lblMss2;
@@ -425,7 +420,8 @@ public class PRealizarVenta extends javax.swing.JFrame {
             rbtnCRUDUsr.setVisible(false);
             jpMenu.setSize(270, 305);
         }
-        if (this.getCarrito() != null) {
+        if (this.carrito != null) {
+            JOptionPane.showMessageDialog(null, "EA");
             reloadCarrito();
         }
     }
