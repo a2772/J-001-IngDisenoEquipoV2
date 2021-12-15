@@ -35,30 +35,30 @@ public class PAgregarAlCarrito extends javax.swing.JFrame {
         lblProductos8 = new javax.swing.JLabel();
         lblProductos9 = new javax.swing.JLabel();
         lblProductos10 = new javax.swing.JLabel();
+        lblProductos11 = new javax.swing.JLabel();
+        btnQuitar = new javax.swing.JButton();
         btnAdd = new javax.swing.JButton();
         txtDisponibles = new javax.swing.JTextField();
         txtIdRegistro1 = new javax.swing.JTextField();
         txtCantAnadir = new javax.swing.JTextField();
+        jComboBox1 = new javax.swing.JComboBox<>();
+        lblInstrucciones1 = new javax.swing.JLabel();
         jspDescription = new javax.swing.JScrollPane();
         txtDescripcion = new javax.swing.JTextArea();
         jspCarrito = new javax.swing.JScrollPane();
         jtCarrito = new javax.swing.JTable();
         jspProductos = new javax.swing.JScrollPane();
         jtProductos = new javax.swing.JTable();
-        btnGuardar = new javax.swing.JButton();
         jpMenu = new javax.swing.JPanel();
         lblProductos = new javax.swing.JLabel();
         cboCat = new javax.swing.JComboBox<>();
         lblProductos1 = new javax.swing.JLabel();
         lblProductos3 = new javax.swing.JLabel();
         cboMar = new javax.swing.JComboBox<>();
-        lblProductos4 = new javax.swing.JLabel();
-        txtPrecMin = new javax.swing.JTextField();
-        txtPrecMax = new javax.swing.JTextField();
-        lblProductos5 = new javax.swing.JLabel();
-        lblProductos6 = new javax.swing.JLabel();
+        btnGuardar = new javax.swing.JButton();
         jLBackground = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
+        txtDisponibles1 = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setLocation(new java.awt.Point(500, 300));
@@ -78,10 +78,10 @@ public class PAgregarAlCarrito extends javax.swing.JFrame {
         lblInstrucciones.setBackground(new java.awt.Color(0, 102, 204));
         lblInstrucciones.setFont(new java.awt.Font("Dialog", 0, 24)); // NOI18N
         lblInstrucciones.setForeground(new java.awt.Color(255, 255, 255));
-        lblInstrucciones.setText(" Seleccionado");
+        lblInstrucciones.setText("Elimina Producto");
         lblInstrucciones.setOpaque(true);
         getContentPane().add(lblInstrucciones);
-        lblInstrucciones.setBounds(960, 20, 160, 40);
+        lblInstrucciones.setBounds(70, 30, 200, 40);
 
         lblProductos2.setBackground(new java.awt.Color(0, 204, 204));
         lblProductos2.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
@@ -110,7 +110,7 @@ public class PAgregarAlCarrito extends javax.swing.JFrame {
         lblProductos8.setText("Id del Registro:");
         lblProductos8.setOpaque(true);
         getContentPane().add(lblProductos8);
-        lblProductos8.setBounds(860, 90, 110, 19);
+        lblProductos8.setBounds(20, 90, 110, 19);
 
         lblProductos9.setBackground(new java.awt.Color(0, 204, 204));
         lblProductos9.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
@@ -126,6 +126,25 @@ public class PAgregarAlCarrito extends javax.swing.JFrame {
         getContentPane().add(lblProductos10);
         lblProductos10.setBounds(860, 170, 110, 19);
 
+        lblProductos11.setBackground(new java.awt.Color(0, 204, 204));
+        lblProductos11.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
+        lblProductos11.setText("Id del Registro:");
+        lblProductos11.setOpaque(true);
+        getContentPane().add(lblProductos11);
+        lblProductos11.setBounds(860, 90, 110, 19);
+
+        btnQuitar.setBackground(new java.awt.Color(204, 0, 0));
+        btnQuitar.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        btnQuitar.setForeground(new java.awt.Color(255, 255, 255));
+        btnQuitar.setText("Quitar");
+        btnQuitar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnQuitarActionPerformed(evt);
+            }
+        });
+        getContentPane().add(btnQuitar);
+        btnQuitar.setBounds(90, 170, 120, 40);
+
         btnAdd.setBackground(new java.awt.Color(0, 204, 0));
         btnAdd.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         btnAdd.setText("Añadir");
@@ -138,19 +157,41 @@ public class PAgregarAlCarrito extends javax.swing.JFrame {
         btnAdd.setBounds(1040, 320, 120, 40);
 
         txtDisponibles.setBackground(new java.awt.Color(255, 204, 102));
-        txtDisponibles.setText("jTextField2");
+        txtDisponibles.setText("SP/NODATA");
         getContentPane().add(txtDisponibles);
         txtDisponibles.setBounds(1000, 120, 120, 30);
 
         txtIdRegistro1.setBackground(new java.awt.Color(255, 204, 102));
-        txtIdRegistro1.setText("jTextField2");
+        txtIdRegistro1.setText("SP/NODATA");
+        txtIdRegistro1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtIdRegistro1ActionPerformed(evt);
+            }
+        });
         getContentPane().add(txtIdRegistro1);
         txtIdRegistro1.setBounds(1000, 80, 120, 30);
 
         txtCantAnadir.setBackground(new java.awt.Color(255, 204, 102));
-        txtCantAnadir.setText("jTextField2");
+        txtCantAnadir.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtCantAnadirKeyTyped(evt);
+            }
+        });
         getContentPane().add(txtCantAnadir);
         txtCantAnadir.setBounds(1000, 263, 120, 30);
+
+        jComboBox1.setBackground(new java.awt.Color(255, 204, 153));
+        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        getContentPane().add(jComboBox1);
+        jComboBox1.setBounds(160, 90, 150, 22);
+
+        lblInstrucciones1.setBackground(new java.awt.Color(0, 102, 204));
+        lblInstrucciones1.setFont(new java.awt.Font("Dialog", 0, 24)); // NOI18N
+        lblInstrucciones1.setForeground(new java.awt.Color(255, 255, 255));
+        lblInstrucciones1.setText("Añade producto");
+        lblInstrucciones1.setOpaque(true);
+        getContentPane().add(lblInstrucciones1);
+        lblInstrucciones1.setBounds(960, 20, 180, 40);
 
         txtDescripcion.setColumns(20);
         txtDescripcion.setRows(5);
@@ -196,18 +237,7 @@ public class PAgregarAlCarrito extends javax.swing.JFrame {
         jspProductos.setViewportView(jtProductos);
 
         getContentPane().add(jspProductos);
-        jspProductos.setBounds(360, 370, 760, 230);
-
-        btnGuardar.setBackground(new java.awt.Color(0, 204, 0));
-        btnGuardar.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
-        btnGuardar.setText("Guardar Carrito");
-        btnGuardar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnGuardarActionPerformed(evt);
-            }
-        });
-        getContentPane().add(btnGuardar);
-        btnGuardar.setBounds(90, 520, 150, 80);
+        jspProductos.setBounds(360, 370, 830, 230);
 
         jpMenu.setBackground(new java.awt.Color(51, 102, 255));
 
@@ -234,60 +264,36 @@ public class PAgregarAlCarrito extends javax.swing.JFrame {
         cboMar.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
         cboMar.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
-        lblProductos4.setBackground(new java.awt.Color(0, 204, 204));
-        lblProductos4.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
-        lblProductos4.setText("Precio");
-        lblProductos4.setOpaque(true);
-
-        txtPrecMin.setBackground(new java.awt.Color(102, 153, 255));
-        txtPrecMin.setText("jTextField1");
-
-        txtPrecMax.setBackground(new java.awt.Color(102, 153, 255));
-        txtPrecMax.setText("jTextField2");
-
-        lblProductos5.setBackground(new java.awt.Color(51, 255, 153));
-        lblProductos5.setText("Mínimo");
-        lblProductos5.setOpaque(true);
-
-        lblProductos6.setBackground(new java.awt.Color(51, 255, 153));
-        lblProductos6.setText("Máximo");
-        lblProductos6.setOpaque(true);
+        btnGuardar.setBackground(new java.awt.Color(0, 204, 0));
+        btnGuardar.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        btnGuardar.setText("Guardar Carrito");
+        btnGuardar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnGuardarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jpMenuLayout = new javax.swing.GroupLayout(jpMenu);
         jpMenu.setLayout(jpMenuLayout);
         jpMenuLayout.setHorizontalGroup(
             jpMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jpMenuLayout.createSequentialGroup()
-                .addGap(58, 58, 58)
-                .addComponent(lblProductos5)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(lblProductos6)
-                .addGap(65, 65, 65))
-            .addGroup(jpMenuLayout.createSequentialGroup()
                 .addGroup(jpMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jpMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                        .addGroup(jpMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jpMenuLayout.createSequentialGroup()
-                                .addGap(114, 114, 114)
-                                .addComponent(lblProductos1))
-                            .addGroup(jpMenuLayout.createSequentialGroup()
-                                .addGap(23, 23, 23)
-                                .addGroup(jpMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(lblProductos, javax.swing.GroupLayout.DEFAULT_SIZE, 250, Short.MAX_VALUE)
-                                    .addComponent(cboCat, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(cboMar, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
-                        .addGroup(jpMenuLayout.createSequentialGroup()
-                            .addGap(15, 15, 15)
-                            .addComponent(txtPrecMin, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(txtPrecMax, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGap(9, 9, 9)))
                     .addGroup(jpMenuLayout.createSequentialGroup()
-                        .addGap(123, 123, 123)
-                        .addComponent(lblProductos4))
+                        .addGap(114, 114, 114)
+                        .addComponent(lblProductos1))
+                    .addGroup(jpMenuLayout.createSequentialGroup()
+                        .addGap(23, 23, 23)
+                        .addGroup(jpMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(lblProductos, javax.swing.GroupLayout.DEFAULT_SIZE, 250, Short.MAX_VALUE)
+                            .addComponent(cboCat, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(cboMar, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                     .addGroup(jpMenuLayout.createSequentialGroup()
                         .addGap(125, 125, 125)
-                        .addComponent(lblProductos3)))
+                        .addComponent(lblProductos3))
+                    .addGroup(jpMenuLayout.createSequentialGroup()
+                        .addGap(71, 71, 71)
+                        .addComponent(btnGuardar, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(27, Short.MAX_VALUE))
         );
         jpMenuLayout.setVerticalGroup(
@@ -303,21 +309,13 @@ public class PAgregarAlCarrito extends javax.swing.JFrame {
                 .addComponent(lblProductos3)
                 .addGap(18, 18, 18)
                 .addComponent(cboMar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(32, 32, 32)
-                .addComponent(lblProductos4)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jpMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblProductos5)
-                    .addComponent(lblProductos6))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jpMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtPrecMax, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtPrecMin, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(55, Short.MAX_VALUE))
+                .addComponent(btnGuardar, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(7, Short.MAX_VALUE))
         );
 
         getContentPane().add(jpMenu);
-        jpMenu.setBounds(30, 60, 300, 430);
+        jpMenu.setBounds(20, 220, 300, 350);
 
         jLBackground.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         jLBackground.setIcon(new javax.swing.ImageIcon(getClass().getResource("/binarios/images/Degradado4.jpg"))); // NOI18N
@@ -327,6 +325,11 @@ public class PAgregarAlCarrito extends javax.swing.JFrame {
         jLabel1.setText("jLabel1");
         getContentPane().add(jLabel1);
         jLabel1.setBounds(50, 20, 220, 40);
+
+        txtDisponibles1.setBackground(new java.awt.Color(255, 204, 102));
+        txtDisponibles1.setText("SP/NODATA");
+        getContentPane().add(txtDisponibles1);
+        txtDisponibles1.setBounds(1000, 120, 120, 30);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -361,6 +364,18 @@ public class PAgregarAlCarrito extends javax.swing.JFrame {
         txtDescripcion.setText(d);
     }//GEN-LAST:event_jtProductosMouseClicked
 
+    private void txtCantAnadirKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCantAnadirKeyTyped
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtCantAnadirKeyTyped
+
+    private void btnQuitarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnQuitarActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnQuitarActionPerformed
+
+    private void txtIdRegistro1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtIdRegistro1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtIdRegistro1ActionPerformed
+
     /*public static void main(String args[]) {
         java.awt.EventQueue.invokeLater(new Runnable() {
             private Personal personal;
@@ -373,8 +388,10 @@ public class PAgregarAlCarrito extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAdd;
     private javax.swing.JButton btnGuardar;
+    private javax.swing.JButton btnQuitar;
     private javax.swing.JComboBox<String> cboCat;
     private javax.swing.JComboBox<String> cboMar;
+    private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JLabel jLBackground;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jpMenu;
@@ -385,14 +402,13 @@ public class PAgregarAlCarrito extends javax.swing.JFrame {
     private javax.swing.JTable jtProductos;
     private javax.swing.JLabel lblCarrito;
     private javax.swing.JLabel lblInstrucciones;
+    private javax.swing.JLabel lblInstrucciones1;
     private javax.swing.JLabel lblProductos;
     private javax.swing.JLabel lblProductos1;
     private javax.swing.JLabel lblProductos10;
+    private javax.swing.JLabel lblProductos11;
     private javax.swing.JLabel lblProductos2;
     private javax.swing.JLabel lblProductos3;
-    private javax.swing.JLabel lblProductos4;
-    private javax.swing.JLabel lblProductos5;
-    private javax.swing.JLabel lblProductos6;
     private javax.swing.JLabel lblProductos7;
     private javax.swing.JLabel lblProductos8;
     private javax.swing.JLabel lblProductos9;
@@ -400,9 +416,8 @@ public class PAgregarAlCarrito extends javax.swing.JFrame {
     private javax.swing.JTextField txtCantAnadir;
     private javax.swing.JTextArea txtDescripcion;
     private javax.swing.JTextField txtDisponibles;
+    private javax.swing.JTextField txtDisponibles1;
     private javax.swing.JTextField txtIdRegistro1;
-    private javax.swing.JTextField txtPrecMax;
-    private javax.swing.JTextField txtPrecMin;
     // End of variables declaration//GEN-END:variables
 
     public Personal getPersonal() {
