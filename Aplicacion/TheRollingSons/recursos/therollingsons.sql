@@ -6,6 +6,10 @@ create table catDia(
 	idDia int AUTO_INCREMENT primary key,
 	dia nvarchar(10) not null
 );
+create table catSexo(
+	idSexo int AUTO_INCREMENT primary key,
+	sexo nvarchar(10) not null
+);
 create table catHorario(
 	idCHorario int AUTO_INCREMENT primary key,
 	horaInicio time not null,
@@ -53,7 +57,9 @@ create table personal(
 	fechNac date not null,
 	correo nvarchar(150) not null,
 	idCPerfil1 int,
-	foreign key (idCPerfil1) references catPerfil(idCPerfil)
+	idSexo1 int,
+	foreign key (idCPerfil1) references catPerfil(idCPerfil),
+	foreign key (idSexo1) references catSexo(idSexo)
 );
 create table venta(
 	idVenta int AUTO_INCREMENT primary key,
@@ -105,7 +111,8 @@ create table pass(
 -- Inserciones
 
 	insert into catDia(dia) values ('Lunes'),('Martes'),('Miércoles'),('Jueves'),('Viernes'),('Sábado'),('Domingo');
-
+	insert into catSexo (sexo) values ('Hombre'),('Mujer');
+	
 	insert into catHorario(horaInicio,horaFin,idDiaInicio,idDiaFin) values ('12:00:00','15:00:00',2,7),('16:00:00','19:00',2,7);
 	insert into catHorario(horaInicio,horaFin,idDiaInicio,idDiaFin) values ('12:00:00','15:00:00',2,7),('16:00:00','20:00',2,7);
 	
@@ -227,7 +234,7 @@ create table pass(
 		11
 	); 
     
-	insert into personal(nombre,apPat,apMat,curp,tel,fechNac,correo,idCPerfil1) values (
+	insert into personal(nombre,apPat,apMat,curp,tel,fechNac,correo,idCPerfil1,idSexo1) values (
 		'Paris',
 		'Ramirez',
 		'Saldaña',
@@ -235,6 +242,7 @@ create table pass(
 		'55-9876-5432',
 		'2001-05-27',
 		'paris.140815@gmail.com',
+		1,
 		1
 	),(
 		'Luis Antonio',
@@ -244,15 +252,17 @@ create table pass(
 		'55-1234-5678',
 		'1999-06-05',
 		'luisasantiagom.5699@gmail.com',
+		1,
 		1
 	),(
-		'Fer',
+		'Fernanda',
 		'Oregón',
 		'Juárez',
 		'SMTHNG',
 		'99-1234-5678',
 		'1999-12-31',
 		'usr',
+		2,
 		2
 	);
 
