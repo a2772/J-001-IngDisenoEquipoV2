@@ -426,33 +426,30 @@ public class PRealizarVenta extends javax.swing.JFrame {
             jpMenu.setSize(270, 305);
         }
         if (this.getCarrito() != null) {
-            fillCarrito();
+            reloadCarrito();
         }
     }
 
     //Fill table
-    public void fillCarrito() {
+    public void reloadCarrito() {//Recarga el carrito cada que se haga un cambio, inventarios se quedan iguales
+        //Recargamos con la información actualizada del objeto carrito
         DefaultTableModel modelo = new DefaultTableModel();
 
-        modelo.addColumn("Id del artículo");
+        modelo.addColumn("Id del registro");
+        modelo.addColumn("Id del producto");
         modelo.addColumn("Producto");
-        modelo.addColumn("Descripción");
         modelo.addColumn("Precio $");
-        modelo.addColumn("Color");
-        modelo.addColumn("Categoría");
-        modelo.addColumn("Marca");
+        modelo.addColumn("Cantidad");
 
-        String registro[] = new String[7];
-        for (int i = 0; i < getCarrito().getlArticulo().size(); i++) {
-            Articulo ar = getCarrito().getlArticulo().get(i);
+        String registro[] = new String[5];
+        for (int i = 0; i < this.carrito.getlArticulo().size(); i++) {
+            Articulo ar = this.carrito.getlArticulo().get(i);
 
-            registro[0] = String.valueOf(ar.getCatProducto().getIdCProducto());
-            registro[1] = String.valueOf(ar.getCatProducto().getProducto());
-            registro[2] = String.valueOf(ar.getCatProducto().getDescripcion());
-            registro[3] = String.valueOf("$" + Math.round(ar.getCatProducto().getPrecio() * 100) / 100);
-            registro[4] = String.valueOf(ar.getCatProducto().getColor());
-            registro[5] = String.valueOf(ar.getCatProducto().getCatCategoria().getCategoria());
-            registro[6] = String.valueOf(ar.getCatProducto().getCatMarca().getMarca());
+            registro[0] = String.valueOf(ar.getInventario().getIdInventario());
+            registro[1] = String.valueOf(ar.getCatProducto().getIdCProducto());
+            registro[2] = String.valueOf(ar.getCatProducto().getProducto());//Ruta corta a CatProducto
+            registro[3] = String.valueOf("$" + Math.round(ar.getInventario().getCatProducto().getPrecio() * 100) / 100);//Ruta larga a CatProducto
+            registro[4] = String.valueOf(ar.getCantidad());
             modelo.addRow(registro);
         }
         jtCarrito.setModel(modelo);

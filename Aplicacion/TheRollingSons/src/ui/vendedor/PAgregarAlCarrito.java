@@ -8,8 +8,11 @@ import clases.Personal;
 import clases.util.Articulo;
 import clases.util.Carrito;
 import dao.DAOInitializationException;
+import java.awt.event.KeyEvent;
 import java.sql.SQLException;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
@@ -41,7 +44,7 @@ public class PAgregarAlCarrito extends javax.swing.JFrame {
         txtDisponibles = new javax.swing.JTextField();
         txtIdRegistro1 = new javax.swing.JTextField();
         txtCantAnadir = new javax.swing.JTextField();
-        jComboBox1 = new javax.swing.JComboBox<>();
+        cboElimina = new javax.swing.JComboBox<>();
         lblInstrucciones1 = new javax.swing.JLabel();
         jspDescription = new javax.swing.JScrollPane();
         txtDescripcion = new javax.swing.JTextArea();
@@ -114,7 +117,7 @@ public class PAgregarAlCarrito extends javax.swing.JFrame {
 
         lblProductos9.setBackground(new java.awt.Color(0, 204, 204));
         lblProductos9.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
-        lblProductos9.setText("Diponibles:");
+        lblProductos9.setText("Disponibles:");
         lblProductos9.setOpaque(true);
         getContentPane().add(lblProductos9);
         lblProductos9.setBounds(860, 130, 110, 19);
@@ -157,12 +160,10 @@ public class PAgregarAlCarrito extends javax.swing.JFrame {
         btnAdd.setBounds(1040, 320, 120, 40);
 
         txtDisponibles.setBackground(new java.awt.Color(255, 204, 102));
-        txtDisponibles.setText("SP/NODATA");
         getContentPane().add(txtDisponibles);
         txtDisponibles.setBounds(1000, 120, 120, 30);
 
         txtIdRegistro1.setBackground(new java.awt.Color(255, 204, 102));
-        txtIdRegistro1.setText("SP/NODATA");
         txtIdRegistro1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtIdRegistro1ActionPerformed(evt);
@@ -180,10 +181,10 @@ public class PAgregarAlCarrito extends javax.swing.JFrame {
         getContentPane().add(txtCantAnadir);
         txtCantAnadir.setBounds(1000, 263, 120, 30);
 
-        jComboBox1.setBackground(new java.awt.Color(255, 204, 153));
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        getContentPane().add(jComboBox1);
-        jComboBox1.setBounds(160, 90, 150, 22);
+        cboElimina.setBackground(new java.awt.Color(255, 204, 153));
+        cboElimina.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        getContentPane().add(cboElimina);
+        cboElimina.setBounds(160, 90, 150, 22);
 
         lblInstrucciones1.setBackground(new java.awt.Color(0, 102, 204));
         lblInstrucciones1.setFont(new java.awt.Font("Dialog", 0, 24)); // NOI18N
@@ -292,7 +293,7 @@ public class PAgregarAlCarrito extends javax.swing.JFrame {
                         .addGap(125, 125, 125)
                         .addComponent(lblProductos3))
                     .addGroup(jpMenuLayout.createSequentialGroup()
-                        .addGap(71, 71, 71)
+                        .addGap(73, 73, 73)
                         .addComponent(btnGuardar, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(27, Short.MAX_VALUE))
         );
@@ -309,9 +310,9 @@ public class PAgregarAlCarrito extends javax.swing.JFrame {
                 .addComponent(lblProductos3)
                 .addGap(18, 18, 18)
                 .addComponent(cboMar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnGuardar, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(7, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addComponent(btnGuardar, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(20, Short.MAX_VALUE))
         );
 
         getContentPane().add(jpMenu);
@@ -343,29 +344,105 @@ public class PAgregarAlCarrito extends javax.swing.JFrame {
         dispose();
     }//GEN-LAST:event_btnGuardarActionPerformed
 
+    private boolean cantValid(int addQuit){//Valida si la cantidad ingresada es valida en tipo y rango
+        boolean val=true;
+        if(addQuit==0){//Si validamos cantidad a añadir
+            //Restamos lo de inventario menos el carrito menos lo que se quiere ingresar
+            int disponibles;
+            if(this.carrito!=null){//buscamos si en el carrito hay algo del registro seleccionado
+                
+            }
+            
+        }else{
+            
+        }
+        return val;
+    }
+    
     private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed
-        // TODO add your handling code here:
+        if (!"".equals(txtIdRegistro1.getText())||cantValid(0)) {
+            int opcion = JOptionPane.showConfirmDialog(null, "¿Añadir " + txtCantAnadir.getText() + " unidades?", "Añade item", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+            if (opcion == 0) {
+                //El carrito deja de ser nulo en caso de que lo fuera antes
+                if (carrito == null) {
+                    this.carrito = new Carrito();
+                }
+                //Antes de añadir, comprobamos que no se haya insertado antes ese registro, en cuyo caso solo actualizaríamos las existencias
+                boolean existArticle = false;
+                int posArt = 0;
+                for (Articulo articulo : carrito.getlArticulo()) {
+                    if (articulo.getInventario().getIdInventario() == (Integer.parseInt(txtIdRegistro1.getText()))) {//Si ya existe
+                        existArticle = true;
+                        break;
+                    }
+                    posArt++;
+                }
+
+                if (!existArticle) {
+                    Articulo ar = new Articulo();
+                    Inventario inventario = new Inventario();
+                    ar.setCantidad(Integer.parseInt(txtCantAnadir.getText()));
+                    inventario.setIdInventario(Integer.parseInt(txtIdRegistro1.getText()));
+                    ar.setInventario(inventario);
+
+                    //Fase de pasar el inventario, ya lo tenemos pues con ese llenamos la tabla
+                    GetListas getListas = new GetListas();
+                    List<Inventario> lista = null;
+                    try {
+                        lista = getListas.fillLInventario();
+                    } catch (ClassNotFoundException | SQLException | DAOInitializationException ex) {
+                        Logger.getLogger(PAgregarAlCarrito.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                    //Buscamos la ID correspondiente y se la pasamos a artículo
+                    for (Inventario in : lista) {
+                        if (in.getIdInventario() == ar.getInventario().getIdInventario()) {
+                            ar.setInventario(in);
+                            break;
+                        }
+                    }
+
+                    //Ahora añadimos el catProducto que está dentro del inventario para accesibilidad más sencilla
+                    ar.setCatProducto(ar.getInventario().getCatProducto());
+
+                    //La parte de producto Venta será añadida cuando se concrete la venta, por el momento solo dejamos ese atributo faltante.
+                    //Añadimos el artículo
+                    this.carrito.pushArticulo(ar);
+                    JOptionPane.showMessageDialog(null, "Añadidas " + ar.getCantidad() + " unidades");
+                } else {
+                    //Si ya existe solo actualizamos las existencias sumándolas
+                    int existentes = this.carrito.getlArticulo().get(posArt).getCantidad();
+                    int ingresadas = Integer.parseInt(txtCantAnadir.getText());
+                    this.carrito.getlArticulo().get(posArt).setCantidad(existentes + ingresadas);
+                    JOptionPane.showMessageDialog(null, "Añadidas " + ingresadas + " unidades más");
+                }
+                //Actualizamos carrito
+                reloadCarrito();
+            }
+        }else{//Sino, no se ha seleccionado registro válido
+            JOptionPane.showMessageDialog(null, "No has seleccionado un producto de la tabla Productos", "Warning!", JOptionPane.WARNING_MESSAGE);
+        }
     }//GEN-LAST:event_btnAddActionPerformed
 
     private void jtProductosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jtProductosMouseClicked
-        int sel=jtProductos.rowAtPoint(evt.getPoint());
+        int sel = jtProductos.rowAtPoint(evt.getPoint());
         txtIdRegistro1.setText(String.valueOf(jtProductos.getValueAt(sel, 0)));
         txtDisponibles.setText(String.valueOf(jtProductos.getValueAt(sel, 8)));
-        String d="";
-        d+="Descripición: " + String.valueOf(jtProductos.getValueAt(sel, 3));
-        d+="\n\nNombre: " + String.valueOf(jtProductos.getValueAt(sel, 2));
-        d+="\nSección: " + String.valueOf(jtProductos.getValueAt(sel, 1));
-        d+="\nMarca: " + String.valueOf(jtProductos.getValueAt(sel, 7));
-        d+="\nCategoría: " + String.valueOf(jtProductos.getValueAt(sel, 6));
-        d+="\nColor: " + String.valueOf(jtProductos.getValueAt(sel, 5));
-        d+="\nPrecio unitario: " + String.valueOf(jtProductos.getValueAt(sel, 4));
-        
-        
+        String d = "";
+        d += "Descripición: " + String.valueOf(jtProductos.getValueAt(sel, 3));
+        d += "\n\nNombre: " + String.valueOf(jtProductos.getValueAt(sel, 2));
+        d += "\nSección: " + String.valueOf(jtProductos.getValueAt(sel, 1));
+        d += "\nMarca: " + String.valueOf(jtProductos.getValueAt(sel, 7));
+        d += "\nCategoría: " + String.valueOf(jtProductos.getValueAt(sel, 6));
+        d += "\nColor: " + String.valueOf(jtProductos.getValueAt(sel, 5));
+        d += "\nPrecio unitario: " + String.valueOf(jtProductos.getValueAt(sel, 4));
+
         txtDescripcion.setText(d);
     }//GEN-LAST:event_jtProductosMouseClicked
 
     private void txtCantAnadirKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCantAnadirKeyTyped
-        // TODO add your handling code here:
+        char c = evt.getKeyChar();
+        if(!Character.isDigit(c) && c!= KeyEvent.VK_BACK_SPACE)
+            evt.consume();
     }//GEN-LAST:event_txtCantAnadirKeyTyped
 
     private void btnQuitarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnQuitarActionPerformed
@@ -390,8 +467,8 @@ public class PAgregarAlCarrito extends javax.swing.JFrame {
     private javax.swing.JButton btnGuardar;
     private javax.swing.JButton btnQuitar;
     private javax.swing.JComboBox<String> cboCat;
+    private javax.swing.JComboBox<String> cboElimina;
     private javax.swing.JComboBox<String> cboMar;
-    private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JLabel jLBackground;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jpMenu;
@@ -435,16 +512,38 @@ public class PAgregarAlCarrito extends javax.swing.JFrame {
         txtIdRegistro1.setEditable(false);
         txtDescripcion.setEditable(false);
         txtDisponibles.setEditable(false);
-        if(this.carrito!=null){//Si el carrito no es nulo, llenamos la tabla de
+        if (this.carrito != null) {//Si el carrito no es nulo, llenamos la tabla de
             reloadCarrito();
         }
         //Llenamos los filtros desde la BD
         fillCategoria();
         fillMarca();
     }
-    public void reloadCarrito(){//Recarga el carrito cada que se haga un cambio, inventarios se quedan iguales
-        
+
+    public void reloadCarrito() {//Recarga el carrito cada que se haga un cambio, inventarios se quedan iguales
+        //Recargamos con la información actualizada del objeto carrito
+        DefaultTableModel modelo = new DefaultTableModel();
+
+        modelo.addColumn("Id del registro");
+        modelo.addColumn("Id del producto");
+        modelo.addColumn("Producto");
+        modelo.addColumn("Precio $");
+        modelo.addColumn("Cantidad");
+
+        String registro[] = new String[5];
+        for (int i = 0; i < this.carrito.getlArticulo().size(); i++) {
+            Articulo ar = this.carrito.getlArticulo().get(i);
+
+            registro[0] = String.valueOf(ar.getInventario().getIdInventario());
+            registro[1] = String.valueOf(ar.getCatProducto().getIdCProducto());
+            registro[2] = String.valueOf(ar.getCatProducto().getProducto());//Ruta corta a CatProducto
+            registro[3] = String.valueOf("$" + Math.round(ar.getInventario().getCatProducto().getPrecio() * 100) / 100);//Ruta larga a CatProducto
+            registro[4] = String.valueOf(ar.getCantidad());
+            modelo.addRow(registro);
+        }
+        jtCarrito.setModel(modelo);
     }
+
     private void fillCategoria() throws ClassNotFoundException, SQLException, SQLException, DAOInitializationException {
         List<CatCategoria> lista;
         GetListas getListas = new GetListas();
@@ -455,6 +554,7 @@ public class PAgregarAlCarrito extends javax.swing.JFrame {
             cboCat.addItem(lista.get(i).getCategoria());
         }
     }
+
     private void fillMarca() throws ClassNotFoundException, SQLException, SQLException, DAOInitializationException {
         List<CatMarca> lista;
         GetListas getListas = new GetListas();
@@ -465,7 +565,18 @@ public class PAgregarAlCarrito extends javax.swing.JFrame {
             cboMar.addItem(lista.get(i).getMarca());
         }
     }
-    private  void fillTablaProductos() throws ClassNotFoundException, SQLException, DAOInitializationException{
+    private void fillElimina(){
+        /*List<CatMarca> lista;
+        GetListas getListas = new GetListas();
+        lista = getListas.fillLCatMarca();
+        cboMar.removeAllItems();
+        cboMar.addItem("No aplicar");
+        for (int i = 0; i < lista.size(); i++) {
+            cboMar.addItem(lista.get(i).getMarca());
+        }*/
+    }
+
+    private void fillTablaProductos() throws ClassNotFoundException, SQLException, DAOInitializationException {
         GetListas getListas = new GetListas();
         List<Inventario> lista;
         lista = getListas.fillLInventario();
@@ -480,8 +591,7 @@ public class PAgregarAlCarrito extends javax.swing.JFrame {
         modelo.addColumn("Categoría");
         modelo.addColumn("Marca");
         modelo.addColumn("Existencias");
-        JOptionPane.showMessageDialog(null, lista.size());
-        
+
         String registro[] = new String[9];
         for (int i = 0; i < lista.size(); i++) {
             Inventario in = lista.get(i);
