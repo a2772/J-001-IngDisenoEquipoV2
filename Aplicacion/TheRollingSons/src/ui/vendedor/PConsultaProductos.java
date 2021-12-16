@@ -69,7 +69,6 @@ public class PConsultaProductos extends javax.swing.JFrame {
         lblMss2 = new javax.swing.JLabel();
         jLBackground = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setLocation(new java.awt.Point(30, 40));
@@ -419,10 +418,6 @@ public class PConsultaProductos extends javax.swing.JFrame {
         getContentPane().add(jLabel1);
         jLabel1.setBounds(50, 20, 220, 40);
 
-        jTextField1.setText("jTextField1");
-        getContentPane().add(jTextField1);
-        jTextField1.setBounds(180, 590, 65, 22);
-
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
@@ -584,7 +579,6 @@ public class PConsultaProductos extends javax.swing.JFrame {
     private javax.swing.JComboBox<String> cboSeccion;
     private javax.swing.JLabel jLBackground;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JTextField jTextField1;
     private javax.swing.JPanel jpMenu;
     private javax.swing.JPanel jpMenu1;
     private javax.swing.JScrollPane jspProductos;

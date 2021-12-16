@@ -264,7 +264,7 @@ public class PLogin extends javax.swing.JFrame {
                 prv.setVisible(true);
                 dispose();
             }else{
-                JOptionPane.showMessageDialog(null, "Credenciales incorrectas, intenta de nuevo" + ". Usuario: " + usuario.getCorreo() + ". Contraseña: " + usuario.getPass());
+                JOptionPane.showMessageDialog(null, "Credenciales incorrectas, intenta de nuevo");
             }
         } catch (ClassNotFoundException|SQLException|DAOInitializationException ex) {
             Logger.getLogger(PLogin.class.getName()).log(Level.SEVERE, null, ex);
