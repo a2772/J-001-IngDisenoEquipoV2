@@ -332,6 +332,8 @@ public class PRealizarVenta extends javax.swing.JFrame {
                 try {
                     insertList.registraVentaCarrito(this.carrito);
                     JOptionPane.showMessageDialog(null, "¡Compra realizada!");
+                    this.carrito = null;
+                    jtCarrito.setModel(new DefaultTableModel());
                 } catch (ClassNotFoundException | SQLException | DAOInitializationException ex) {
                     Logger.getLogger(PRealizarVenta.class.getName()).log(Level.SEVERE, null, ex);
                     JOptionPane.showMessageDialog(null, "¡Error al realizar la compra!");
@@ -449,7 +451,6 @@ public class PRealizarVenta extends javax.swing.JFrame {
             jpMenu.setSize(270, 305);
         }
         if (this.carrito != null) {
-            JOptionPane.showMessageDialog(null, "EA");
             reloadCarrito();
         }
     }

@@ -10,6 +10,7 @@ import clases.util.Carrito;
 import dao.DAOInitializationException;
 import java.awt.event.KeyEvent;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -61,7 +62,6 @@ public class PAgregarAlCarrito extends javax.swing.JFrame {
         btnGuardar = new javax.swing.JButton();
         jLBackground = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
-        txtDisponibles1 = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setLocation(new java.awt.Point(500, 300));
@@ -160,10 +160,12 @@ public class PAgregarAlCarrito extends javax.swing.JFrame {
         btnAdd.setBounds(1040, 320, 120, 40);
 
         txtDisponibles.setBackground(new java.awt.Color(255, 204, 102));
+        txtDisponibles.setText("N/A");
         getContentPane().add(txtDisponibles);
         txtDisponibles.setBounds(1000, 120, 120, 30);
 
         txtIdRegistro1.setBackground(new java.awt.Color(255, 204, 102));
+        txtIdRegistro1.setText("N/A");
         txtIdRegistro1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtIdRegistro1ActionPerformed(evt);
@@ -327,11 +329,6 @@ public class PAgregarAlCarrito extends javax.swing.JFrame {
         getContentPane().add(jLabel1);
         jLabel1.setBounds(50, 20, 220, 40);
 
-        txtDisponibles1.setBackground(new java.awt.Color(255, 204, 102));
-        txtDisponibles1.setText("SP/NODATA");
-        getContentPane().add(txtDisponibles1);
-        txtDisponibles1.setBounds(1000, 120, 120, 30);
-
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
@@ -344,82 +341,112 @@ public class PAgregarAlCarrito extends javax.swing.JFrame {
         dispose();
     }//GEN-LAST:event_btnGuardarActionPerformed
 
-    private boolean cantValid(int addQuit){//Valida si la cantidad ingresada es valida en tipo y rango
-        boolean val=true;
-        if(addQuit==0){//Si validamos cantidad a añadir
-            //Restamos lo de inventario menos el carrito menos lo que se quiere ingresar
-            int disponibles;
-            if(this.carrito!=null){//buscamos si en el carrito hay algo del registro seleccionado
-                
+    private boolean cantValid() throws ClassNotFoundException, SQLException, DAOInitializationException {//Valida si la cantidad ingresada es valida en tipo y rango
+        boolean val = true;
+        //Restamos lo de inventario menos el carrito menos lo que se quiere ingresar
+        if (txtCantAnadir.getText().isEmpty()) {
+            val = false;
+            JOptionPane.showMessageDialog(null, "No has seleccionado una cantidad", "Warning!", JOptionPane.WARNING_MESSAGE);
+        } else if ("N/A".equals(txtIdRegistro1.getText())) {
+            val = false;
+            JOptionPane.showMessageDialog(null, "No has seleccionado un producto de la tabla Productos", "Warning!", JOptionPane.WARNING_MESSAGE);
+        } else {//Validacion de cantidades
+            int idTxt = Integer.parseInt(txtIdRegistro1.getText());
+            int disponiblesTxt = Integer.parseInt(txtDisponibles.getText());
+            if (this.carrito != null) {
+                GetListas getListas = new GetListas();
+                List<Inventario> lista;
+                lista = getListas.fillLInventario();
+
+                //Primero restamos lo del carrito a lo disponible
+                if (txtIdRegistro1.getText() != "N/A" && txtDisponibles.getText() != "N/A") {
+                    for (Articulo ar : carrito.getlArticulo()) {
+                        if (idTxt == ar.getInventario().getIdInventario()) {
+                            disponiblesTxt -= ar.getCantidad();
+                        }
+                    }
+                }
             }
-            
-        }else{
-            
+            //Ahora restamos también la cantidad que se desea insertar
+            if (disponiblesTxt - Integer.parseInt(txtCantAnadir.getText()) < 0) {
+                String fr = "¡No puedes añadir esa cantidad!";
+                JOptionPane.showMessageDialog(null, fr, "Cantidad no existente", JOptionPane.WARNING_MESSAGE);
+                val = false;
+            }
         }
         return val;
     }
-    
+
     private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed
-        if (!"".equals(txtIdRegistro1.getText())||cantValid(0)) {
-            int opcion = JOptionPane.showConfirmDialog(null, "¿Añadir " + txtCantAnadir.getText() + " unidades?", "Añade item", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
-            if (opcion == 0) {
-                //El carrito deja de ser nulo en caso de que lo fuera antes
-                if (carrito == null) {
-                    this.carrito = new Carrito();
-                }
-                //Antes de añadir, comprobamos que no se haya insertado antes ese registro, en cuyo caso solo actualizaríamos las existencias
-                boolean existArticle = false;
-                int posArt = 0;
-                for (Articulo articulo : carrito.getlArticulo()) {
-                    if (articulo.getInventario().getIdInventario() == (Integer.parseInt(txtIdRegistro1.getText()))) {//Si ya existe
-                        existArticle = true;
-                        break;
+        try {
+            if (cantValid()) {
+                int opcion = JOptionPane.showConfirmDialog(null, "¿Añadir " + txtCantAnadir.getText() + " unidades?", "Añade item", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+                if (opcion == 0) {
+                    //El carrito deja de ser nulo en caso de que lo fuera antes
+                    if (carrito == null) {
+                        this.carrito = new Carrito();
                     }
-                    posArt++;
-                }
-
-                if (!existArticle) {
-                    Articulo ar = new Articulo();
-                    Inventario inventario = new Inventario();
-                    ar.setCantidad(Integer.parseInt(txtCantAnadir.getText()));
-                    inventario.setIdInventario(Integer.parseInt(txtIdRegistro1.getText()));
-                    ar.setInventario(inventario);
-
-                    //Fase de pasar el inventario, ya lo tenemos pues con ese llenamos la tabla
-                    GetListas getListas = new GetListas();
-                    List<Inventario> lista = null;
-                    try {
-                        lista = getListas.fillLInventario();
-                    } catch (ClassNotFoundException | SQLException | DAOInitializationException ex) {
-                        Logger.getLogger(PAgregarAlCarrito.class.getName()).log(Level.SEVERE, null, ex);
-                    }
-                    //Buscamos la ID correspondiente y se la pasamos a artículo
-                    for (Inventario in : lista) {
-                        if (in.getIdInventario() == ar.getInventario().getIdInventario()) {
-                            ar.setInventario(in);
+                    //Antes de añadir, comprobamos que no se haya insertado antes ese registro, en cuyo caso solo actualizaríamos las existencias
+                    boolean existArticle = false;
+                    int posArt = 0;
+                    for (Articulo articulo : carrito.getlArticulo()) {
+                        if (articulo.getInventario().getIdInventario() == (Integer.parseInt(txtIdRegistro1.getText()))) {//Si ya existe
+                            existArticle = true;
                             break;
                         }
+                        posArt++;
                     }
 
-                    //Ahora añadimos el catProducto que está dentro del inventario para accesibilidad más sencilla
-                    ar.setCatProducto(ar.getInventario().getCatProducto());
+                    if (!existArticle) {
+                        Articulo ar = new Articulo();
+                        Inventario inventario = new Inventario();
+                        ar.setCantidad(Integer.parseInt(txtCantAnadir.getText()));
+                        inventario.setIdInventario(Integer.parseInt(txtIdRegistro1.getText()));
+                        ar.setInventario(inventario);
 
-                    //La parte de producto Venta será añadida cuando se concrete la venta, por el momento solo dejamos ese atributo faltante.
-                    //Añadimos el artículo
-                    this.carrito.pushArticulo(ar);
-                    JOptionPane.showMessageDialog(null, "Añadidas " + ar.getCantidad() + " unidades");
-                } else {
-                    //Si ya existe solo actualizamos las existencias sumándolas
-                    int existentes = this.carrito.getlArticulo().get(posArt).getCantidad();
-                    int ingresadas = Integer.parseInt(txtCantAnadir.getText());
-                    this.carrito.getlArticulo().get(posArt).setCantidad(existentes + ingresadas);
-                    JOptionPane.showMessageDialog(null, "Añadidas " + ingresadas + " unidades más");
+                        //Fase de pasar el inventario, ya lo tenemos pues con ese llenamos la tabla
+                        GetListas getListas = new GetListas();
+                        List<Inventario> lista = null;
+                        try {
+                            lista = getListas.fillLInventario();
+                        } catch (ClassNotFoundException | SQLException | DAOInitializationException ex) {
+                            Logger.getLogger(PAgregarAlCarrito.class.getName()).log(Level.SEVERE, null, ex);
+                        }
+                        //Buscamos la ID correspondiente y se la pasamos a artículo
+                        for (Inventario in : lista) {
+                            if (in.getIdInventario() == ar.getInventario().getIdInventario()) {
+                                ar.setInventario(in);
+                                break;
+                            }
+                        }
+
+                        //Ahora añadimos el catProducto que está dentro del inventario para accesibilidad más sencilla
+                        ar.setCatProducto(ar.getInventario().getCatProducto());
+
+                        //La parte de producto Venta será añadida cuando se concrete la venta, por el momento solo dejamos ese atributo faltante.
+                        //Añadimos el artículo
+                        this.carrito.pushArticulo(ar);
+                        JOptionPane.showMessageDialog(null, "Añadidas " + ar.getCantidad() + " unidades");
+                        fillEliminar();
+                    } else {
+                        //Si ya existe solo actualizamos las existencias sumándolas
+                        int existentes = this.carrito.getlArticulo().get(posArt).getCantidad();
+                        int ingresadas = Integer.parseInt(txtCantAnadir.getText());
+                        this.carrito.getlArticulo().get(posArt).setCantidad(existentes + ingresadas);
+                        JOptionPane.showMessageDialog(null, "Añadidas " + ingresadas + " unidades más");
+                    }
+                    //Actualizamos carrito
+                    reloadCarrito();
                 }
-                //Actualizamos carrito
-                reloadCarrito();
+            } else {//Sino, no se ha seleccionado registro válido
+                JOptionPane.showMessageDialog(null, "Error al insertar", "Warning!", JOptionPane.WARNING_MESSAGE);
             }
-        }else{//Sino, no se ha seleccionado registro válido
-            JOptionPane.showMessageDialog(null, "No has seleccionado un producto de la tabla Productos", "Warning!", JOptionPane.WARNING_MESSAGE);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(PAgregarAlCarrito.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(PAgregarAlCarrito.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (DAOInitializationException ex) {
+            Logger.getLogger(PAgregarAlCarrito.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_btnAddActionPerformed
 
@@ -441,12 +468,32 @@ public class PAgregarAlCarrito extends javax.swing.JFrame {
 
     private void txtCantAnadirKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCantAnadirKeyTyped
         char c = evt.getKeyChar();
-        if(!Character.isDigit(c) && c!= KeyEvent.VK_BACK_SPACE)
+        if (!Character.isDigit(c) && c != KeyEvent.VK_BACK_SPACE)
             evt.consume();
     }//GEN-LAST:event_txtCantAnadirKeyTyped
 
     private void btnQuitarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnQuitarActionPerformed
-        // TODO add your handling code here:
+        if(this.carrito!=null){
+            int idTxt=Integer.parseInt(String.valueOf(cboElimina.getSelectedItem()));
+            List<Articulo> lArticulo = new ArrayList<>();
+            for(Articulo ar:carrito.getlArticulo()){
+                if(ar.getInventario().getIdInventario()==idTxt){//Si llegamos al artículo a eliminar, no lo almacenamos
+                    ;
+                }else{
+                    lArticulo.add(ar);
+                }
+            }
+            carrito.setlArticulo(lArticulo);//Actualizando con la nueva
+            JOptionPane.showMessageDialog(null, "Eliminado del carrito", "Aviso", JOptionPane.WARNING_MESSAGE);
+            try {
+                fillEliminar();
+                reloadCarrito();
+            } catch (ClassNotFoundException | SQLException | DAOInitializationException ex) {
+                Logger.getLogger(PAgregarAlCarrito.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }else{
+            JOptionPane.showMessageDialog(null, "No tienes ningún artículo para eliminar", "Aviso", JOptionPane.WARNING_MESSAGE);
+        }
     }//GEN-LAST:event_btnQuitarActionPerformed
 
     private void txtIdRegistro1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtIdRegistro1ActionPerformed
@@ -493,7 +540,6 @@ public class PAgregarAlCarrito extends javax.swing.JFrame {
     private javax.swing.JTextField txtCantAnadir;
     private javax.swing.JTextArea txtDescripcion;
     private javax.swing.JTextField txtDisponibles;
-    private javax.swing.JTextField txtDisponibles1;
     private javax.swing.JTextField txtIdRegistro1;
     // End of variables declaration//GEN-END:variables
 
@@ -518,6 +564,7 @@ public class PAgregarAlCarrito extends javax.swing.JFrame {
         //Llenamos los filtros desde la BD
         fillCategoria();
         fillMarca();
+        fillEliminar();
     }
 
     public void reloadCarrito() {//Recarga el carrito cada que se haga un cambio, inventarios se quedan iguales
@@ -565,15 +612,16 @@ public class PAgregarAlCarrito extends javax.swing.JFrame {
             cboMar.addItem(lista.get(i).getMarca());
         }
     }
-    private void fillElimina(){
-        /*List<CatMarca> lista;
-        GetListas getListas = new GetListas();
-        lista = getListas.fillLCatMarca();
-        cboMar.removeAllItems();
-        cboMar.addItem("No aplicar");
-        for (int i = 0; i < lista.size(); i++) {
-            cboMar.addItem(lista.get(i).getMarca());
-        }*/
+
+    private void fillEliminar() throws ClassNotFoundException, SQLException, SQLException, DAOInitializationException {
+        cboElimina.removeAllItems();
+        if (this.carrito != null) {
+            for (int i = 0; i < this.carrito.getlArticulo().size(); i++) {
+                cboElimina.addItem(String.valueOf(this.carrito.getlArticulo().get(i).getInventario().getIdInventario()));
+            }
+        }else{
+            cboElimina.addItem(" ");
+        }
     }
 
     private void fillTablaProductos() throws ClassNotFoundException, SQLException, DAOInitializationException {
