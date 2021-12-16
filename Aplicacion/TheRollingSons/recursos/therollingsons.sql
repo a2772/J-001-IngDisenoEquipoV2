@@ -122,7 +122,7 @@ create table pass(
 
 	insert into catCategoria(categoria) values ('Baleros'),('Aceite'),('Trucks'),('Patinetas'),("Patines"),('Ropa Hombre'),('Ropa Mujer'),('Ruedas para Patin'), ("Ruedas para patineta"),('Tablas');
 
-	insert into catSeccion(seccion) values ('Estante 3, repisa 1');
+	insert into catSeccion(seccion) values ('Estante 3, repisa 1'),('Estante 3, repisa 2'),('Estante 5, repisa 6'),('Bodega Norte'),('Bodega a 20 grados'),('Almacen express'),('Almacen 4');
 
 	insert into catProducto(producto,descripcionAlmacenar,descripcion,precio,color,idCategoria1,idMarca1) values (
 		'Patineta Mediana',
@@ -237,7 +237,7 @@ create table pass(
 	insert into personal(nombre,apPat,apMat,curp,tel,fechNac,correo,idCPerfil1,idSexo1) values (
 		'Paris',
 		'Ramirez',
-		'Saldaña',
+		'Saldana',
 		'RASP010527HDFJLR9',
 		'55-9876-5432',
 		'2001-05-27',
@@ -281,6 +281,31 @@ create table pass(
 		'Ingreso por compra a credito del 16/12/2021',
 		1,
 		1
+	),(
+		25,
+		'Ingreso a inventario al contado',
+		2,
+		1
+	),(
+		10,
+		'Pedido de cliente J.L Goytia. NO VENDER',
+		1,
+		4
+	),(
+		19,
+		'Unidades de nuevo producto',
+		1,
+		3
+	),(
+		23,
+		'Compra de posible nueva tendencia de articulo',
+		1,
+		5
+	),(
+		9,
+		'Ingreso del 18/12/2021 por compra a credito',
+		1,
+		5
 	);
 
 	insert into horario(idPersonal2,idCHorario1) values (1,1),(1,2);

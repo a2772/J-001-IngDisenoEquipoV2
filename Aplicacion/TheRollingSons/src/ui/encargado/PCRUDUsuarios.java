@@ -2,6 +2,7 @@ package ui.encargado;
 
 import business.GetById;
 import business.GetListas;
+import business.InsertIndividual;
 import clases.CatCategoria;
 import clases.CatMarca;
 import clases.CatPerfil;
@@ -50,7 +51,6 @@ public class PCRUDUsuarios extends javax.swing.JFrame {
         jButtonSalir1 = new javax.swing.JButton();
         btnLimpiar = new javax.swing.JButton();
         jLabelNombre5 = new javax.swing.JLabel();
-        txtCurp = new javax.swing.JTextField();
         jLabelNombre6 = new javax.swing.JLabel();
         txtCorreo = new javax.swing.JTextField();
         txtApMat = new javax.swing.JTextField();
@@ -66,6 +66,9 @@ public class PCRUDUsuarios extends javax.swing.JFrame {
         txtNombre = new javax.swing.JTextField();
         txtId = new javax.swing.JTextField();
         jLabelID = new javax.swing.JLabel();
+        txtCurp = new javax.swing.JTextField();
+        jLabelNombre7 = new javax.swing.JLabel();
+        txtPass = new javax.swing.JPasswordField();
         jLabelTitulo = new javax.swing.JLabel();
         dtpFechNac = new com.toedter.calendar.JDateChooser();
         jpMenu = new javax.swing.JPanel();
@@ -188,11 +191,9 @@ public class PCRUDUsuarios extends javax.swing.JFrame {
 
         jLabelNombre5.setBackground(new java.awt.Color(0, 153, 153));
         jLabelNombre5.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jLabelNombre5.setText("CURP");
+        jLabelNombre5.setText("Contraseña");
         getContentPane().add(jLabelNombre5);
-        jLabelNombre5.setBounds(840, 210, 110, 30);
-        getContentPane().add(txtCurp);
-        txtCurp.setBounds(960, 210, 160, 30);
+        jLabelNombre5.setBounds(840, 260, 110, 30);
 
         jLabelNombre6.setBackground(new java.awt.Color(0, 153, 153));
         jLabelNombre6.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
@@ -257,6 +258,18 @@ public class PCRUDUsuarios extends javax.swing.JFrame {
         jLabelID.setText("ID del Empleado");
         getContentPane().add(jLabelID);
         jLabelID.setBounds(480, 60, 130, 30);
+        getContentPane().add(txtCurp);
+        txtCurp.setBounds(960, 210, 160, 30);
+
+        jLabelNombre7.setBackground(new java.awt.Color(0, 153, 153));
+        jLabelNombre7.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabelNombre7.setText("CURP");
+        getContentPane().add(jLabelNombre7);
+        jLabelNombre7.setBounds(840, 210, 110, 30);
+
+        txtPass.setText("1234");
+        getContentPane().add(txtPass);
+        txtPass.setBounds(960, 260, 160, 30);
 
         jLabelTitulo.setBackground(new java.awt.Color(0, 153, 153));
         jLabelTitulo.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
@@ -486,6 +499,7 @@ public class PCRUDUsuarios extends javax.swing.JFrame {
         this.rbtnAgregar.setSelected(true);
         enableAll();
         this.vRbtn=1;
+        
     }//GEN-LAST:event_rbtnAgregarActionPerformed
 
     private void rbtnConsultarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbtnConsultarActionPerformed
@@ -559,7 +573,35 @@ public class PCRUDUsuarios extends javax.swing.JFrame {
     }//GEN-LAST:event_jtPersonalMouseClicked
 
     private void btnAplicarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAplicarActionPerformed
-        //if()
+        if(vRbtn==1){//Inserccion
+            //Pendiente pedir  e insertar password
+            Personal p = new Personal();
+            
+            p.setNombre(txtNombre.getText());
+            p.setApPat(txtNombre.getText());
+            p.setApMat(txtNombre.getText());
+            p.setCorreo(txtNombre.getText());
+            p.setCurp(txtNombre.getText());
+            p.setFechaNac(dtpFechNac.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate());
+            p.setTel(txtNombre.getText());
+            //Parte del CatPerfil
+            CatPerfil cp = new CatPerfil();
+            cp.setIdCPerfil(cboTipoPerfil.getSelectedIndex());
+            CatSexo cs = new CatSexo();
+            cs.setIdSexo(cboSexo.getSelectedIndex());
+            p.setCatPerfil(cp);
+            p.setCatSexo(cs);
+            
+            //Mandamos a insertar
+            InsertIndividual insertIndividual = new InsertIndividual();
+            try {
+                insertIndividual.fillPersonal(p);
+                JOptionPane.showMessageDialog(null, "Usuario agregado");
+            } catch (ClassNotFoundException | SQLException | DAOInitializationException ex) {
+                Logger.getLogger(PCRUDUsuarios.class.getName()).log(Level.SEVERE, null, ex);
+                JOptionPane.showMessageDialog(null, "Error 405");
+            }
+        }
     }//GEN-LAST:event_btnAplicarActionPerformed
 
     private void enableAll() {
@@ -672,6 +714,7 @@ public class PCRUDUsuarios extends javax.swing.JFrame {
     private javax.swing.JLabel jLabelNombre4;
     private javax.swing.JLabel jLabelNombre5;
     private javax.swing.JLabel jLabelNombre6;
+    private javax.swing.JLabel jLabelNombre7;
     private javax.swing.JLabel jLabelNombre8;
     private javax.swing.JLabel jLabelNombre9;
     private javax.swing.JLabel jLabelTitulo;
@@ -697,6 +740,7 @@ public class PCRUDUsuarios extends javax.swing.JFrame {
     private javax.swing.JTextField txtCurp;
     private javax.swing.JTextField txtId;
     private javax.swing.JTextField txtNombre;
+    private javax.swing.JPasswordField txtPass;
     private javax.swing.JTextField txtTel;
     // End of variables declaration//GEN-END:variables
 
