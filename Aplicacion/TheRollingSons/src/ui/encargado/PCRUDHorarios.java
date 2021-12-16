@@ -245,11 +245,11 @@ public class PCRUDHorarios extends javax.swing.JFrame {
                 .addComponent(rbtnCRUDUsr)
                 .addGap(18, 18, 18)
                 .addComponent(rbtnCRUDInv)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(rbtnCRUDPM)
                 .addGap(18, 18, 18)
+                .addComponent(rbtnCRUDPM)
+                .addGap(20, 20, 20)
                 .addComponent(rbtnCRUDHor)
-                .addContainerGap(68, Short.MAX_VALUE))
+                .addContainerGap(51, Short.MAX_VALUE))
         );
 
         getContentPane().add(jpMenu);
