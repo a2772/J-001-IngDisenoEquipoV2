@@ -561,7 +561,7 @@ public class PConsultaProductos extends javax.swing.JFrame {
             registro[4] = String.valueOf(pve.getVenta().getIdVenta());
             modelo.addRow(registro);
         }
-        jtArticulos.setModel(modelo);        
+        jtArticulos.setModel(modelo);
     }//GEN-LAST:event_jtMisVentas1MouseClicked
 
     /*public static void main(String args[]) {

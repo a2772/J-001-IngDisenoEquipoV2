@@ -88,4 +88,47 @@ public class ConsultaConId extends DataAccessObject {
         }
         return ve;
     }
+    public CatProducto getCatProducto(int idCatProducto) throws SQLException, DAOInitializationException {
+        ResultSet rs = null;
+        PreparedStatement stmt = null;
+        CatProducto catP=null;
+        CatMarca cM;
+        CatCategoria cC;
+
+        String sql = "select * from catProducto cp, catMarca cm, catCategoria cc where cp.idCategoria1=cc.idCategoria and cp.idMarca1=cm.idMarca and cp.idCProducto=?";
+
+        try {
+            stmt = prepareStatement(sql);
+            stmt.setInt(1, idCatProducto);            
+            rs = stmt.executeQuery();
+            while (rs.next()) {
+                catP = new CatProducto();
+                //Tabla trabajador
+                catP.setIdCProducto(rs.getInt("idCProducto"));
+                catP.setProducto(rs.getString("producto"));
+                catP.setPrecio(rs.getFloat("precio"));
+                catP.setColor(rs.getString("color"));
+                catP.setDescripcion(rs.getString("descripcion"));
+                catP.setDescripcionAlmacenar(rs.getString("descripcionAlmacenar"));
+                //CatMarca
+                cM = new CatMarca();
+                cM.setIdMarca(rs.getInt("idMarca"));
+                cM.setMarca(rs.getString("marca"));
+                //CatCategoria
+                cC = new CatCategoria();
+                cC.setIdCategoria(rs.getInt("idCategoria"));
+                cC.setCategoria(rs.getString("categoria"));
+                //Añadiendo objetos
+                catP.setCatCategoria(cC);
+                catP.setCatMarca(cM);
+                
+            }
+        } catch (DAOInitializationException | SQLException ex) {
+            
+        } finally {
+            closeResultSet(rs);
+            closeStatement(stmt);
+        }
+        return catP;
+    }
 }

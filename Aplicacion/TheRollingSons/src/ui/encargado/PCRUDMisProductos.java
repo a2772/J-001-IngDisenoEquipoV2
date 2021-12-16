@@ -1,6 +1,9 @@
 package ui.encargado;
 
+import business.GetById;
 import business.GetListas;
+import business.InsertIndividual;
+import business.Update;
 import clases.CatCategoria;
 import clases.CatMarca;
 import clases.CatProducto;
@@ -24,10 +27,10 @@ public class PCRUDMisProductos extends javax.swing.JFrame {
     public PCRUDMisProductos() {
         initComponents();
         this.vRbtn = 1;//Siempre empieza con el radio button de Agregar
-        this.txtId.setEditable(false);
+        this.txtId.setVisible(false);
+        this.jLabelID.setVisible(false);
 
         //DESACTIVA
-        btnLimpiar.setVisible(false);
     }
 
     @SuppressWarnings("unchecked")
@@ -124,7 +127,7 @@ public class PCRUDMisProductos extends javax.swing.JFrame {
         getContentPane().add(jLabelNombre4);
         jLabelNombre4.setBounds(500, 200, 160, 30);
         getContentPane().add(txtPrecio);
-        txtPrecio.setBounds(990, 10, 220, 30);
+        txtPrecio.setBounds(990, 50, 220, 30);
 
         jLabelNombre1.setBackground(new java.awt.Color(0, 153, 153));
         jLabelNombre1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
@@ -154,7 +157,7 @@ public class PCRUDMisProductos extends javax.swing.JFrame {
             }
         });
         getContentPane().add(btnAceptar);
-        btnAceptar.setBounds(1050, 250, 90, 40);
+        btnAceptar.setBounds(1120, 260, 90, 40);
 
         btnSalir.setBackground(new java.awt.Color(204, 0, 0));
         btnSalir.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
@@ -178,7 +181,7 @@ public class PCRUDMisProductos extends javax.swing.JFrame {
             }
         });
         getContentPane().add(btnLimpiar);
-        btnLimpiar.setBounds(350, 270, 90, 40);
+        btnLimpiar.setBounds(930, 260, 90, 40);
 
         cboCat.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Producto", "Proteccion", "Refaccion", "Accesorio" }));
         cboCat.addActionListener(new java.awt.event.ActionListener() {
@@ -200,6 +203,11 @@ public class PCRUDMisProductos extends javax.swing.JFrame {
         getContentPane().add(txtColor);
         txtColor.setBounds(660, 280, 220, 30);
 
+        jtProductos.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jtProductosMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(jtProductos);
 
         getContentPane().add(jScrollPane1);
@@ -245,7 +253,7 @@ public class PCRUDMisProductos extends javax.swing.JFrame {
         jLabelNombre6.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabelNombre6.setText("Costo:");
         getContentPane().add(jLabelNombre6);
-        jLabelNombre6.setBounds(900, 10, 60, 30);
+        jLabelNombre6.setBounds(900, 50, 60, 30);
 
         jpMenu.setBackground(new java.awt.Color(204, 255, 255));
 
@@ -424,7 +432,13 @@ public class PCRUDMisProductos extends javax.swing.JFrame {
     }//GEN-LAST:event_btnSalirActionPerformed
 
     private void btnLimpiarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimpiarActionPerformed
-        // TODO add your handling code here:
+        cboCat.setSelectedIndex(0);
+        cboMar.setSelectedIndex(0);
+        txtNombre.setText("");
+        txtDescripcion.setText("");
+        txtDescripcionA.setText("");
+        txtColor.setText("");
+        txtPrecio.setText("");
     }//GEN-LAST:event_btnLimpiarActionPerformed
 
     private void rbtnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbtnAddActionPerformed
@@ -504,7 +518,7 @@ public class PCRUDMisProductos extends javax.swing.JFrame {
     }//GEN-LAST:event_cboCatActionPerformed
 
     private void btnAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAceptarActionPerformed
-        if (vRbtn == 1) {
+        if (vRbtn == 1) {//Si es insertar
             //Insertamos
             //Primero obtenemos id's
             GetListas getListas = new GetListas();
@@ -529,11 +543,84 @@ public class PCRUDMisProductos extends javax.swing.JFrame {
             if (indxC > 0) {
                 idCategoria = catLCategoria.get(indxC - 1).getIdCategoria();
             }
-            
+
             //Insertamos
-            
+            CatProducto cp = new CatProducto();
+            cp.setIdCProducto(0);
+            cp.setColor(txtColor.getText());
+            cp.setDescripcion(txtDescripcion.getText());
+            cp.setDescripcionAlmacenar(txtDescripcionA.getText());
+            cp.setPrecio(Float.parseFloat(txtPrecio.getText()));
+            cp.setProducto(txtNombre.getText());
+            CatCategoria cc = new CatCategoria();
+            CatMarca cm = new CatMarca();
+            cc.setIdCategoria(idCategoria);
+            cm.setIdMarca(idMarca);
+            //Pasamos los cat, solo con ID, no es necesario más
+            cp.setCatCategoria(cc);
+            cp.setCatMarca(cm);
+
+            InsertIndividual insertIndividual = new InsertIndividual();
+            try {
+                insertIndividual.fillCatProducto(cp);
+                JOptionPane.showMessageDialog(null, "Insertado con éxito");
+            } catch (ClassNotFoundException | SQLException | DAOInitializationException ex) {
+                Logger.getLogger(PCRUDMisProductos.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        } else if (vRbtn == 3) {//Actualizamos
+            int opcion = JOptionPane.showConfirmDialog(null, "¿Realmente deseas actualizar este producto?", "Actualizando", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+            if (opcion == 0) {
+                //Llenamos el Cat con los datos correspondientes
+                CatProducto cp = new CatProducto();
+                cp.setIdCProducto(Integer.parseInt(txtId.getText()));
+                cp.setProducto(txtNombre.getText());
+                cp.setDescripcion(txtDescripcion.getText());
+                cp.setDescripcionAlmacenar(txtDescripcionA.getText());
+                cp.setPrecio(Float.parseFloat(txtPrecio.getText()));
+                cp.setColor(txtColor.getText());
+                CatCategoria cc = new CatCategoria();
+                CatMarca cm = new CatMarca();
+                cc.setIdCategoria(cboCat.getSelectedIndex());
+                cm.setIdMarca(cboMar.getSelectedIndex());
+                
+                cp.setCatCategoria(cc);
+                cp.setCatMarca(cm);
+                
+                
+                Update update = new Update();
+                try {
+                    update.updtCatProducto(cp);
+                } catch (ClassNotFoundException | SQLException | DAOInitializationException ex) {
+                    Logger.getLogger(PCRUDMisProductos.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                JOptionPane.showMessageDialog(null, "        Actualizado        ");
+            }
         }
     }//GEN-LAST:event_btnAceptarActionPerformed
+
+    private void jtProductosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jtProductosMouseClicked
+        int sel = jtProductos.rowAtPoint(evt.getPoint());
+        txtId.setText(String.valueOf(jtProductos.getValueAt(sel, 0)));
+        txtNombre.setText(String.valueOf(jtProductos.getValueAt(sel, 1)));
+        txtDescripcion.setText(String.valueOf(jtProductos.getValueAt(sel, 2)));
+        txtDescripcionA.setText(String.valueOf(jtProductos.getValueAt(sel, 3)));
+        txtPrecio.setText(String.valueOf(jtProductos.getValueAt(sel, 4)));
+        txtColor.setText(String.valueOf(jtProductos.getValueAt(sel, 5)));
+
+        //Obtenemos el producto por id
+        GetById getById = new GetById();
+        CatProducto cp = new CatProducto();
+        try {
+            cp = getById.getCatProductoById(Integer.parseInt(txtId.getText()));
+        } catch (ClassNotFoundException | SQLException | DAOInitializationException ex) {
+            Logger.getLogger(PCRUDMisProductos.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        cboCat.setSelectedIndex(cp.getCatCategoria().getIdCategoria());
+        cboMar.setSelectedIndex(cp.getCatMarca().getIdMarca());
+        if(vRbtn==3){
+            enableAllFields();
+        }
+    }//GEN-LAST:event_jtProductosMouseClicked
 
     /*public static void main(String args[]) {
         java.awt.EventQueue.invokeLater(new Runnable() {
@@ -660,7 +747,7 @@ public class PCRUDMisProductos extends javax.swing.JFrame {
             registro[1] = String.valueOf(in.getProducto());
             registro[2] = String.valueOf(in.getDescripcion());
             registro[3] = String.valueOf(in.getDescripcionAlmacenar());
-            registro[4] = String.valueOf("$" + Math.round(in.getPrecio() * 100) / 100);
+            registro[4] = String.valueOf(Math.round(in.getPrecio() * 100) / 100);
             registro[5] = String.valueOf(in.getColor());
             registro[6] = String.valueOf(in.getCatCategoria().getCategoria());
             registro[7] = String.valueOf(in.getCatMarca().getMarca());
