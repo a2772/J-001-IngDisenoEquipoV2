@@ -245,7 +245,7 @@ public class PLogin extends javax.swing.JFrame {
             usuario.setCorreo(txtUsuario.getText());
             usuario.setPass(new String(txtPass.getPassword()) );
             //Validamos ese usuario
-            usuario.setEstatus(validaciones.usuarioValido(usuario));
+            usuario.setEstatus(validaciones.usuarioValido(usuario));//Incluye validacion de vacíos
             
             //Ahora determinamos el estado, si es válido lo mandamos a donde corresponde, sino le indicamos que los datos ingresados son incorrectos
             if(usuario.isEstatus()){

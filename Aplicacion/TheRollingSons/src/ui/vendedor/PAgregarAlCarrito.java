@@ -695,13 +695,13 @@ public class PAgregarAlCarrito extends javax.swing.JFrame {
             int idMarca = -1, idCategoria = -1, aux=0;
             int indxM = cboMar.getSelectedIndex(),indxC = cboCat.getSelectedIndex();
             //Marcas
-            if(indxM>1)
-                idMarca = catLMarca.get(indxM).getIdMarca()-1;
+            if(indxM>0)
+                idMarca = catLMarca.get(indxM-1).getIdMarca();
             
             //Categorias
             if(indxC>0)
-                idCategoria = catLCategoria.get(indxC).getIdCategoria()-1;
-            JOptionPane.showMessageDialog(null, "idM: " + idMarca + ". IdC: " + idCategoria);
+                idCategoria = catLCategoria.get(indxC-1).getIdCategoria();
+            //JOptionPane.showMessageDialog(null, "idM: " + idMarca + ". IdC: " + idCategoria);
             ///Fin
             List<Inventario> lista;
             lista = getListas.fillLInventarioFiltro(idMarca, idCategoria);

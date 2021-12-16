@@ -29,6 +29,8 @@ public class Login extends DataAccessObject{
             closeResultSet(rs);
             closeStatement(stmt);
         }
+        if(email=="" || pass =="")
+            isValid = false;
         return isValid;
     }
 }

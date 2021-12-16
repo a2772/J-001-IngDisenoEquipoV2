@@ -67,7 +67,7 @@ public class PRealizarVenta extends javax.swing.JFrame {
             }
         });
         getContentPane().add(btnCompraCarrito);
-        btnCompraCarrito.setBounds(1020, 560, 200, 70);
+        btnCompraCarrito.setBounds(960, 530, 200, 70);
 
         btnSalir.setBackground(new java.awt.Color(153, 0, 51));
         btnSalir.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
@@ -90,7 +90,7 @@ public class PRealizarVenta extends javax.swing.JFrame {
             }
         });
         getContentPane().add(btnIrCarrito1);
-        btnIrCarrito1.setBounds(790, 560, 200, 70);
+        btnIrCarrito1.setBounds(650, 530, 200, 70);
 
         btnBorrar1.setBackground(new java.awt.Color(255, 102, 102));
         btnBorrar1.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
@@ -102,7 +102,7 @@ public class PRealizarVenta extends javax.swing.JFrame {
             }
         });
         getContentPane().add(btnBorrar1);
-        btnBorrar1.setBounds(550, 560, 200, 70);
+        btnBorrar1.setBounds(370, 530, 200, 70);
 
         jLabel2.setBackground(new java.awt.Color(255, 153, 51));
         jLabel2.setFont(new java.awt.Font("DialogInput", 3, 36)); // NOI18N
@@ -123,7 +123,7 @@ public class PRealizarVenta extends javax.swing.JFrame {
         jspCarrito.setViewportView(jtCarrito);
 
         getContentPane().add(jspCarrito);
-        jspCarrito.setBounds(340, 120, 700, 402);
+        jspCarrito.setBounds(340, 120, 780, 360);
 
         jpMenu.setBackground(new java.awt.Color(204, 255, 255));
 
@@ -280,7 +280,11 @@ public class PRealizarVenta extends javax.swing.JFrame {
         //Iniciamos el primer formulario, si es Encargado
         pConsultaProductos.setPersonal(personal);
         pConsultaProductos.setCarrito(carrito);
-        pConsultaProductos.preCarga();
+        try {
+            pConsultaProductos.preCarga();
+        } catch (ClassNotFoundException | SQLException | DAOInitializationException ex) {
+            Logger.getLogger(PRealizarVenta.class.getName()).log(Level.SEVERE, null, ex);
+        }
         pConsultaProductos.setVisible(true);
         dispose();
     }//GEN-LAST:event_rbtnConsProdActionPerformed
@@ -407,15 +411,6 @@ public class PRealizarVenta extends javax.swing.JFrame {
 
     public void setPersonal(Personal personal) {
         this.personal = personal;
-    }
-
-    private void desSelect() {//Desselecciona todos los RBTN
-        rbtnConsProd.setSelected(false);
-        rbtnVenta.setSelected(false);
-        rbtnCRUDHor.setSelected(false);
-        rbtnCRUDInv.setSelected(false);
-        rbtnCRUDPM.setSelected(false);
-        rbtnCRUDUsr.setSelected(false);
     }
 
     public void preCarga() {//Datos previos a mostrar el JFRAME pero posteriores al constructor
