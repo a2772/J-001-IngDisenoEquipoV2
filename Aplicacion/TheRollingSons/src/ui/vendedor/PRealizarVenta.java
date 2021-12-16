@@ -29,6 +29,7 @@ public class PRealizarVenta extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        lblInstrucciones = new javax.swing.JLabel();
         btnCompraCarrito = new javax.swing.JButton();
         btnSalir = new javax.swing.JButton();
         btnIrCarrito1 = new javax.swing.JButton();
@@ -57,9 +58,15 @@ public class PRealizarVenta extends javax.swing.JFrame {
         setSize(new java.awt.Dimension(1252, 683));
         getContentPane().setLayout(null);
 
+        lblInstrucciones.setBackground(new java.awt.Color(0, 102, 204));
+        lblInstrucciones.setFont(new java.awt.Font("Pristina", 1, 40)); // NOI18N
+        lblInstrucciones.setForeground(new java.awt.Color(255, 255, 255));
+        lblInstrucciones.setText("The Rolling Sons");
+        getContentPane().add(lblInstrucciones);
+        lblInstrucciones.setBounds(970, 10, 260, 50);
+
         btnCompraCarrito.setBackground(new java.awt.Color(51, 204, 0));
-        btnCompraCarrito.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
-        btnCompraCarrito.setForeground(new java.awt.Color(255, 255, 255));
+        btnCompraCarrito.setFont(new java.awt.Font("Dialog", 0, 24)); // NOI18N
         btnCompraCarrito.setText("Confirmar Compra");
         btnCompraCarrito.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -67,11 +74,10 @@ public class PRealizarVenta extends javax.swing.JFrame {
             }
         });
         getContentPane().add(btnCompraCarrito);
-        btnCompraCarrito.setBounds(960, 530, 200, 70);
+        btnCompraCarrito.setBounds(880, 530, 240, 70);
 
         btnSalir.setBackground(new java.awt.Color(153, 0, 51));
         btnSalir.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
-        btnSalir.setForeground(new java.awt.Color(255, 255, 255));
         btnSalir.setText("SALIR");
         btnSalir.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -79,10 +85,10 @@ public class PRealizarVenta extends javax.swing.JFrame {
             }
         });
         getContentPane().add(btnSalir);
-        btnSalir.setBounds(30, 590, 90, 50);
+        btnSalir.setBounds(100, 590, 90, 50);
 
         btnIrCarrito1.setBackground(new java.awt.Color(0, 255, 204));
-        btnIrCarrito1.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
+        btnIrCarrito1.setFont(new java.awt.Font("Dialog", 0, 24)); // NOI18N
         btnIrCarrito1.setText("Cambiar Carrito");
         btnIrCarrito1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -90,26 +96,25 @@ public class PRealizarVenta extends javax.swing.JFrame {
             }
         });
         getContentPane().add(btnIrCarrito1);
-        btnIrCarrito1.setBounds(650, 530, 200, 70);
+        btnIrCarrito1.setBounds(600, 530, 200, 70);
 
         btnBorrar1.setBackground(new java.awt.Color(255, 102, 102));
-        btnBorrar1.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
-        btnBorrar1.setForeground(new java.awt.Color(255, 255, 255));
-        btnBorrar1.setText("BORRAR");
+        btnBorrar1.setFont(new java.awt.Font("Dialog", 0, 24)); // NOI18N
+        btnBorrar1.setText("Borrar");
         btnBorrar1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnBorrar1ActionPerformed(evt);
             }
         });
         getContentPane().add(btnBorrar1);
-        btnBorrar1.setBounds(370, 530, 200, 70);
+        btnBorrar1.setBounds(340, 530, 200, 70);
 
         jLabel2.setBackground(new java.awt.Color(255, 153, 51));
-        jLabel2.setFont(new java.awt.Font("DialogInput", 3, 36)); // NOI18N
-        jLabel2.setText("       Carrito Actual     ");
-        jLabel2.setOpaque(true);
+        jLabel2.setFont(new java.awt.Font("Tahoma", 1, 36)); // NOI18N
+        jLabel2.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel2.setText("Carrito Actual");
         getContentPane().add(jLabel2);
-        jLabel2.setBounds(390, 40, 600, 60);
+        jLabel2.setBounds(340, 40, 270, 60);
 
         jtCarrito.setBackground(new java.awt.Color(102, 255, 204));
         jtCarrito.setModel(new javax.swing.table.DefaultTableModel(
@@ -394,6 +399,7 @@ public class PRealizarVenta extends javax.swing.JFrame {
     private javax.swing.JPanel jpMenu;
     private javax.swing.JScrollPane jspCarrito;
     private javax.swing.JTable jtCarrito;
+    private javax.swing.JLabel lblInstrucciones;
     private javax.swing.JLabel lblMss1;
     private javax.swing.JLabel lblMss2;
     private javax.swing.JLabel lblMss3;
