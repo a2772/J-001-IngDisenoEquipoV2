@@ -106,4 +106,10 @@ public class GetListas {
         list = consultaCats.getLProductoVenta(venta);
         return list;
     }
+    public List<Personal> fillLPersonal() throws ClassNotFoundException, ClassNotFoundException, SQLException, DAOInitializationException{
+        List<Personal> list;
+        ConsultaCats consultaCats = new ConsultaCats();
+        list = consultaCats.getLPersonal();
+        return list;
+    }
 }

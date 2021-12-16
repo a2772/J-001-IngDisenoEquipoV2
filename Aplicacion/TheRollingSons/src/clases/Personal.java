@@ -93,5 +93,9 @@ public class Personal {
     public void setCatSexo(CatSexo catSexo) {
         this.catSexo = catSexo;
     }
+
+    public void setNombre(LocalDate object) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
     
 }

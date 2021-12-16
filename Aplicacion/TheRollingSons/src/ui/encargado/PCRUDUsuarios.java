@@ -1,12 +1,20 @@
 package ui.encargado;
 
+import business.GetListas;
+import clases.CatCategoria;
+import clases.CatMarca;
+import clases.CatProducto;
+import clases.CatSexo;
 import ui.vendedor.*;
 import clases.Personal;
 import dao.DAOInitializationException;
 import java.sql.SQLException;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+import ui.PLogin;
 
 public class PCRUDUsuarios extends javax.swing.JFrame {
 
@@ -21,10 +29,10 @@ public class PCRUDUsuarios extends javax.swing.JFrame {
     private void initComponents() {
 
         jLabelNombre = new javax.swing.JLabel();
-        jRadioButton1 = new javax.swing.JRadioButton();
-        jRadioButton2 = new javax.swing.JRadioButton();
-        jRadioButton3 = new javax.swing.JRadioButton();
-        jRadioButton4 = new javax.swing.JRadioButton();
+        rbtnActualizar = new javax.swing.JRadioButton();
+        rbtnConsultar = new javax.swing.JRadioButton();
+        rbtnAgregar = new javax.swing.JRadioButton();
+        rbtnEliminar = new javax.swing.JRadioButton();
         jLabelNombre4 = new javax.swing.JLabel();
         jTextFieldPriApellido = new javax.swing.JTextField();
         jLabelNombre2 = new javax.swing.JLabel();
@@ -37,25 +45,19 @@ public class PCRUDUsuarios extends javax.swing.JFrame {
         jTextFieldEmail = new javax.swing.JTextField();
         jTextFieldSegApellido = new javax.swing.JTextField();
         jTextFieldTelefono = new javax.swing.JTextField();
-        jLabelNombre7 = new javax.swing.JLabel();
         jLabelNombre8 = new javax.swing.JLabel();
+        cboTipoPerfil = new javax.swing.JComboBox<>();
         jLabelNombre9 = new javax.swing.JLabel();
-        jTextFieldCalle = new javax.swing.JTextField();
+        cboSexo = new javax.swing.JComboBox<>();
         jLabelNombre10 = new javax.swing.JLabel();
-        jTextFieldNumInt = new javax.swing.JTextField();
-        jTextFieldNumExt1 = new javax.swing.JTextField();
         jLabelNombre11 = new javax.swing.JLabel();
-        jTextFieldCP = new javax.swing.JTextField();
-        jLabelNombre12 = new javax.swing.JLabel();
-        jTextFieldMun = new javax.swing.JTextField();
-        jLabelNombre13 = new javax.swing.JLabel();
-        jTextFieldEstado = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        jtPersonal = new javax.swing.JTable();
         jTextFieldNombre = new javax.swing.JTextField();
         jTextFieldID = new javax.swing.JTextField();
         jLabelID = new javax.swing.JLabel();
         jLabelTitulo = new javax.swing.JLabel();
+        jDateChooser1 = new com.toedter.calendar.JDateChooser();
         jpMenu = new javax.swing.JPanel();
         lblMss1 = new javax.swing.JLabel();
         rbtnVenta = new javax.swing.JRadioButton();
@@ -79,29 +81,50 @@ public class PCRUDUsuarios extends javax.swing.JFrame {
         getContentPane().add(jLabelNombre);
         jLabelNombre.setBounds(480, 100, 120, 30);
 
-        jRadioButton1.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        jRadioButton1.setText("Actualizar");
-        jRadioButton1.setOpaque(false);
-        getContentPane().add(jRadioButton1);
-        jRadioButton1.setBounds(320, 220, 120, 31);
+        rbtnActualizar.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        rbtnActualizar.setText("Actualizar");
+        rbtnActualizar.setOpaque(false);
+        rbtnActualizar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                rbtnActualizarActionPerformed(evt);
+            }
+        });
+        getContentPane().add(rbtnActualizar);
+        rbtnActualizar.setBounds(320, 220, 120, 31);
 
-        jRadioButton2.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        jRadioButton2.setText("Consultar");
-        jRadioButton2.setOpaque(false);
-        getContentPane().add(jRadioButton2);
-        jRadioButton2.setBounds(320, 160, 120, 31);
+        rbtnConsultar.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        rbtnConsultar.setText("Consultar");
+        rbtnConsultar.setOpaque(false);
+        rbtnConsultar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                rbtnConsultarActionPerformed(evt);
+            }
+        });
+        getContentPane().add(rbtnConsultar);
+        rbtnConsultar.setBounds(320, 160, 120, 31);
 
-        jRadioButton3.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        jRadioButton3.setText("Agregar");
-        jRadioButton3.setOpaque(false);
-        getContentPane().add(jRadioButton3);
-        jRadioButton3.setBounds(320, 100, 100, 31);
+        rbtnAgregar.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        rbtnAgregar.setSelected(true);
+        rbtnAgregar.setText("Agregar");
+        rbtnAgregar.setOpaque(false);
+        rbtnAgregar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                rbtnAgregarActionPerformed(evt);
+            }
+        });
+        getContentPane().add(rbtnAgregar);
+        rbtnAgregar.setBounds(320, 100, 100, 31);
 
-        jRadioButton4.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        jRadioButton4.setText("Eliminar");
-        jRadioButton4.setOpaque(false);
-        getContentPane().add(jRadioButton4);
-        jRadioButton4.setBounds(320, 280, 100, 23);
+        rbtnEliminar.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        rbtnEliminar.setText("Eliminar");
+        rbtnEliminar.setOpaque(false);
+        rbtnEliminar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                rbtnEliminarActionPerformed(evt);
+            }
+        });
+        getContentPane().add(rbtnEliminar);
+        rbtnEliminar.setBounds(320, 280, 140, 23);
 
         jLabelNombre4.setBackground(new java.awt.Color(0, 153, 153));
         jLabelNombre4.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
@@ -122,7 +145,7 @@ public class PCRUDUsuarios extends javax.swing.JFrame {
         jButtonAplicar.setText("Aplicar");
         jButtonAplicar.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         getContentPane().add(jButtonAplicar);
-        jButtonAplicar.setBounds(940, 410, 90, 40);
+        jButtonAplicar.setBounds(1060, 180, 90, 40);
 
         jButtonSalir1.setBackground(new java.awt.Color(204, 0, 0));
         jButtonSalir1.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
@@ -134,7 +157,7 @@ public class PCRUDUsuarios extends javax.swing.JFrame {
             }
         });
         getContentPane().add(jButtonSalir1);
-        jButtonSalir1.setBounds(480, 410, 90, 40);
+        jButtonSalir1.setBounds(330, 380, 90, 40);
 
         jButtonLimpiar.setBackground(new java.awt.Color(0, 255, 255));
         jButtonLimpiar.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
@@ -146,7 +169,7 @@ public class PCRUDUsuarios extends javax.swing.JFrame {
             }
         });
         getContentPane().add(jButtonLimpiar);
-        jButtonLimpiar.setBounds(710, 410, 90, 40);
+        jButtonLimpiar.setBounds(900, 180, 90, 40);
 
         jLabelNombre5.setBackground(new java.awt.Color(0, 153, 153));
         jLabelNombre5.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
@@ -166,13 +189,7 @@ public class PCRUDUsuarios extends javax.swing.JFrame {
         getContentPane().add(jTextFieldSegApellido);
         jTextFieldSegApellido.setBounds(620, 180, 180, 30);
         getContentPane().add(jTextFieldTelefono);
-        jTextFieldTelefono.setBounds(620, 300, 180, 30);
-
-        jLabelNombre7.setBackground(new java.awt.Color(0, 153, 153));
-        jLabelNombre7.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jLabelNombre7.setText("Dirección");
-        getContentPane().add(jLabelNombre7);
-        jLabelNombre7.setBounds(840, 30, 170, 30);
+        jTextFieldTelefono.setBounds(630, 300, 170, 30);
 
         jLabelNombre8.setBackground(new java.awt.Color(0, 153, 153));
         jLabelNombre8.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
@@ -180,52 +197,36 @@ public class PCRUDUsuarios extends javax.swing.JFrame {
         getContentPane().add(jLabelNombre8);
         jLabelNombre8.setBounds(480, 300, 120, 30);
 
+        cboTipoPerfil.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        getContentPane().add(cboTipoPerfil);
+        cboTipoPerfil.setBounds(960, 110, 130, 30);
+
         jLabelNombre9.setBackground(new java.awt.Color(0, 153, 153));
         jLabelNombre9.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jLabelNombre9.setText("Calle");
+        jLabelNombre9.setText("Fecha de nacimiento");
         getContentPane().add(jLabelNombre9);
-        jLabelNombre9.setBounds(840, 60, 170, 30);
-        getContentPane().add(jTextFieldCalle);
-        jTextFieldCalle.setBounds(1020, 60, 220, 30);
+        jLabelNombre9.setBounds(480, 340, 170, 30);
+
+        cboSexo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        getContentPane().add(cboSexo);
+        cboSexo.setBounds(960, 60, 130, 30);
 
         jLabelNombre10.setBackground(new java.awt.Color(0, 153, 153));
         jLabelNombre10.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jLabelNombre10.setText("Número Exterior e Interior");
+        jLabelNombre10.setText("Sexo");
         getContentPane().add(jLabelNombre10);
-        jLabelNombre10.setBounds(840, 100, 170, 30);
-        getContentPane().add(jTextFieldNumInt);
-        jTextFieldNumInt.setBounds(1140, 100, 100, 30);
-        getContentPane().add(jTextFieldNumExt1);
-        jTextFieldNumExt1.setBounds(1020, 100, 100, 30);
+        jLabelNombre10.setBounds(840, 60, 90, 30);
 
         jLabelNombre11.setBackground(new java.awt.Color(0, 153, 153));
         jLabelNombre11.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jLabelNombre11.setText("Código Postal ");
+        jLabelNombre11.setText("Tipo de Perfil");
         getContentPane().add(jLabelNombre11);
-        jLabelNombre11.setBounds(840, 140, 170, 30);
-        getContentPane().add(jTextFieldCP);
-        jTextFieldCP.setBounds(1020, 140, 100, 30);
+        jLabelNombre11.setBounds(840, 110, 110, 30);
 
-        jLabelNombre12.setBackground(new java.awt.Color(0, 153, 153));
-        jLabelNombre12.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jLabelNombre12.setText("Alcaldia/Municipio");
-        getContentPane().add(jLabelNombre12);
-        jLabelNombre12.setBounds(840, 180, 170, 30);
-        getContentPane().add(jTextFieldMun);
-        jTextFieldMun.setBounds(1020, 180, 220, 30);
-
-        jLabelNombre13.setBackground(new java.awt.Color(0, 153, 153));
-        jLabelNombre13.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jLabelNombre13.setText("Estado");
-        getContentPane().add(jLabelNombre13);
-        jLabelNombre13.setBounds(840, 220, 170, 30);
-        getContentPane().add(jTextFieldEstado);
-        jTextFieldEstado.setBounds(1020, 220, 220, 30);
-
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(jtPersonal);
 
         getContentPane().add(jScrollPane1);
-        jScrollPane1.setBounds(330, 492, 880, 110);
+        jScrollPane1.setBounds(310, 482, 900, 140);
         getContentPane().add(jTextFieldNombre);
         jTextFieldNombre.setBounds(620, 100, 180, 30);
         getContentPane().add(jTextFieldID);
@@ -242,6 +243,8 @@ public class PCRUDUsuarios extends javax.swing.JFrame {
         jLabelTitulo.setText("CRUD Usuarios");
         getContentPane().add(jLabelTitulo);
         jLabelTitulo.setBounds(320, 10, 220, 40);
+        getContentPane().add(jDateChooser1);
+        jDateChooser1.setBounds(630, 340, 170, 30);
 
         jpMenu.setBackground(new java.awt.Color(204, 255, 255));
 
@@ -410,7 +413,13 @@ public class PCRUDUsuarios extends javax.swing.JFrame {
     }//GEN-LAST:event_rbtnVentaActionPerformed
 
     private void jButtonSalir1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSalir1ActionPerformed
-        // TODO add your handling code here:
+        int opcion = JOptionPane.showConfirmDialog(null, "¿Realmente desea salir de su sesión?", "Cerrando Sesión...", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+        if (opcion == 0) {
+            JOptionPane.showMessageDialog(null, "        Cerrando sesión        \n     Ten un excelente día\n          " + personal.getNombre());
+            PLogin pLogin = new PLogin();
+            pLogin.setVisible(true);
+            dispose();
+        }
     }//GEN-LAST:event_jButtonSalir1ActionPerformed
 
     private void jButtonLimpiarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonLimpiarActionPerformed
@@ -443,6 +452,96 @@ public class PCRUDUsuarios extends javax.swing.JFrame {
         dispose();
     }//GEN-LAST:event_rbtnCRUDPMActionPerformed
 
+    private void rbtnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbtnAgregarActionPerformed
+        disRbtn();
+        this.rbtnAgregar.setSelected(true);
+    }//GEN-LAST:event_rbtnAgregarActionPerformed
+
+    private void rbtnConsultarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbtnConsultarActionPerformed
+        disRbtn();
+        this.rbtnConsultar.setSelected(true);
+        try {
+            consulta();
+        } catch (ClassNotFoundException | SQLException | DAOInitializationException ex) {
+            Logger.getLogger(PCRUDUsuarios.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_rbtnConsultarActionPerformed
+
+    private void rbtnActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbtnActualizarActionPerformed
+        disRbtn();
+        this.rbtnActualizar.setSelected(true);
+    }//GEN-LAST:event_rbtnActualizarActionPerformed
+
+    private void rbtnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbtnEliminarActionPerformed
+        disRbtn();
+        this.rbtnEliminar.setSelected(true);
+    }//GEN-LAST:event_rbtnEliminarActionPerformed
+
+    private void disRbtn(){//eshabilita todos los rbtn de opciones Agrega, consultar, etc.
+        this.rbtnAgregar.setSelected(false);
+        this.rbtnActualizar.setSelected(false);
+        this.rbtnConsultar.setSelected(false);
+        this.rbtnEliminar.setSelected(false);
+    }
+    private void consulta() throws ClassNotFoundException, SQLException, DAOInitializationException {//Se usa en actualización y en consulta
+        //Hacemos consulta llenando los desplegables con filtros
+        //Cada que se invoque, actualiza la tabla de productos
+        GetListas getListas = new GetListas();
+        List<Personal> lista = getListas.fillLPersonal();
+        
+        DefaultTableModel modelo = new DefaultTableModel();
+
+        modelo.addColumn("Id personal");
+        modelo.addColumn("Nombre");
+        modelo.addColumn("Ap. paterno");
+        modelo.addColumn("Ap. Materno");
+        modelo.addColumn("Sexo");
+        modelo.addColumn("CURP");
+        modelo.addColumn("Teléfono");
+        modelo.addColumn("Fecha de Nac.");
+        modelo.addColumn("E-mail");
+        modelo.addColumn("Tipo Perfil");
+
+        String registro[] = new String[10];
+        for (int i = 0; i < lista.size(); i++) {
+            Personal p = lista.get(i);
+
+            registro[0] = String.valueOf(p.getIdPersonal());
+            registro[1] = String.valueOf(p.getNombre());
+            registro[2] = String.valueOf(p.getApPat());
+            registro[3] = String.valueOf(p.getApMat());
+            registro[4] = String.valueOf(p.getCatSexo().getSexo());
+            registro[5] = String.valueOf(p.getCurp());
+            registro[6] = String.valueOf(p.getTel());
+            registro[7] = String.valueOf(p.getFechaNac().getDayOfMonth() + "/" + p.getFechaNac().getMonth() + "/"+p.getFechaNac().getYear());
+            registro[8] = String.valueOf(p.getCorreo());
+            registro[9] = String.valueOf(p.getCatPerfil().getPerfil());
+            
+            modelo.addRow(registro);
+        }
+        jtPersonal.setModel(modelo);
+    }
+    
+    private void fillSexo() throws ClassNotFoundException, SQLException, SQLException, DAOInitializationException {
+        List<CatSexo> lista;
+        GetListas getListas = new GetListas();
+        lista = getListas.fillLCatSexo();
+        cboMar.removeAllItems();
+        cboMar.addItem(" ");
+        for (int i = 0; i < lista.size(); i++) {
+            cboMar.addItem(lista.get(i).getMarca());
+        }
+    }
+    private void fillCatPerfil() throws ClassNotFoundException, SQLException, SQLException, DAOInitializationException {
+        List<CatMarca> lista;
+        GetListas getListas = new GetListas();
+        lista = getListas.fillLCatMarca();
+        cboMar.removeAllItems();
+        cboMar.addItem(" ");
+        for (int i = 0; i < lista.size(); i++) {
+            cboMar.addItem(lista.get(i).getMarca());
+        }
+    }
     /*public static void main(String args[]) {
         java.awt.EventQueue.invokeLater(new Runnable() {
             private Personal personal;
@@ -453,52 +552,46 @@ public class PCRUDUsuarios extends javax.swing.JFrame {
     }*/
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JComboBox<String> cboSexo;
+    private javax.swing.JComboBox<String> cboTipoPerfil;
     private javax.swing.JButton jButtonAplicar;
     private javax.swing.JButton jButtonLimpiar;
     private javax.swing.JButton jButtonSalir1;
+    private com.toedter.calendar.JDateChooser jDateChooser1;
     private javax.swing.JLabel jLBackground;
     private javax.swing.JLabel jLabelID;
     private javax.swing.JLabel jLabelNombre;
     private javax.swing.JLabel jLabelNombre10;
     private javax.swing.JLabel jLabelNombre11;
-    private javax.swing.JLabel jLabelNombre12;
-    private javax.swing.JLabel jLabelNombre13;
     private javax.swing.JLabel jLabelNombre2;
     private javax.swing.JLabel jLabelNombre4;
     private javax.swing.JLabel jLabelNombre5;
     private javax.swing.JLabel jLabelNombre6;
-    private javax.swing.JLabel jLabelNombre7;
     private javax.swing.JLabel jLabelNombre8;
     private javax.swing.JLabel jLabelNombre9;
     private javax.swing.JLabel jLabelTitulo;
-    private javax.swing.JRadioButton jRadioButton1;
-    private javax.swing.JRadioButton jRadioButton2;
-    private javax.swing.JRadioButton jRadioButton3;
-    private javax.swing.JRadioButton jRadioButton4;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
-    private javax.swing.JTextField jTextFieldCP;
     private javax.swing.JTextField jTextFieldCURP;
-    private javax.swing.JTextField jTextFieldCalle;
     private javax.swing.JTextField jTextFieldEmail;
-    private javax.swing.JTextField jTextFieldEstado;
     private javax.swing.JTextField jTextFieldID;
-    private javax.swing.JTextField jTextFieldMun;
     private javax.swing.JTextField jTextFieldNombre;
-    private javax.swing.JTextField jTextFieldNumExt1;
-    private javax.swing.JTextField jTextFieldNumInt;
     private javax.swing.JTextField jTextFieldPriApellido;
     private javax.swing.JTextField jTextFieldSegApellido;
     private javax.swing.JTextField jTextFieldTelefono;
     private javax.swing.JPanel jpMenu;
+    private javax.swing.JTable jtPersonal;
     private javax.swing.JLabel lblMss1;
     private javax.swing.JLabel lblMss2;
     private javax.swing.JLabel lblMss3;
+    private javax.swing.JRadioButton rbtnActualizar;
+    private javax.swing.JRadioButton rbtnAgregar;
     private javax.swing.JRadioButton rbtnCRUDHor;
     private javax.swing.JRadioButton rbtnCRUDInv;
     private javax.swing.JRadioButton rbtnCRUDPM;
     private javax.swing.JRadioButton rbtnCRUDUsr;
     private javax.swing.JRadioButton rbtnConsProd;
+    private javax.swing.JRadioButton rbtnConsultar;
+    private javax.swing.JRadioButton rbtnEliminar;
     private javax.swing.JRadioButton rbtnVenta;
     // End of variables declaration//GEN-END:variables
 

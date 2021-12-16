@@ -59,7 +59,7 @@ public class PCRUDHorarios extends javax.swing.JFrame {
         jRadioButton2.setText("Consultar");
         jRadioButton2.setOpaque(false);
         getContentPane().add(jRadioButton2);
-        jRadioButton2.setBounds(340, 140, 120, 31);
+        jRadioButton2.setBounds(340, 100, 120, 31);
 
         jLabelHorario.setBackground(new java.awt.Color(0, 153, 153));
         jLabelHorario.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
@@ -122,7 +122,7 @@ public class PCRUDHorarios extends javax.swing.JFrame {
         jScrollPane1.setViewportView(jTable1);
 
         getContentPane().add(jScrollPane1);
-        jScrollPane1.setBounds(330, 322, 880, 290);
+        jScrollPane1.setBounds(330, 322, 880, 260);
         getContentPane().add(jTextFieldIDEmpleado);
         jTextFieldIDEmpleado.setBounds(720, 140, 220, 30);
 
@@ -136,7 +136,7 @@ public class PCRUDHorarios extends javax.swing.JFrame {
         jLabelTitulo.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
         jLabelTitulo.setText("CRUD Horarios");
         getContentPane().add(jLabelTitulo);
-        jLabelTitulo.setBounds(340, 40, 220, 40);
+        jLabelTitulo.setBounds(340, 20, 220, 40);
 
         jpMenu.setBackground(new java.awt.Color(204, 255, 255));
 

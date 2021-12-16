@@ -406,4 +406,49 @@ public class ConsultaCats extends DataAccessObject {
         }
         return lista;
     }
+    public List<Personal> getLPersonal() throws SQLException, DAOInitializationException {
+        ResultSet rs = null;
+        PreparedStatement stmt = null;
+        List<Personal> lista = new ArrayList<>();
+        Personal p;
+        CatPerfil cp;
+        CatSexo cs;
+
+        String sql = "select * from personal p, catPerfil cp, catSexo cs where p.idCPerfil1=cp.idCPerfil and cs.idSexo=p.idSexo1";
+        
+        try {
+            stmt = prepareStatement(sql);
+            rs = stmt.executeQuery();
+            while (rs.next()) {
+                p = new Personal();
+                p.setIdPersonal(rs.getInt("idPersonal"));
+                p.setNombre(rs.getString("nombre"));
+                p.setApPat(rs.getString("apPat"));
+                p.setApMat(rs.getString("apMat"));
+                p.setCurp(rs.getString("curp"));
+                p.setTel(rs.getString("tel"));
+                p.setFechaNac(rs.getObject("fechNac", LocalDate.class));
+                p.setCorreo(rs.getString("correo"));
+                
+                ///Vaciamos el catProducto
+                cp = new CatPerfil();
+                cp.setIdCPerfil(rs.getInt("idCPerfil"));
+                cp.setPerfil(rs.getString("perfil"));
+                
+                cs = new CatSexo();
+                cs.setIdSexo(rs.getInt("idSexo"));
+                cs.setSexo(rs.getString("sexo"));
+                
+                p.setCatPerfil(cp);
+                p.setCatSexo(cs);
+                lista.add(p);
+            }
+        } catch (DAOInitializationException | SQLException ex) {
+            lista = null;
+        } finally {
+            closeResultSet(rs);
+            closeStatement(stmt);
+        }
+        return lista;
+    }
 }

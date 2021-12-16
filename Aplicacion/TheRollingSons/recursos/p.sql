@@ -15,7 +15,8 @@ USE therollingsons;
 -- select * from productoVenta;
 
 -- select * from catProducto cp
-select * from productoVenta pv, catProducto cp where pv.idCProducto1=cp.idCProducto and pv.idVenta1=1;
+-- select * from productoVenta pv, catProducto cp where pv.idCProducto1=cp.idCProducto and pv.idVenta1=1;
+select * from personal p, catPerfil cp, catSexo cs where p.idCPerfil1=cp.idCPerfil and cs.idSexo=p.idSexo1
 
 
 
