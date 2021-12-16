@@ -85,4 +85,10 @@ public class GetListas {
         list = consultaGeneral.getLInventarioFiltro2(idMarca, idCategoria, idSeccion);
         return list;
     }
+    public List<CatProducto> fillLCatProductoFiltro(int idMarca, int idCategoria) throws ClassNotFoundException, ClassNotFoundException, SQLException, DAOInitializationException{
+        List<CatProducto> list;
+        ConsultaGeneral consultaGeneral = new ConsultaGeneral();
+        list = consultaGeneral.getLCatProductoFiltro(idMarca, idCategoria);
+        return list;
+    }
 }

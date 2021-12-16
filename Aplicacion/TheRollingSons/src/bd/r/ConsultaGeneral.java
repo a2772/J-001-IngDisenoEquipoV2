@@ -174,6 +174,80 @@ public class ConsultaGeneral extends DataAccessObject {
         }
         return lista;
     }
+    public List<CatProducto> getLCatProductoFiltro(int idMarca, int idCategoria) throws SQLException, DAOInitializationException {
+        ResultSet rs = null;
+        PreparedStatement stmt = null;
+        List<CatProducto> lista = new ArrayList<>();
+        CatProducto cp;
+        CatMarca cm;
+        CatCategoria cc;
+        
+        String sql = "";
+        int caso = 0;
+
+        if (idMarca == -1 && idCategoria == -1) {//Si no hay filtros
+            sql = "select * from catProducto cp, catMarca cm, catCategoria cc where cp.idCategoria1=cc.idCategoria and cp.idMarca1=cm.idMarca";
+            caso = 0;
+        } else if (idMarca != -1 && idCategoria != -1) {//Si tiene ambos filtros
+            sql = "select * from catProducto cp, catMarca cm, catCategoria cc where cp.idCategoria1=cc.idCategoria and cp.idMarca1=cm.idMarca and cm.idMarca=cp.idMarca1 and cc.idCategoria=cp.idCategoria1";
+            caso = 1;
+        } else if (idMarca != -1) {//Solo filtro marca
+            sql = "select * from catProducto cp, catMarca cm, catCategoria cc where cp.idCategoria1=cc.idCategoria and cp.idMarca1=cm.idMarca and cm.idMarca=cp.idMarca1";
+            caso = 2;
+        } else if (idCategoria != -1) {//Solo filtro categoría
+            sql = "select * from catProducto cp, catMarca cm, catCategoria cc where cp.idCategoria1=cc.idCategoria and cp.idMarca1=cm.idMarca and cc.idCategoria=cp.idCategoria1";
+            caso = 3;
+        }
+
+        try {
+            stmt = prepareStatement(sql);
+            switch (caso) {
+                case 0://Sin filtro
+                    break;
+                case 1://Ambos filtros (primero marca luego categoría)
+                    stmt.setInt(1, idMarca);
+                    stmt.setInt(2, idCategoria);
+                    break;
+                case 2://Marca
+                    stmt.setInt(1, idMarca);
+                    break;
+                case 3://Categoría
+                    stmt.setInt(1, idCategoria);
+                    break;
+            }
+            rs = stmt.executeQuery();
+            while (rs.next()) {//Recuperando valores
+                cp = new CatProducto();
+                //Cat Producto
+                cp = new CatProducto();
+                
+                cp.setIdCProducto(rs.getInt("idCProducto"));
+                cp.setColor(rs.getString("color"));
+                cp.setDescripcion(rs.getString("descripcion"));
+                cp.setDescripcionAlmacenar(rs.getString("descripcionAlmacenar"));
+                cp.setPrecio(rs.getFloat("precio"));
+                cp.setProducto(rs.getString("producto"));
+                //SUB  de Cat Producto
+                cc = new CatCategoria();
+                cm = new CatMarca();
+                cc.setIdCategoria(rs.getInt("idCategoria"));
+                cc.setCategoria(rs.getString("categoria"));
+                cm.setIdMarca(rs.getInt("idMarca"));
+                cm.setMarca(rs.getString("marca"));
+
+                cp.setCatCategoria(cc);
+                cp.setCatMarca(cm);
+                
+                lista.add(cp);
+            }
+        } catch (DAOInitializationException | SQLException ex) {
+            lista = null;
+        } finally {
+            closeResultSet(rs);
+            closeStatement(stmt);
+        }
+        return lista;
+    }
 
     public List<Inventario> getLInventarioFiltro2(int idMarca, int idCategoria, int idSeccion) throws SQLException, DAOInitializationException {
         ResultSet rs = null;
