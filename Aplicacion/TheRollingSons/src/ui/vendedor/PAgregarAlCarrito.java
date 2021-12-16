@@ -252,6 +252,11 @@ public class PAgregarAlCarrito extends javax.swing.JFrame {
         cboCat.setBackground(new java.awt.Color(102, 153, 255));
         cboCat.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
         cboCat.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cboCat.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cboCatActionPerformed(evt);
+            }
+        });
 
         lblProductos1.setBackground(new java.awt.Color(0, 204, 204));
         lblProductos1.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
@@ -266,6 +271,11 @@ public class PAgregarAlCarrito extends javax.swing.JFrame {
         cboMar.setBackground(new java.awt.Color(102, 153, 255));
         cboMar.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
         cboMar.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cboMar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cboMarActionPerformed(evt);
+            }
+        });
 
         btnGuardar.setBackground(new java.awt.Color(0, 204, 0));
         btnGuardar.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
@@ -473,13 +483,13 @@ public class PAgregarAlCarrito extends javax.swing.JFrame {
     }//GEN-LAST:event_txtCantAnadirKeyTyped
 
     private void btnQuitarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnQuitarActionPerformed
-        if(this.carrito!=null){
-            int idTxt=Integer.parseInt(String.valueOf(cboElimina.getSelectedItem()));
+        if (this.carrito != null) {
+            int idTxt = Integer.parseInt(String.valueOf(cboElimina.getSelectedItem()));
             List<Articulo> lArticulo = new ArrayList<>();
-            for(Articulo ar:carrito.getlArticulo()){
-                if(ar.getInventario().getIdInventario()==idTxt){//Si llegamos al artículo a eliminar, no lo almacenamos
+            for (Articulo ar : carrito.getlArticulo()) {
+                if (ar.getInventario().getIdInventario() == idTxt) {//Si llegamos al artículo a eliminar, no lo almacenamos
                     ;
-                }else{
+                } else {
                     lArticulo.add(ar);
                 }
             }
@@ -491,14 +501,30 @@ public class PAgregarAlCarrito extends javax.swing.JFrame {
             } catch (ClassNotFoundException | SQLException | DAOInitializationException ex) {
                 Logger.getLogger(PAgregarAlCarrito.class.getName()).log(Level.SEVERE, null, ex);
             }
-        }else{
+        } else {
             JOptionPane.showMessageDialog(null, "No tienes ningún artículo para eliminar", "Aviso", JOptionPane.WARNING_MESSAGE);
         }
     }//GEN-LAST:event_btnQuitarActionPerformed
 
     private void txtIdRegistro1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtIdRegistro1ActionPerformed
-        // TODO add your handling code here:
+        
     }//GEN-LAST:event_txtIdRegistro1ActionPerformed
+
+    private void cboCatActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cboCatActionPerformed
+        try {
+            aplicaFiltros();
+        } catch (ClassNotFoundException | SQLException | DAOInitializationException ex) {
+            Logger.getLogger(PAgregarAlCarrito.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_cboCatActionPerformed
+
+    private void cboMarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cboMarActionPerformed
+        try {
+            aplicaFiltros();
+        } catch (ClassNotFoundException | SQLException | DAOInitializationException ex) {
+            Logger.getLogger(PAgregarAlCarrito.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_cboMarActionPerformed
 
     /*public static void main(String args[]) {
         java.awt.EventQueue.invokeLater(new Runnable() {
@@ -596,7 +622,7 @@ public class PAgregarAlCarrito extends javax.swing.JFrame {
         GetListas getListas = new GetListas();
         lista = getListas.fillLCatCategoria();
         cboCat.removeAllItems();
-        cboCat.addItem("No aplicar");
+        cboCat.addItem(" ");
         for (int i = 0; i < lista.size(); i++) {
             cboCat.addItem(lista.get(i).getCategoria());
         }
@@ -607,7 +633,7 @@ public class PAgregarAlCarrito extends javax.swing.JFrame {
         GetListas getListas = new GetListas();
         lista = getListas.fillLCatMarca();
         cboMar.removeAllItems();
-        cboMar.addItem("No aplicar");
+        cboMar.addItem(" ");
         for (int i = 0; i < lista.size(); i++) {
             cboMar.addItem(lista.get(i).getMarca());
         }
@@ -619,7 +645,7 @@ public class PAgregarAlCarrito extends javax.swing.JFrame {
             for (int i = 0; i < this.carrito.getlArticulo().size(); i++) {
                 cboElimina.addItem(String.valueOf(this.carrito.getlArticulo().get(i).getInventario().getIdInventario()));
             }
-        }else{
+        } else {
             cboElimina.addItem(" ");
         }
     }
@@ -658,16 +684,62 @@ public class PAgregarAlCarrito extends javax.swing.JFrame {
         jtProductos.setModel(modelo);
     }
 
-    /**
-     * @return the carrito
-     */
+    private void aplicaFiltros() throws ClassNotFoundException, SQLException, DAOInitializationException {
+        //Cada que se invoque, actualiza la tabla de productos
+        
+            GetListas getListas = new GetListas();
+            List<CatMarca> catLMarca = getListas.fillLCatMarca();
+            List<CatCategoria> catLCategoria = getListas.fillLCatCategoria();
+
+            //Obteniendo las id de los combo box
+            int idMarca = -1, idCategoria = -1, aux=0;
+            int indxM = cboMar.getSelectedIndex(),indxC = cboCat.getSelectedIndex();
+            //Marcas
+            if(indxM>1)
+                idMarca = catLMarca.get(indxM).getIdMarca()-1;
+            
+            //Categorias
+            if(indxC>0)
+                idCategoria = catLCategoria.get(indxC).getIdCategoria()-1;
+            JOptionPane.showMessageDialog(null, "idM: " + idMarca + ". IdC: " + idCategoria);
+            ///Fin
+            List<Inventario> lista;
+            lista = getListas.fillLInventarioFiltro(idMarca, idCategoria);
+            DefaultTableModel modelo = new DefaultTableModel();
+
+            modelo.addColumn("Id del registro");
+            modelo.addColumn("Sección");
+            modelo.addColumn("Producto");
+            modelo.addColumn("Descripción");
+            modelo.addColumn("Precio $");
+            modelo.addColumn("Color");
+            modelo.addColumn("Categoría");
+            modelo.addColumn("Marca");
+            modelo.addColumn("Existencias");
+
+            String registro[] = new String[9];
+            for (int i = 0; i < lista.size(); i++) {
+                Inventario in = lista.get(i);
+
+                registro[0] = String.valueOf(in.getIdInventario());
+                registro[1] = String.valueOf(in.getCatSeccion().getSeccion());
+                registro[2] = String.valueOf(in.getCatProducto().getProducto());
+                registro[3] = String.valueOf(in.getCatProducto().getDescripcion());
+                registro[4] = String.valueOf("$" + Math.round(in.getCatProducto().getPrecio() * 100) / 100);
+                registro[5] = String.valueOf(in.getCatProducto().getColor());
+                registro[6] = String.valueOf(in.getCatProducto().getCatCategoria().getCategoria());
+                registro[7] = String.valueOf(in.getCatProducto().getCatMarca().getMarca());
+                registro[8] = String.valueOf(in.getCantidad());
+                modelo.addRow(registro);
+            }
+            jtProductos.setModel(modelo);
+        
+    }
+
     public Carrito getCarrito() {
         return carrito;
     }
 
-    /**
-     * @param carrito the carrito to set
-     */
     public void setCarrito(Carrito carrito) {
         this.carrito = carrito;
     }

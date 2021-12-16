@@ -82,4 +82,94 @@ public class ConsultaGeneral extends DataAccessObject {
         }
         return lista;
     }
+    public List<Inventario> getLInventarioFiltro(int idMarca, int idCategoria) throws SQLException, DAOInitializationException{
+        ResultSet rs = null;
+        PreparedStatement stmt = null;
+        List<Inventario> lista = new ArrayList<>();
+        Inventario inventario;
+        CatProducto catProducto;
+        CatSeccion catSeccion;
+        
+        CatCategoria catCategoria;
+        
+        //SUB- Anidados
+        CatCategoria cc;
+        CatMarca cm;
+        String sql = "";
+        int caso=0;
+        
+        if(idMarca==-1 && idCategoria==-1){//Si no hay filtros
+            sql = "select * from inventario i, catProducto cp, catSeccion cs, catMarca cm, catCategoria cc where i.idCProducto2=cp.idCProducto and i.idSeccion1=cs.idSeccion and cm.idMarca=cp.idMarca1 and cc.idCategoria=cp.idCategoria1";
+            caso = 0;
+        }else if(idMarca!=-1 && idCategoria !=-1){//Si tiene ambos filtros
+            sql = "select * from inventario i, catProducto cp, catSeccion cs, catMarca cm, catCategoria cc where i.idCProducto2=cp.idCProducto and i.idSeccion1=cs.idSeccion and cm.idMarca=cp.idMarca1 and cc.idCategoria=cp.idCategoria1 and cm.idMarca=? and cc.idCategoria=?";
+            caso=1;
+        }else if(idMarca!=-1){//Solo filtro marca
+            sql = "select * from inventario i, catProducto cp, catSeccion cs, catMarca cm, catCategoria cc where i.idCProducto2=cp.idCProducto and i.idSeccion1=cs.idSeccion and cm.idMarca=cp.idMarca1 and cc.idCategoria=cp.idCategoria1 and cm.idMarca=?";
+            caso=2;
+        }else if(idCategoria!=-1){//Solo filtro categoría
+            sql = "select * from inventario i, catProducto cp, catSeccion cs, catMarca cm, catCategoria cc where i.idCProducto2=cp.idCProducto and i.idSeccion1=cs.idSeccion and cm.idMarca=cp.idMarca1 and cc.idCategoria=cp.idCategoria1 and cc.idCategoria=?";
+            caso=3;
+        }
+
+        try {
+            stmt = prepareStatement(sql);
+            switch(caso){
+                case 0://Sin filtro
+                    break;
+                case 1://Ambos filtros (primero marca luego categoría)
+                    stmt.setInt(1, idMarca);
+                    stmt.setInt(2, idCategoria);
+                    break;
+                case 2://Marca
+                    stmt.setInt(1, idMarca);
+                    break;
+                case 3://Categoría
+                    stmt.setInt(1, idCategoria);
+                    break;
+            }
+            rs = stmt.executeQuery();
+            while (rs.next()) {
+                inventario = new Inventario();
+                //Tabla trabajador
+                inventario.setIdInventario(rs.getInt("idInventario"));
+                inventario.setCantidad(rs.getInt("cantidad"));
+                inventario.setDescripcion(rs.getString("descripcion"));
+                //Cat Producto
+                
+                catProducto=new CatProducto();
+                catProducto.setIdCProducto(rs.getInt("idCProducto"));
+                catProducto.setColor(rs.getString("color"));
+                catProducto.setDescripcion(rs.getString("descripcion"));
+                catProducto.setDescripcionAlmacenar(rs.getString("descripcionAlmacenar"));
+                catProducto.setPrecio(rs.getFloat("precio"));
+                catProducto.setProducto(rs.getString("producto"));
+                            //SUB  de Cat Producto
+                cc = new CatCategoria();
+                cm = new CatMarca();
+                cc.setIdCategoria(rs.getInt("idCategoria"));
+                cc.setCategoria(rs.getString("categoria"));
+                cm.setIdMarca(rs.getInt("idMarca"));
+                cm.setMarca(rs.getString("marca"));
+                
+                catProducto.setCatCategoria(cc);
+                catProducto.setCatMarca(cm);
+                //CatSeccion
+                catSeccion = new CatSeccion();
+                catSeccion.setIdSeccion(rs.getInt("idSeccion"));
+                catSeccion.setSeccion(rs.getString("seccion"));
+                
+                inventario.setCatProducto(catProducto);
+                inventario.setCatSeccion(catSeccion);
+                
+                lista.add(inventario);
+            }
+        } catch (DAOInitializationException | SQLException ex) {
+            lista = null;
+        } finally {
+            closeResultSet(rs);
+            closeStatement(stmt);
+        }
+        return lista;
+    }
 }
