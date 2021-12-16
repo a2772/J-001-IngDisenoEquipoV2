@@ -11,6 +11,9 @@ import clases.CatProducto;
 import clases.CatSeccion;
 import clases.CatSexo;
 import clases.Inventario;
+import clases.Personal;
+import clases.ProductoVenta;
+import clases.Venta;
 import dao.DAOInitializationException;
 import java.sql.SQLException;
 import java.util.List;
@@ -89,6 +92,18 @@ public class GetListas {
         List<CatProducto> list;
         ConsultaGeneral consultaGeneral = new ConsultaGeneral();
         list = consultaGeneral.getLCatProductoFiltro(idMarca, idCategoria);
+        return list;
+    }
+    public List<Venta> fillLCatVenta(Personal personal) throws ClassNotFoundException, ClassNotFoundException, SQLException, DAOInitializationException{
+        List<Venta> list;
+        ConsultaCats consultaCats = new ConsultaCats();
+        list = consultaCats.getLVenta(personal);
+        return list;
+    }
+    public List<ProductoVenta> fillLProductoVenta(Venta venta) throws ClassNotFoundException, ClassNotFoundException, SQLException, DAOInitializationException{
+        List<ProductoVenta> list;
+        ConsultaCats consultaCats = new ConsultaCats();
+        list = consultaCats.getLProductoVenta(venta);
         return list;
     }
 }

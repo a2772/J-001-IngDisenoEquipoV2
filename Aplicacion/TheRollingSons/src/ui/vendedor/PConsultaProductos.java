@@ -1,14 +1,19 @@
 package ui.vendedor;
 
+import bd.r.ConsultaCats;
+import business.GetById;
 import business.GetListas;
 import clases.CatCategoria;
 import clases.CatMarca;
 import clases.CatSeccion;
 import clases.Inventario;
 import clases.Personal;
+import clases.ProductoVenta;
+import clases.Venta;
 import clases.util.Carrito;
 import dao.DAOInitializationException;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -24,6 +29,7 @@ public class PConsultaProductos extends javax.swing.JFrame {
 
     private Personal personal;
     private Carrito carrito;
+    private int idVenta;//Auxiliar
 
     public PConsultaProductos() {
         initComponents();
@@ -34,8 +40,14 @@ public class PConsultaProductos extends javax.swing.JFrame {
     private void initComponents() {
 
         jspProductos = new javax.swing.JScrollPane();
-        jtProductos = new javax.swing.JTable();
+        jtArticulos = new javax.swing.JTable();
         lblSeleccion = new javax.swing.JLabel();
+        lblSeleccion1 = new javax.swing.JLabel();
+        jspProductos2 = new javax.swing.JScrollPane();
+        jtMisVentas1 = new javax.swing.JTable();
+        lblSeleccion2 = new javax.swing.JLabel();
+        jspProductos1 = new javax.swing.JScrollPane();
+        jtProductos1 = new javax.swing.JTable();
         jpMenu1 = new javax.swing.JPanel();
         lblProductos = new javax.swing.JLabel();
         cboCat = new javax.swing.JComboBox<>();
@@ -57,15 +69,16 @@ public class PConsultaProductos extends javax.swing.JFrame {
         lblMss2 = new javax.swing.JLabel();
         jLBackground = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
+        jTextField1 = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setLocation(new java.awt.Point(500, 300));
         setMinimumSize(new java.awt.Dimension(1252, 652));
         getContentPane().setLayout(null);
 
-        jtProductos.setBackground(new java.awt.Color(153, 255, 204));
-        jtProductos.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
-        jtProductos.setModel(new javax.swing.table.DefaultTableModel(
+        jtArticulos.setBackground(new java.awt.Color(153, 255, 204));
+        jtArticulos.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
+        jtArticulos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {},
                 {},
@@ -76,23 +89,80 @@ public class PConsultaProductos extends javax.swing.JFrame {
 
             }
         ));
-        jtProductos.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jtProductosMouseClicked(evt);
-            }
-        });
-        jspProductos.setViewportView(jtProductos);
+        jspProductos.setViewportView(jtArticulos);
 
         getContentPane().add(jspProductos);
-        jspProductos.setBounds(320, 390, 870, 220);
+        jspProductos.setBounds(590, 550, 600, 70);
 
         lblSeleccion.setBackground(new java.awt.Color(0, 102, 204));
         lblSeleccion.setFont(new java.awt.Font("Dialog", 0, 24)); // NOI18N
         lblSeleccion.setForeground(new java.awt.Color(255, 255, 255));
-        lblSeleccion.setText(" Productos");
+        lblSeleccion.setText(" Artículos de la venta");
         lblSeleccion.setOpaque(true);
         getContentPane().add(lblSeleccion);
-        lblSeleccion.setBounds(710, 340, 120, 40);
+        lblSeleccion.setBounds(320, 560, 240, 40);
+
+        lblSeleccion1.setBackground(new java.awt.Color(0, 102, 204));
+        lblSeleccion1.setFont(new java.awt.Font("Dialog", 0, 24)); // NOI18N
+        lblSeleccion1.setForeground(new java.awt.Color(255, 255, 255));
+        lblSeleccion1.setText(" Productos");
+        lblSeleccion1.setOpaque(true);
+        getContentPane().add(lblSeleccion1);
+        lblSeleccion1.setBounds(700, 190, 120, 40);
+
+        jtMisVentas1.setBackground(new java.awt.Color(153, 255, 204));
+        jtMisVentas1.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
+        jtMisVentas1.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {},
+                {},
+                {},
+                {}
+            },
+            new String [] {
+
+            }
+        ));
+        jtMisVentas1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jtMisVentas1MouseClicked(evt);
+            }
+        });
+        jspProductos2.setViewportView(jtMisVentas1);
+
+        getContentPane().add(jspProductos2);
+        jspProductos2.setBounds(460, 430, 730, 80);
+
+        lblSeleccion2.setBackground(new java.awt.Color(0, 102, 204));
+        lblSeleccion2.setFont(new java.awt.Font("Dialog", 0, 24)); // NOI18N
+        lblSeleccion2.setForeground(new java.awt.Color(255, 255, 255));
+        lblSeleccion2.setText("Mis Ventas");
+        lblSeleccion2.setOpaque(true);
+        getContentPane().add(lblSeleccion2);
+        lblSeleccion2.setBounds(320, 450, 120, 40);
+
+        jtProductos1.setBackground(new java.awt.Color(153, 255, 204));
+        jtProductos1.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
+        jtProductos1.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {},
+                {},
+                {},
+                {}
+            },
+            new String [] {
+
+            }
+        ));
+        jtProductos1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jtProductos1MouseClicked(evt);
+            }
+        });
+        jspProductos1.setViewportView(jtProductos1);
+
+        getContentPane().add(jspProductos1);
+        jspProductos1.setBounds(320, 240, 870, 160);
 
         jpMenu1.setBackground(new java.awt.Color(102, 255, 204));
 
@@ -148,56 +218,49 @@ public class PConsultaProductos extends javax.swing.JFrame {
         jpMenu1Layout.setHorizontalGroup(
             jpMenu1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jpMenu1Layout.createSequentialGroup()
-                .addGroup(jpMenu1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jpMenu1Layout.createSequentialGroup()
-                        .addGap(155, 155, 155)
-                        .addComponent(lblProductos1))
-                    .addGroup(jpMenu1Layout.createSequentialGroup()
-                        .addGap(55, 55, 55)
-                        .addComponent(cboCat, javax.swing.GroupLayout.PREFERRED_SIZE, 257, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 130, Short.MAX_VALUE)
-                .addGroup(jpMenu1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jpMenu1Layout.createSequentialGroup()
-                        .addComponent(cboMar, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(88, 88, 88))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jpMenu1Layout.createSequentialGroup()
-                        .addComponent(lblProductos3)
-                        .addGap(197, 197, 197))))
+                .addContainerGap()
+                .addComponent(cboCat, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(lblProductos2, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(130, 130, 130)
+                .addComponent(cboMar, javax.swing.GroupLayout.PREFERRED_SIZE, 224, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
             .addGroup(jpMenu1Layout.createSequentialGroup()
-                .addGroup(jpMenu1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGap(71, 71, 71)
+                .addGroup(jpMenu1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(cboSeccion, javax.swing.GroupLayout.PREFERRED_SIZE, 257, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jpMenu1Layout.createSequentialGroup()
-                        .addGap(255, 255, 255)
-                        .addComponent(lblProductos, javax.swing.GroupLayout.PREFERRED_SIZE, 256, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jpMenu1Layout.createSequentialGroup()
-                        .addGap(339, 339, 339)
-                        .addComponent(lblProductos2, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jpMenu1Layout.createSequentialGroup()
-                        .addGap(239, 239, 239)
-                        .addComponent(cboSeccion, javax.swing.GroupLayout.PREFERRED_SIZE, 257, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addComponent(lblProductos1)
+                        .addGap(120, 120, 120)
+                        .addComponent(lblProductos, javax.swing.GroupLayout.PREFERRED_SIZE, 256, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 115, Short.MAX_VALUE)
+                .addComponent(lblProductos3)
+                .addGap(98, 98, 98))
         );
         jpMenu1Layout.setVerticalGroup(
             jpMenu1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jpMenu1Layout.createSequentialGroup()
                 .addGap(16, 16, 16)
-                .addComponent(lblProductos, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jpMenu1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblProductos, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lblProductos1)
                     .addComponent(lblProductos3))
-                .addGap(18, 18, 18)
                 .addGroup(jpMenu1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(cboMar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(cboCat, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(36, 36, 36)
-                .addComponent(lblProductos2)
+                    .addGroup(jpMenu1Layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jpMenu1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(cboCat, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(cboMar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(jpMenu1Layout.createSequentialGroup()
+                        .addGap(19, 19, 19)
+                        .addComponent(lblProductos2)))
                 .addGap(18, 18, 18)
                 .addComponent(cboSeccion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(45, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         getContentPane().add(jpMenu1);
-        jpMenu1.setBounds(370, 30, 780, 270);
+        jpMenu1.setBounds(370, 30, 780, 150);
 
         btnSalir.setBackground(new java.awt.Color(153, 0, 51));
         btnSalir.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
@@ -356,6 +419,10 @@ public class PConsultaProductos extends javax.swing.JFrame {
         getContentPane().add(jLabel1);
         jLabel1.setBounds(50, 20, 220, 40);
 
+        jTextField1.setText("jTextField1");
+        getContentPane().add(jTextField1);
+        jTextField1.setBounds(180, 590, 65, 22);
+
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
@@ -406,10 +473,6 @@ public class PConsultaProductos extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_cboMarActionPerformed
 
-    private void jtProductosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jtProductosMouseClicked
-
-    }//GEN-LAST:event_jtProductosMouseClicked
-
     private void cboSeccionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cboSeccionActionPerformed
         try {
             aplicaFiltros();
@@ -450,6 +513,57 @@ public class PConsultaProductos extends javax.swing.JFrame {
         dispose();
     }//GEN-LAST:event_rbtnCRUDPMActionPerformed
 
+    private void jtProductos1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jtProductos1MouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jtProductos1MouseClicked
+
+    private void jtMisVentas1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jtMisVentas1MouseClicked
+        int sel = jtMisVentas1.rowAtPoint(evt.getPoint());
+        this.idVenta = Integer.parseInt(String.valueOf(jtMisVentas1.getValueAt(sel, 0)));
+        //Obtenemos la Venta por ID
+        Venta ve= new Venta();
+        GetById getById = new GetById();
+        JOptionPane.showMessageDialog(null, "Id Venta: " + this.idVenta);
+        try {
+            ve = getById.getVentaById(this.idVenta);
+        } catch (ClassNotFoundException | SQLException | DAOInitializationException ex) {
+            Logger.getLogger(PConsultaProductos.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        ve.setPersonal(this.personal);
+        ve.setIdVenta(idVenta);
+        //Procedemos a llenar la tabla
+        
+        GetListas getListas = new GetListas();
+        
+        List<ProductoVenta> lista = new ArrayList<>();
+        try {
+            lista = getListas.fillLProductoVenta(ve);
+        } catch (SQLException | DAOInitializationException | ClassNotFoundException ex) {
+            Logger.getLogger(PConsultaProductos.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        //Parte de Ventas
+        DefaultTableModel modelo = new DefaultTableModel();
+        
+        modelo.addColumn("Id registro");
+        modelo.addColumn("Producto");
+        modelo.addColumn("Cantidad");
+        modelo.addColumn("Precio total");
+        modelo.addColumn("Id de la venta");
+
+        String registro[] = new String[5];
+        for (int i = 0; i < lista.size(); i++) {
+            ProductoVenta pve = lista.get(i);
+
+            registro[0] = String.valueOf(pve.getIdProductoVenta());
+            registro[1] = String.valueOf(pve.getCatProducto().getProducto());
+            registro[2] = String.valueOf(pve.getCantidad());
+            registro[3] = String.valueOf("$" + Math.round(pve.getPrecio() * 100) / 100);//Ruta larga a CatProducto
+            registro[4] = String.valueOf(pve.getVenta().getIdVenta());
+            modelo.addRow(registro);
+        }
+        jtArticulos.setModel(modelo);        
+    }//GEN-LAST:event_jtMisVentas1MouseClicked
+
     /*public static void main(String args[]) {
         java.awt.EventQueue.invokeLater(new Runnable() {
             private Personal personal;
@@ -466,10 +580,15 @@ public class PConsultaProductos extends javax.swing.JFrame {
     private javax.swing.JComboBox<String> cboSeccion;
     private javax.swing.JLabel jLBackground;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JTextField jTextField1;
     private javax.swing.JPanel jpMenu;
     private javax.swing.JPanel jpMenu1;
     private javax.swing.JScrollPane jspProductos;
-    private javax.swing.JTable jtProductos;
+    private javax.swing.JScrollPane jspProductos1;
+    private javax.swing.JScrollPane jspProductos2;
+    private javax.swing.JTable jtArticulos;
+    private javax.swing.JTable jtMisVentas1;
+    private javax.swing.JTable jtProductos1;
     private javax.swing.JLabel lblMss1;
     private javax.swing.JLabel lblMss2;
     private javax.swing.JLabel lblMss3;
@@ -478,6 +597,8 @@ public class PConsultaProductos extends javax.swing.JFrame {
     private javax.swing.JLabel lblProductos2;
     private javax.swing.JLabel lblProductos3;
     private javax.swing.JLabel lblSeleccion;
+    private javax.swing.JLabel lblSeleccion1;
+    private javax.swing.JLabel lblSeleccion2;
     private javax.swing.JRadioButton rbtnCRUDHor;
     private javax.swing.JRadioButton rbtnCRUDInv;
     private javax.swing.JRadioButton rbtnCRUDPM;
@@ -539,6 +660,34 @@ public class PConsultaProductos extends javax.swing.JFrame {
         fillMarca();
         fillCategoria();
         fillSeccion();
+        
+        //Obtención del registro de las ventas del vendedor
+        fillVenta();
+    }
+    private void fillVenta() throws ClassNotFoundException, SQLException, DAOInitializationException{
+        //Cada que se invoque, actualiza la tabla de productos
+        ConsultaCats consultaCats = new ConsultaCats();
+        List<Venta> lista;
+        lista = consultaCats.getLVenta(this.personal);
+        //Parte de Ventas
+        DefaultTableModel modelo = new DefaultTableModel();
+        
+        modelo.addColumn("Id venta");
+        modelo.addColumn("IVA");
+        modelo.addColumn("Total");
+        modelo.addColumn("Fecha y hora");
+
+        String registro[] = new String[4];
+        for (int i = 0; i < lista.size(); i++) {
+            Venta ve = lista.get(i);
+
+            registro[0] = String.valueOf(ve.getIdVenta());
+            registro[1] = String.valueOf("$" + ve.getIva());
+            registro[2] = String.valueOf("$" + ve.getTotal());
+            registro[3] = String.valueOf(ve.getFecha().getDayOfMonth() + "/" + ve.getFecha().getMonthValue() + "/" + ve.getFecha().getYear() + "; " + ve.getFecha().getHour() + ":" + ve.getFecha().getMinute());
+            modelo.addRow(registro);
+        }
+        jtMisVentas1.setModel(modelo);
     }
 
     private void fillCategoria() throws ClassNotFoundException, SQLException, SQLException, DAOInitializationException {
@@ -631,7 +780,7 @@ public class PConsultaProductos extends javax.swing.JFrame {
             registro[8] = String.valueOf(in.getCantidad());
             modelo.addRow(registro);
         }
-        jtProductos.setModel(modelo);
+        jtProductos1.setModel(modelo);
         
     }
 

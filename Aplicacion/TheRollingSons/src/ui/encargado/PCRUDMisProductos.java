@@ -148,8 +148,13 @@ public class PCRUDMisProductos extends javax.swing.JFrame {
         btnAceptar.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         btnAceptar.setText("Aplicar");
         btnAceptar.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        btnAceptar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAceptarActionPerformed(evt);
+            }
+        });
         getContentPane().add(btnAceptar);
-        btnAceptar.setBounds(1110, 250, 90, 40);
+        btnAceptar.setBounds(1050, 250, 90, 40);
 
         btnSalir.setBackground(new java.awt.Color(204, 0, 0));
         btnSalir.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
@@ -426,19 +431,34 @@ public class PCRUDMisProductos extends javax.swing.JFrame {
         desSelect();
         rbtnAdd.setSelected(true);
         this.vRbtn = 1;
-        
+        try {
+            casoRbtn();
+        } catch (ClassNotFoundException | SQLException | DAOInitializationException ex) {
+            Logger.getLogger(PCRUDMisProductos.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
     }//GEN-LAST:event_rbtnAddActionPerformed
 
     private void rbtnConsultActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbtnConsultActionPerformed
         desSelect();
         rbtnConsult.setSelected(true);
         this.vRbtn = 2;
+        try {
+            casoRbtn();
+        } catch (ClassNotFoundException | SQLException | DAOInitializationException ex) {
+            Logger.getLogger(PCRUDMisProductos.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_rbtnConsultActionPerformed
 
     private void rbtnActuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbtnActuActionPerformed
         desSelect();
         rbtnActu.setSelected(true);
         this.vRbtn = 3;
+        try {
+            casoRbtn();
+        } catch (ClassNotFoundException | SQLException | DAOInitializationException ex) {
+            Logger.getLogger(PCRUDMisProductos.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_rbtnActuActionPerformed
 
     private void rbtnConsProdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbtnConsProdActionPerformed
@@ -465,8 +485,9 @@ public class PCRUDMisProductos extends javax.swing.JFrame {
 
     private void cboMarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cboMarActionPerformed
         try {
-            if(vRbtn!=1)
+            if (vRbtn != 1) {
                 consulta();
+            }
         } catch (ClassNotFoundException | SQLException | DAOInitializationException ex) {
             Logger.getLogger(PCRUDMisProductos.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -474,12 +495,45 @@ public class PCRUDMisProductos extends javax.swing.JFrame {
 
     private void cboCatActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cboCatActionPerformed
         try {
-            if(vRbtn!=1)
+            if (vRbtn != 1) {
                 consulta();
+            }
         } catch (ClassNotFoundException | SQLException | DAOInitializationException ex) {
             Logger.getLogger(PCRUDMisProductos.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_cboCatActionPerformed
+
+    private void btnAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAceptarActionPerformed
+        if (vRbtn == 1) {
+            //Insertamos
+            //Primero obtenemos id's
+            GetListas getListas = new GetListas();
+            List<CatMarca> catLMarca = null;
+            List<CatCategoria> catLCategoria = null;
+            try {
+                catLMarca = getListas.fillLCatMarca();
+                catLCategoria = getListas.fillLCatCategoria();
+            } catch (ClassNotFoundException | SQLException | DAOInitializationException ex) {
+                Logger.getLogger(PCRUDMisProductos.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
+            //Obteniendo las id de los combo box
+            int idMarca = -1, idCategoria = -1, aux = 0;
+            int indxM = cboMar.getSelectedIndex(), indxC = cboCat.getSelectedIndex();
+            //Marcas
+            if (indxM > 0) {
+                idMarca = catLMarca.get(indxM - 1).getIdMarca();
+            }
+
+            //Categorias
+            if (indxC > 0) {
+                idCategoria = catLCategoria.get(indxC - 1).getIdCategoria();
+            }
+            
+            //Insertamos
+            
+        }
+    }//GEN-LAST:event_btnAceptarActionPerformed
 
     /*public static void main(String args[]) {
         java.awt.EventQueue.invokeLater(new Runnable() {
@@ -550,7 +604,6 @@ public class PCRUDMisProductos extends javax.swing.JFrame {
             case 1://Agregar
                 enableAllFields();
                 jtProductos.setModel(new DefaultTableModel());
-                
                 break;
             case 2://Consultar
                 disableAllFields();
@@ -667,6 +720,7 @@ public class PCRUDMisProductos extends javax.swing.JFrame {
         fillCategoria();
         fillMarca();
     }
+
     private void fillCategoria() throws ClassNotFoundException, SQLException, SQLException, DAOInitializationException {
         List<CatCategoria> lista;
         GetListas getListas = new GetListas();

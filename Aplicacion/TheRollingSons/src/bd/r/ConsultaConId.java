@@ -8,6 +8,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 public class ConsultaConId extends DataAccessObject {
 
@@ -57,5 +58,34 @@ public class ConsultaConId extends DataAccessObject {
             closeStatement(stmt);
         }
         return p;
+    }
+    public Venta getVenta(int idVenta) throws SQLException, DAOInitializationException {
+        ResultSet rs = null;
+        PreparedStatement stmt = null;
+        Venta ve = null;
+        //Objetos
+        CatPerfil cp =new CatPerfil();
+        CatSexo cs = new CatSexo();
+        
+        String sql = "select * from venta where idVenta=?";
+        
+        try {
+            stmt = prepareStatement(sql);
+            stmt.setInt(1, idVenta);
+            rs = stmt.executeQuery();
+            while (rs.next()) {
+                ve= new Venta();
+                ve.setIdVenta(rs.getInt("idVenta"));
+                ve.setIva(rs.getFloat("iva"));
+                ve.setTotal(rs.getFloat("total"));
+                ve.setFecha(rs.getObject("fecha", LocalDateTime.class));
+            }
+        } catch (DAOInitializationException | SQLException ex) {
+            
+        } finally {
+            closeResultSet(rs);
+            closeStatement(stmt);
+        }
+        return ve;
     }
 }

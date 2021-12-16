@@ -1,12 +1,13 @@
 package clases;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 public class Venta {
     private int idVenta;
     private float iva;
     private float total;
-    private LocalDate fecha;
+    private LocalDateTime fecha;
     private Personal personal;
     
     public int getIdVenta() {
@@ -27,10 +28,10 @@ public class Venta {
     public void setTotal(float total) {
         this.total = total;
     }
-    public LocalDate getFecha() {
+    public LocalDateTime getFecha() {
         return fecha;
     }
-    public void setFecha(LocalDate fecha) {
+    public void setFecha(LocalDateTime fecha) {
         this.fecha = fecha;
     }
     public Personal getPersonal() {

@@ -14,7 +14,8 @@ USE therollingsons;
 -- insert into productoVenta(cantidad, precio, idVenta1, idCProducto1) values(1,1,1,1);
 -- select * from productoVenta;
 
-select * from catProducto cp
+-- select * from catProducto cp
+select * from productoVenta pv, catProducto cp where pv.idCProducto1=cp.idCProducto and pv.idVenta1=1;
 
 
 

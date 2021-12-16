@@ -7,6 +7,8 @@ import dao.DataAccessObject;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -235,7 +237,7 @@ public class ConsultaCats extends DataAccessObject {
                 catP.setProducto(rs.getString("producto"));
                 catP.setPrecio(rs.getFloat("precio"));
                 catP.setColor(rs.getString("color"));
-                catP.setDescripcion(rs.getString("descripcio"));
+                catP.setDescripcion(rs.getString("descripcion"));
                 catP.setDescripcionAlmacenar(rs.getString("descripcionAlmacenar"));
                 //CatMarca
                 cM = new CatMarca();
@@ -306,6 +308,95 @@ public class ConsultaCats extends DataAccessObject {
                 catP.setIdSexo(rs.getInt("idSexo"));
                 catP.setSexo(rs.getString("sexo"));
                 lista.add(catP);
+            }
+        } catch (DAOInitializationException | SQLException ex) {
+            lista = null;
+        } finally {
+            closeResultSet(rs);
+            closeStatement(stmt);
+        }
+        return lista;
+    }
+    
+    //Llenar Venta
+    public List<Venta> getLVenta(Personal personal) throws SQLException, DAOInitializationException {
+        ResultSet rs = null;
+        PreparedStatement stmt = null;
+        List<Venta> lista = new ArrayList<>();
+        Venta ve;
+
+        String sql = "select * from venta where idPersonal1=?";
+
+        try {
+            stmt = prepareStatement(sql);
+            stmt.setInt(1, personal.getIdPersonal());
+            rs = stmt.executeQuery();
+            while (rs.next()) {
+                ve= new Venta();
+                ve.setIdVenta(rs.getInt("idVenta"));
+                ve.setIva(rs.getFloat("iva"));
+                ve.setTotal(rs.getFloat("total"));
+                ve.setFecha(rs.getObject("fecha", LocalDateTime.class));
+                ve.setPersonal(personal);
+                
+                lista.add(ve);
+            }
+        } catch (DAOInitializationException | SQLException ex) {
+            lista = null;
+        } finally {
+            closeResultSet(rs);
+            closeStatement(stmt);
+        }
+        return lista;
+    }
+    
+    //Llenar Venta
+    public List<ProductoVenta> getLProductoVenta(Venta venta) throws SQLException, DAOInitializationException {
+        ResultSet rs = null;
+        PreparedStatement stmt = null;
+        List<ProductoVenta> lista = new ArrayList<>();
+        CatProducto catP;
+        CatMarca cM;
+        CatCategoria cC;
+        ProductoVenta ve;
+
+        String sql = "select * from productoVenta pv, catProducto cp, catMarca cm, catCategoria cc where cm.idMarca=cp.idMarca1 and cc.idCategoria=cp.idCategoria1 and pv.idCProducto1=cp.idCProducto and pv.idVenta1=?";
+        
+        
+        try {
+            stmt = prepareStatement(sql);
+            stmt.setInt(1, venta.getIdVenta());
+            rs = stmt.executeQuery();
+            while (rs.next()) {
+                ve = new ProductoVenta();
+                ve.setIdProductoVenta(rs.getInt("idProductoVenta"));
+                ve.setCantidad(rs.getInt("cantidad"));
+                ve.setPrecio(rs.getInt("precio"));
+                ve.setVenta(venta);
+                
+                ///Vaciamos el catProducto
+                catP = new CatProducto();
+                catP.setIdCProducto(rs.getInt("idCProducto"));
+                catP.setProducto(rs.getString("producto"));
+                catP.setPrecio(rs.getFloat("precio"));
+                catP.setColor(rs.getString("color"));
+                catP.setDescripcion(rs.getString("descripcion"));
+                catP.setDescripcionAlmacenar(rs.getString("descripcionAlmacenar"));
+                //CatMarca
+                cM = new CatMarca();
+                cM.setIdMarca(rs.getInt("idMarca"));
+                cM.setMarca(rs.getString("marca"));
+                //CatCategoria
+                cC = new CatCategoria();
+                cC.setIdCategoria(rs.getInt("idCategoria"));
+                cC.setCategoria(rs.getString("categoria"));
+                //Añadiendo objetos
+                catP.setCatCategoria(cC);
+                catP.setCatMarca(cM);
+                ///Fin CatProducto, ahora lo añadimos
+                ve.setCatProducto(catP);
+                
+                lista.add(ve);
             }
         } catch (DAOInitializationException | SQLException ex) {
             lista = null;

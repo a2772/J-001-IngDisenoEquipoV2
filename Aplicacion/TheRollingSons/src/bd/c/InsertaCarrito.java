@@ -1,6 +1,7 @@
 package bd.c;
 
 import bd.r.ConsultaBuscandoId;
+import clases.CatProducto;
 import clases.util.Articulo;
 import clases.util.Carrito;
 import dao.DAOInitializationException;
@@ -63,6 +64,32 @@ public class InsertaCarrito extends DataAccessObject {
                 if (pStmt != null) {
                     pStmt.close();
                 }
+            }
+        }
+    }
+    public void setCatProducto(CatProducto cp) throws SQLException, DAOInitializationException, ClassNotFoundException {
+        Connection con = DriverManager.getConnection(URL, USER, PASSWORD);
+        PreparedStatement pStmt = null;
+        String sql;
+        //Ahora procedemos a insertar
+        try {
+            sql = "insert into catProducto(producto,descripcionAlmacenar,descripcion,precio,color,idCategoria1,idMarca1) values (?,?,?,?,?,?,?)";
+
+            pStmt = con.prepareStatement(sql);
+            pStmt.setString(1, cp.getProducto());
+            pStmt.setString(2, cp.getDescripcionAlmacenar());
+            pStmt.setString(3, cp.getDescripcion());
+            pStmt.setFloat(4, cp.getPrecio());
+            pStmt.setString(5, cp.getColor());
+            pStmt.setInt(6, cp.getCatCategoria().getIdCategoria());
+            pStmt.setInt(7, cp.getCatMarca().getIdMarca());
+
+            pStmt.executeUpdate();
+        } catch (SQLException ex) {
+
+        } finally {
+            if (pStmt != null) {
+                pStmt.close();
             }
         }
     }

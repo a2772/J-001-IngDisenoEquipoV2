@@ -9,6 +9,7 @@ import clases.util.Carrito;
 import dao.DAOInitializationException;
 import java.sql.SQLException;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
@@ -340,7 +341,7 @@ public class PRealizarVenta extends javax.swing.JFrame {
                 }
                 venta.setTotal(total);
                 venta.setIva((float) ((total / 1.16) * 0.16));
-                venta.setFecha(LocalDate.now());
+                venta.setFecha(LocalDateTime.now());
                 venta.setPersonal(this.personal);
 
                 this.carrito.setVenta(venta); //Añadiendo los datos que le faltan al carrito: ProductoVenta
