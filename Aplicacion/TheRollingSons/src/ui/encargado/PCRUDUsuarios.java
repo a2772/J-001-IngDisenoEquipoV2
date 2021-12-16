@@ -2,6 +2,10 @@ package ui.encargado;
 
 import ui.vendedor.*;
 import clases.Personal;
+import dao.DAOInitializationException;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 public class PCRUDUsuarios extends javax.swing.JFrame {
@@ -218,18 +222,6 @@ public class PCRUDUsuarios extends javax.swing.JFrame {
         getContentPane().add(jTextFieldEstado);
         jTextFieldEstado.setBounds(1020, 220, 220, 30);
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null}
-            },
-            new String [] {
-                "ID", "Nombre", "Cantidad", "Precio", "Seccion", "Categoria"
-            }
-        ));
         jScrollPane1.setViewportView(jTable1);
 
         getContentPane().add(jScrollPane1);
@@ -274,6 +266,11 @@ public class PCRUDUsuarios extends javax.swing.JFrame {
         rbtnConsProd.setFont(new java.awt.Font("Dialog", 1, 19)); // NOI18N
         rbtnConsProd.setForeground(new java.awt.Color(255, 153, 51));
         rbtnConsProd.setText("Consultar Productos");
+        rbtnConsProd.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                rbtnConsProdActionPerformed(evt);
+            }
+        });
 
         rbtnCRUDUsr.setBackground(new java.awt.Color(127, 248, 248));
         rbtnCRUDUsr.setFont(new java.awt.Font("Dialog", 1, 19)); // NOI18N
@@ -295,6 +292,11 @@ public class PCRUDUsuarios extends javax.swing.JFrame {
         rbtnCRUDPM.setFont(new java.awt.Font("Dialog", 1, 19)); // NOI18N
         rbtnCRUDPM.setForeground(new java.awt.Color(255, 153, 51));
         rbtnCRUDPM.setText("CRUD Mis Productos");
+        rbtnCRUDPM.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                rbtnCRUDPMActionPerformed(evt);
+            }
+        });
 
         rbtnCRUDHor.setBackground(new java.awt.Color(127, 248, 248));
         rbtnCRUDHor.setFont(new java.awt.Font("Dialog", 1, 19)); // NOI18N
@@ -381,15 +383,30 @@ public class PCRUDUsuarios extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void rbtnCRUDInvActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbtnCRUDInvActionPerformed
-        // TODO add your handling code here:
+        PCRUDInventarios p = new PCRUDInventarios();
+        //Iniciamos el primer formulario, si es Encargado
+        p.setPersonal(personal);
+        p.preCarga();
+        p.setVisible(true);
+        dispose();
     }//GEN-LAST:event_rbtnCRUDInvActionPerformed
 
     private void rbtnCRUDHorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbtnCRUDHorActionPerformed
-        // TODO add your handling code here:
+        PCRUDHorarios p = new PCRUDHorarios();
+        //Iniciamos el primer formulario, si es Encargado
+        p.setPersonal(personal);
+        p.preCarga();
+        p.setVisible(true);
+        dispose();
     }//GEN-LAST:event_rbtnCRUDHorActionPerformed
 
     private void rbtnVentaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbtnVentaActionPerformed
-        
+        PRealizarVenta p = new PRealizarVenta();
+        //Iniciamos el primer formulario, si es Encargado
+        p.setPersonal(personal);
+        p.preCarga();
+        p.setVisible(true);
+        dispose();
     }//GEN-LAST:event_rbtnVentaActionPerformed
 
     private void jButtonSalir1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSalir1ActionPerformed
@@ -399,6 +416,32 @@ public class PCRUDUsuarios extends javax.swing.JFrame {
     private void jButtonLimpiarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonLimpiarActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jButtonLimpiarActionPerformed
+
+    private void rbtnConsProdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbtnConsProdActionPerformed
+        PConsultaProductos p = new PConsultaProductos();
+        //Iniciamos el primer formulario, si es Encargado
+        p.setPersonal(personal);
+        try {
+            p.preCarga();
+        } catch (ClassNotFoundException | SQLException | DAOInitializationException ex) {
+            Logger.getLogger(PCRUDUsuarios.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        p.setVisible(true);
+        dispose();
+    }//GEN-LAST:event_rbtnConsProdActionPerformed
+
+    private void rbtnCRUDPMActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbtnCRUDPMActionPerformed
+        PCRUDMisProductos p = new PCRUDMisProductos();
+        //Iniciamos el primer formulario, si es Encargado
+        p.setPersonal(personal);
+        try {
+            p.preCarga();
+        } catch (ClassNotFoundException | SQLException | DAOInitializationException ex) {
+            Logger.getLogger(PCRUDUsuarios.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        p.setVisible(true);
+        dispose();
+    }//GEN-LAST:event_rbtnCRUDPMActionPerformed
 
     /*public static void main(String args[]) {
         java.awt.EventQueue.invokeLater(new Runnable() {
@@ -477,7 +520,6 @@ public class PCRUDUsuarios extends javax.swing.JFrame {
     }
 
     public void preCarga() {//Datos previos a mostrar el JFRAME pero posteriores al constructor
-        JOptionPane.showMessageDialog(null, this.personal.getNombre());
         int spndt = 0;
         String txt = "            ¡Bienvenid";
         if (this.personal.getCatSexo().getIdSexo() != 1) {

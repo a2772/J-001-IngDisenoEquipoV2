@@ -14,6 +14,11 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import ui.PLogin;
+import ui.encargado.PCRUDHorarios;
+import ui.encargado.PCRUDInventarios;
+import ui.encargado.PCRUDMisProductos;
+import ui.encargado.PCRUDUsuarios;
 
 public class PConsultaProductos extends javax.swing.JFrame {
 
@@ -39,6 +44,7 @@ public class PConsultaProductos extends javax.swing.JFrame {
         cboMar = new javax.swing.JComboBox<>();
         lblProductos2 = new javax.swing.JLabel();
         cboSeccion = new javax.swing.JComboBox<>();
+        btnSalir = new javax.swing.JButton();
         jpMenu = new javax.swing.JPanel();
         lblMss1 = new javax.swing.JLabel();
         rbtnVenta = new javax.swing.JRadioButton();
@@ -193,6 +199,18 @@ public class PConsultaProductos extends javax.swing.JFrame {
         getContentPane().add(jpMenu1);
         jpMenu1.setBounds(370, 30, 780, 270);
 
+        btnSalir.setBackground(new java.awt.Color(153, 0, 51));
+        btnSalir.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
+        btnSalir.setForeground(new java.awt.Color(255, 255, 255));
+        btnSalir.setText("SALIR");
+        btnSalir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSalirActionPerformed(evt);
+            }
+        });
+        getContentPane().add(btnSalir);
+        btnSalir.setBounds(30, 590, 90, 50);
+
         jpMenu.setBackground(new java.awt.Color(204, 255, 255));
 
         lblMss1.setBackground(new java.awt.Color(23, 144, 144));
@@ -227,6 +245,11 @@ public class PConsultaProductos extends javax.swing.JFrame {
         rbtnCRUDUsr.setFont(new java.awt.Font("Dialog", 1, 19)); // NOI18N
         rbtnCRUDUsr.setForeground(new java.awt.Color(255, 153, 51));
         rbtnCRUDUsr.setText("CRUD Usuarios");
+        rbtnCRUDUsr.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                rbtnCRUDUsrActionPerformed(evt);
+            }
+        });
 
         rbtnCRUDInv.setBackground(new java.awt.Color(127, 248, 248));
         rbtnCRUDInv.setFont(new java.awt.Font("Dialog", 1, 19)); // NOI18N
@@ -242,6 +265,11 @@ public class PConsultaProductos extends javax.swing.JFrame {
         rbtnCRUDPM.setFont(new java.awt.Font("Dialog", 1, 19)); // NOI18N
         rbtnCRUDPM.setForeground(new java.awt.Color(255, 153, 51));
         rbtnCRUDPM.setText("CRUD Mis Productos");
+        rbtnCRUDPM.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                rbtnCRUDPMActionPerformed(evt);
+            }
+        });
 
         rbtnCRUDHor.setBackground(new java.awt.Color(127, 248, 248));
         rbtnCRUDHor.setFont(new java.awt.Font("Dialog", 1, 19)); // NOI18N
@@ -313,11 +341,11 @@ public class PConsultaProductos extends javax.swing.JFrame {
                 .addComponent(rbtnCRUDPM)
                 .addGap(18, 18, 18)
                 .addComponent(rbtnCRUDHor)
-                .addContainerGap(48, Short.MAX_VALUE))
+                .addContainerGap(38, Short.MAX_VALUE))
         );
 
         getContentPane().add(jpMenu);
-        jpMenu.setBounds(20, 40, 270, 550);
+        jpMenu.setBounds(20, 40, 270, 540);
 
         jLBackground.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         jLBackground.setIcon(new javax.swing.ImageIcon(getClass().getResource("/binarios/images/Degradado1.jpg"))); // NOI18N
@@ -332,11 +360,21 @@ public class PConsultaProductos extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void rbtnCRUDInvActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbtnCRUDInvActionPerformed
-        // TODO add your handling code here:
+        PCRUDInventarios p = new PCRUDInventarios();
+        //Iniciamos el primer formulario, si es Encargado
+        p.setPersonal(personal);
+        p.preCarga();
+        p.setVisible(true);
+        dispose();
     }//GEN-LAST:event_rbtnCRUDInvActionPerformed
 
     private void rbtnCRUDHorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbtnCRUDHorActionPerformed
-        // TODO add your handling code here:
+        PCRUDHorarios p = new PCRUDHorarios();
+        //Iniciamos el primer formulario, si es Encargado
+        p.setPersonal(personal);
+        p.preCarga();
+        p.setVisible(true);
+        dispose();
     }//GEN-LAST:event_rbtnCRUDHorActionPerformed
 
     private void rbtnVentaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbtnVentaActionPerformed
@@ -380,6 +418,38 @@ public class PConsultaProductos extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_cboSeccionActionPerformed
 
+    private void btnSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalirActionPerformed
+        int opcion = JOptionPane.showConfirmDialog(null, "¿Realmente desea salir de su sesión?", "Cerrando Sesión...", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+        if (opcion == 0) {
+            JOptionPane.showMessageDialog(null, "        Cerrando sesión        \n     Ten un excelente día\n          " + personal.getNombre());
+            PLogin pLogin = new PLogin();
+            pLogin.setVisible(true);
+            dispose();
+        }
+    }//GEN-LAST:event_btnSalirActionPerformed
+
+    private void rbtnCRUDUsrActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbtnCRUDUsrActionPerformed
+        PCRUDUsuarios p = new PCRUDUsuarios();
+        //Iniciamos el primer formulario, si es Encargado
+        p.setPersonal(personal);
+        p.preCarga();
+        p.setVisible(true);
+        dispose();
+    }//GEN-LAST:event_rbtnCRUDUsrActionPerformed
+
+    private void rbtnCRUDPMActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbtnCRUDPMActionPerformed
+        PCRUDMisProductos p = new PCRUDMisProductos();
+        //Iniciamos el primer formulario, si es Encargado
+        p.setPersonal(personal);
+        try {
+            p.preCarga();
+        } catch (ClassNotFoundException | SQLException | DAOInitializationException ex) {
+            Logger.getLogger(PConsultaProductos.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        p.setVisible(true);
+        dispose();
+    }//GEN-LAST:event_rbtnCRUDPMActionPerformed
+
     /*public static void main(String args[]) {
         java.awt.EventQueue.invokeLater(new Runnable() {
             private Personal personal;
@@ -390,6 +460,7 @@ public class PConsultaProductos extends javax.swing.JFrame {
     }*/
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnSalir;
     private javax.swing.JComboBox<String> cboCat;
     private javax.swing.JComboBox<String> cboMar;
     private javax.swing.JComboBox<String> cboSeccion;

@@ -264,6 +264,16 @@ create table pass(
 		'usr',
 		2,
 		2
+	),(
+		'FER',
+		'ORTEGA',
+		'Smith',
+		'SMTHNG',
+		'99-1234-5678',
+		'1999-12-31',
+		'u',
+		1,
+		1
 	);
 
 	insert into inventario(cantidad,descripcion,idCProducto2,idSeccion1) values (
@@ -275,7 +285,7 @@ create table pass(
 
 	insert into horario(idPersonal2,idCHorario1) values (1,1),(1,2);
 
-	insert into pass(pass, idPersonal4) values ('paris72',1),('luis5',2),('usr',3);
+	insert into pass(pass, idPersonal4) values ('paris72',1),('luis5',2),('usr',3),('u',4);
 -- Consultas de prueba
 
 

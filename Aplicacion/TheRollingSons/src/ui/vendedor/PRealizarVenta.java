@@ -14,6 +14,10 @@ import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import ui.PLogin;
+import ui.encargado.PCRUDHorarios;
+import ui.encargado.PCRUDInventarios;
+import ui.encargado.PCRUDMisProductos;
+import ui.encargado.PCRUDUsuarios;
 
 public class PRealizarVenta extends javax.swing.JFrame {
 
@@ -159,6 +163,11 @@ public class PRealizarVenta extends javax.swing.JFrame {
         rbtnCRUDUsr.setFont(new java.awt.Font("Dialog", 1, 19)); // NOI18N
         rbtnCRUDUsr.setForeground(new java.awt.Color(255, 153, 51));
         rbtnCRUDUsr.setText("CRUD Usuarios");
+        rbtnCRUDUsr.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                rbtnCRUDUsrActionPerformed(evt);
+            }
+        });
 
         rbtnCRUDInv.setBackground(new java.awt.Color(127, 248, 248));
         rbtnCRUDInv.setFont(new java.awt.Font("Dialog", 1, 19)); // NOI18N
@@ -174,6 +183,11 @@ public class PRealizarVenta extends javax.swing.JFrame {
         rbtnCRUDPM.setFont(new java.awt.Font("Dialog", 1, 19)); // NOI18N
         rbtnCRUDPM.setForeground(new java.awt.Color(255, 153, 51));
         rbtnCRUDPM.setText("CRUD Mis Productos");
+        rbtnCRUDPM.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                rbtnCRUDPMActionPerformed(evt);
+            }
+        });
 
         rbtnCRUDHor.setBackground(new java.awt.Color(127, 248, 248));
         rbtnCRUDHor.setFont(new java.awt.Font("Dialog", 1, 19)); // NOI18N
@@ -264,11 +278,21 @@ public class PRealizarVenta extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void rbtnCRUDInvActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbtnCRUDInvActionPerformed
-        // TODO add your handling code here:
+        PCRUDInventarios p = new PCRUDInventarios();
+        //Iniciamos el primer formulario, si es Encargado
+        p.setPersonal(personal);
+        p.preCarga();
+        p.setVisible(true);
+        dispose();
     }//GEN-LAST:event_rbtnCRUDInvActionPerformed
 
     private void rbtnCRUDHorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbtnCRUDHorActionPerformed
-        // TODO add your handling code here:
+        PCRUDHorarios p = new PCRUDHorarios();
+        //Iniciamos el primer formulario, si es Encargado
+        p.setPersonal(personal);
+        p.preCarga();
+        p.setVisible(true);
+        dispose();
     }//GEN-LAST:event_rbtnCRUDHorActionPerformed
 
     private void rbtnVentaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbtnVentaActionPerformed
@@ -310,24 +334,24 @@ public class PRealizarVenta extends javax.swing.JFrame {
                 ProductoVenta pv;
                 venta.setIdVenta(0);//Como no la vamos a insertar la dejamos en 0, pero al insertarla la recuperamos para mostrar el número de tiquet
                 //obtenemos el total
-                float total=0;
+                float total = 0;
                 for (Articulo ar : this.carrito.getlArticulo()) {
-                    total+=ar.getCatProducto().getPrecio()*ar.getInventario().getCantidad();
+                    total += ar.getCatProducto().getPrecio() * ar.getInventario().getCantidad();
                 }
                 venta.setTotal(total);
-                venta.setIva((float) ((total/1.16)*0.16));
+                venta.setIva((float) ((total / 1.16) * 0.16));
                 venta.setFecha(LocalDate.now());
                 venta.setPersonal(this.personal);
-                
+
                 this.carrito.setVenta(venta); //Añadiendo los datos que le faltan al carrito: ProductoVenta
                 for (Articulo ar : this.carrito.getlArticulo()) {
                     pv = new ProductoVenta();
                     pv.setIdProductoVenta(0);
-                    pv.setPrecio(ar.getCatProducto().getPrecio()*ar.getCantidad());
+                    pv.setPrecio(ar.getCatProducto().getPrecio() * ar.getCantidad());
                     pv.setCantidad(ar.getCantidad());
                     pv.setCatProducto(ar.getCatProducto());
                     pv.setVenta(venta);
-                    
+
                     ar.setProductoVenta(pv);
                 }
 
@@ -373,6 +397,28 @@ public class PRealizarVenta extends javax.swing.JFrame {
             }
         }
     }//GEN-LAST:event_btnBorrar1ActionPerformed
+
+    private void rbtnCRUDUsrActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbtnCRUDUsrActionPerformed
+        PCRUDUsuarios p = new PCRUDUsuarios();
+        //Iniciamos el primer formulario, si es Encargado
+        p.setPersonal(personal);
+        p.preCarga();
+        p.setVisible(true);
+        dispose();
+    }//GEN-LAST:event_rbtnCRUDUsrActionPerformed
+
+    private void rbtnCRUDPMActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbtnCRUDPMActionPerformed
+        PCRUDMisProductos p = new PCRUDMisProductos();
+        //Iniciamos el primer formulario, si es Encargado
+        p.setPersonal(personal);
+        try {
+            p.preCarga();
+        } catch (ClassNotFoundException | SQLException | DAOInitializationException ex) {
+            Logger.getLogger(PRealizarVenta.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        p.setVisible(true);
+        dispose();
+    }//GEN-LAST:event_rbtnCRUDPMActionPerformed
 
     /*public static void main(String args[]) {
         java.awt.EventQueue.invokeLater(new Runnable() {

@@ -346,6 +346,9 @@
             </Property>
             <Property name="text" type="java.lang.String" value="Consultar Productos"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="rbtnConsProdActionPerformed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JRadioButton" name="rbtnCRUDUsr">
           <Properties>
@@ -360,6 +363,9 @@
             </Property>
             <Property name="text" type="java.lang.String" value="CRUD Usuarios"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="rbtnCRUDUsrActionPerformed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JRadioButton" name="rbtnCRUDInv">
           <Properties>
@@ -391,6 +397,9 @@
             </Property>
             <Property name="text" type="java.lang.String" value="CRUD Mis Productos"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="rbtnCRUDPMActionPerformed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JRadioButton" name="rbtnCRUDHor">
           <Properties>

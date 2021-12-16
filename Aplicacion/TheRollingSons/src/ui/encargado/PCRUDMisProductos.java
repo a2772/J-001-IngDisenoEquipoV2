@@ -4,15 +4,17 @@ import business.GetListas;
 import clases.CatCategoria;
 import clases.CatMarca;
 import clases.CatProducto;
-import clases.Inventario;
-import ui.vendedor.*;
 import clases.Personal;
 import dao.DAOInitializationException;
 import java.sql.SQLException;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import ui.PLogin;
+import ui.vendedor.PConsultaProductos;
+import ui.vendedor.PRealizarVenta;
 
 public class PCRUDMisProductos extends javax.swing.JFrame {
 
@@ -23,7 +25,7 @@ public class PCRUDMisProductos extends javax.swing.JFrame {
         initComponents();
         this.vRbtn = 1;//Siempre empieza con el radio button de Agregar
         this.txtId.setEditable(false);
-        
+
         //DESACTIVA
         btnLimpiar.setVisible(false);
     }
@@ -174,30 +176,25 @@ public class PCRUDMisProductos extends javax.swing.JFrame {
         btnLimpiar.setBounds(350, 270, 90, 40);
 
         cboCat.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Producto", "Proteccion", "Refaccion", "Accesorio" }));
+        cboCat.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cboCatActionPerformed(evt);
+            }
+        });
         getContentPane().add(cboCat);
         cboCat.setBounds(990, 200, 230, 30);
 
         cboMar.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Patines", "Patinetas", "Scooters" }));
+        cboMar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cboMarActionPerformed(evt);
+            }
+        });
         getContentPane().add(cboMar);
         cboMar.setBounds(990, 150, 230, 30);
         getContentPane().add(txtColor);
         txtColor.setBounds(660, 280, 220, 30);
 
-        jtProductos.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null}
-            },
-            new String [] {
-                "ID", "Nombre", "Cantidad", "Precio", "Seccion", "Categoria"
-            }
-        ));
         jScrollPane1.setViewportView(jtProductos);
 
         getContentPane().add(jScrollPane1);
@@ -268,11 +265,21 @@ public class PCRUDMisProductos extends javax.swing.JFrame {
         rbtnConsProd.setFont(new java.awt.Font("Dialog", 1, 19)); // NOI18N
         rbtnConsProd.setForeground(new java.awt.Color(255, 153, 51));
         rbtnConsProd.setText("Consultar Productos");
+        rbtnConsProd.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                rbtnConsProdActionPerformed(evt);
+            }
+        });
 
         rbtnCRUDUsr.setBackground(new java.awt.Color(127, 248, 248));
         rbtnCRUDUsr.setFont(new java.awt.Font("Dialog", 1, 19)); // NOI18N
         rbtnCRUDUsr.setForeground(new java.awt.Color(255, 153, 51));
         rbtnCRUDUsr.setText("CRUD Usuarios");
+        rbtnCRUDUsr.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                rbtnCRUDUsrActionPerformed(evt);
+            }
+        });
 
         rbtnCRUDInv.setBackground(new java.awt.Color(127, 248, 248));
         rbtnCRUDInv.setFont(new java.awt.Font("Dialog", 1, 19)); // NOI18N
@@ -375,15 +382,30 @@ public class PCRUDMisProductos extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void rbtnCRUDInvActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbtnCRUDInvActionPerformed
-        // TODO add your handling code here:
+        PCRUDInventarios p = new PCRUDInventarios();
+        //Iniciamos el primer formulario, si es Encargado
+        p.setPersonal(personal);
+        p.preCarga();
+        p.setVisible(true);
+        dispose();
     }//GEN-LAST:event_rbtnCRUDInvActionPerformed
 
     private void rbtnCRUDHorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbtnCRUDHorActionPerformed
-        // TODO add your handling code here:
+        PCRUDHorarios p = new PCRUDHorarios();
+        //Iniciamos el primer formulario, si es Encargado
+        p.setPersonal(personal);
+        p.preCarga();
+        p.setVisible(true);
+        dispose();
     }//GEN-LAST:event_rbtnCRUDHorActionPerformed
 
     private void rbtnVentaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbtnVentaActionPerformed
-
+        PRealizarVenta p = new PRealizarVenta();
+        //Iniciamos el primer formulario, si es Encargado
+        p.setPersonal(personal);
+        p.preCarga();
+        p.setVisible(true);
+        dispose();
     }//GEN-LAST:event_rbtnVentaActionPerformed
 
     private void btnSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalirActionPerformed
@@ -404,6 +426,7 @@ public class PCRUDMisProductos extends javax.swing.JFrame {
         desSelect();
         rbtnAdd.setSelected(true);
         this.vRbtn = 1;
+        
     }//GEN-LAST:event_rbtnAddActionPerformed
 
     private void rbtnConsultActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbtnConsultActionPerformed
@@ -417,6 +440,46 @@ public class PCRUDMisProductos extends javax.swing.JFrame {
         rbtnActu.setSelected(true);
         this.vRbtn = 3;
     }//GEN-LAST:event_rbtnActuActionPerformed
+
+    private void rbtnConsProdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbtnConsProdActionPerformed
+        PConsultaProductos p = new PConsultaProductos();
+        //Iniciamos el primer formulario, si es Encargado
+        p.setPersonal(personal);
+        try {
+            p.preCarga();
+        } catch (ClassNotFoundException | SQLException | DAOInitializationException ex) {
+            Logger.getLogger(PCRUDMisProductos.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        p.setVisible(true);
+        dispose();
+    }//GEN-LAST:event_rbtnConsProdActionPerformed
+
+    private void rbtnCRUDUsrActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbtnCRUDUsrActionPerformed
+        PCRUDUsuarios p = new PCRUDUsuarios();
+        //Iniciamos el primer formulario, si es Encargado
+        p.setPersonal(personal);
+        p.preCarga();
+        p.setVisible(true);
+        dispose();
+    }//GEN-LAST:event_rbtnCRUDUsrActionPerformed
+
+    private void cboMarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cboMarActionPerformed
+        try {
+            if(vRbtn!=1)
+                consulta();
+        } catch (ClassNotFoundException | SQLException | DAOInitializationException ex) {
+            Logger.getLogger(PCRUDMisProductos.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_cboMarActionPerformed
+
+    private void cboCatActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cboCatActionPerformed
+        try {
+            if(vRbtn!=1)
+                consulta();
+        } catch (ClassNotFoundException | SQLException | DAOInitializationException ex) {
+            Logger.getLogger(PCRUDMisProductos.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_cboCatActionPerformed
 
     /*public static void main(String args[]) {
         java.awt.EventQueue.invokeLater(new Runnable() {
@@ -486,6 +549,8 @@ public class PCRUDMisProductos extends javax.swing.JFrame {
         switch (this.vRbtn) {
             case 1://Agregar
                 enableAllFields();
+                jtProductos.setModel(new DefaultTableModel());
+                
                 break;
             case 2://Consultar
                 disableAllFields();
@@ -495,7 +560,7 @@ public class PCRUDMisProductos extends javax.swing.JFrame {
                 disableAllFields();
                 JOptionPane.showMessageDialog(null, "Para actualizar un producto, seleccionalo de la tabla inferior", "Aviso", JOptionPane.WARNING_MESSAGE);
                 consulta();
-                
+
                 break;
         }
     }
@@ -567,8 +632,7 @@ public class PCRUDMisProductos extends javax.swing.JFrame {
         txtPrecio.setEditable(false);
     }
 
-    public void preCarga() {//Datos previos a mostrar el JFRAME pero posteriores al constructor
-        JOptionPane.showMessageDialog(null, this.personal.getNombre());
+    public void preCarga() throws ClassNotFoundException, SQLException, DAOInitializationException {//Datos previos a mostrar el JFRAME pero posteriores al constructor
         int spndt = 0;
         String txt = "            ¡Bienvenid";
         if (this.personal.getCatSexo().getIdSexo() != 1) {
@@ -599,6 +663,29 @@ public class PCRUDMisProductos extends javax.swing.JFrame {
             rbtnCRUDPM.setVisible(false);
             rbtnCRUDUsr.setVisible(false);
             jpMenu.setSize(270, 305);
+        }
+        fillCategoria();
+        fillMarca();
+    }
+    private void fillCategoria() throws ClassNotFoundException, SQLException, SQLException, DAOInitializationException {
+        List<CatCategoria> lista;
+        GetListas getListas = new GetListas();
+        lista = getListas.fillLCatCategoria();
+        cboCat.removeAllItems();
+        cboCat.addItem(" ");
+        for (int i = 0; i < lista.size(); i++) {
+            cboCat.addItem(lista.get(i).getCategoria());
+        }
+    }
+
+    private void fillMarca() throws ClassNotFoundException, SQLException, SQLException, DAOInitializationException {
+        List<CatMarca> lista;
+        GetListas getListas = new GetListas();
+        lista = getListas.fillLCatMarca();
+        cboMar.removeAllItems();
+        cboMar.addItem(" ");
+        for (int i = 0; i < lista.size(); i++) {
+            cboMar.addItem(lista.get(i).getMarca());
         }
     }
 }

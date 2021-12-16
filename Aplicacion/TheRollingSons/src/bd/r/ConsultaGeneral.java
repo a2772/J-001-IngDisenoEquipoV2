@@ -189,13 +189,13 @@ public class ConsultaGeneral extends DataAccessObject {
             sql = "select * from catProducto cp, catMarca cm, catCategoria cc where cp.idCategoria1=cc.idCategoria and cp.idMarca1=cm.idMarca";
             caso = 0;
         } else if (idMarca != -1 && idCategoria != -1) {//Si tiene ambos filtros
-            sql = "select * from catProducto cp, catMarca cm, catCategoria cc where cp.idCategoria1=cc.idCategoria and cp.idMarca1=cm.idMarca and cm.idMarca=cp.idMarca1 and cc.idCategoria=cp.idCategoria1";
+            sql = "select * from catProducto cp, catMarca cm, catCategoria cc where cp.idCategoria1=cc.idCategoria and cp.idMarca1=cm.idMarca and cm.idMarca=? and cc.idCategoria=?";
             caso = 1;
         } else if (idMarca != -1) {//Solo filtro marca
-            sql = "select * from catProducto cp, catMarca cm, catCategoria cc where cp.idCategoria1=cc.idCategoria and cp.idMarca1=cm.idMarca and cm.idMarca=cp.idMarca1";
+            sql = "select * from catProducto cp, catMarca cm, catCategoria cc where cp.idCategoria1=cc.idCategoria and cp.idMarca1=cm.idMarca and cm.idMarca=?";
             caso = 2;
         } else if (idCategoria != -1) {//Solo filtro categoría
-            sql = "select * from catProducto cp, catMarca cm, catCategoria cc where cp.idCategoria1=cc.idCategoria and cp.idMarca1=cm.idMarca and cc.idCategoria=cp.idCategoria1";
+            sql = "select * from catProducto cp, catMarca cm, catCategoria cc where cp.idCategoria1=cc.idCategoria and cp.idMarca1=cm.idMarca and cc.idCategoria=?";
             caso = 3;
         }
 
