@@ -278,12 +278,12 @@ public class PCRUDUsuarios extends javax.swing.JFrame {
         rbtnCRUDUsr.setBackground(new java.awt.Color(127, 248, 248));
         rbtnCRUDUsr.setFont(new java.awt.Font("Dialog", 1, 19)); // NOI18N
         rbtnCRUDUsr.setForeground(new java.awt.Color(255, 153, 51));
+        rbtnCRUDUsr.setSelected(true);
         rbtnCRUDUsr.setText("CRUD Usuarios");
 
         rbtnCRUDInv.setBackground(new java.awt.Color(127, 248, 248));
         rbtnCRUDInv.setFont(new java.awt.Font("Dialog", 1, 19)); // NOI18N
         rbtnCRUDInv.setForeground(new java.awt.Color(255, 153, 51));
-        rbtnCRUDInv.setSelected(true);
         rbtnCRUDInv.setText("CRUD Inventarios");
         rbtnCRUDInv.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -362,11 +362,11 @@ public class PCRUDUsuarios extends javax.swing.JFrame {
                 .addComponent(rbtnCRUDUsr)
                 .addGap(18, 18, 18)
                 .addComponent(rbtnCRUDInv)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(21, 21, 21)
                 .addComponent(rbtnCRUDPM)
                 .addGap(18, 18, 18)
                 .addComponent(rbtnCRUDHor)
-                .addContainerGap(68, Short.MAX_VALUE))
+                .addContainerGap(50, Short.MAX_VALUE))
         );
 
         getContentPane().add(jpMenu);

@@ -301,11 +301,11 @@ public class PCRUDInventarios extends javax.swing.JFrame {
                 .addComponent(rbtnCRUDUsr)
                 .addGap(18, 18, 18)
                 .addComponent(rbtnCRUDInv)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(rbtnCRUDPM)
                 .addGap(18, 18, 18)
+                .addComponent(rbtnCRUDPM)
+                .addGap(17, 17, 17)
                 .addComponent(rbtnCRUDHor)
-                .addContainerGap(68, Short.MAX_VALUE))
+                .addContainerGap(54, Short.MAX_VALUE))
         );
 
         getContentPane().add(jpMenu);

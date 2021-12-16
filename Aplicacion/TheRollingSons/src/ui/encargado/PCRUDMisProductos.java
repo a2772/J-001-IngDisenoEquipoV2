@@ -65,25 +65,25 @@ public class PCRUDMisProductos extends javax.swing.JFrame {
         jRadioButton1.setText("Actualizar");
         jRadioButton1.setOpaque(false);
         getContentPane().add(jRadioButton1);
-        jRadioButton1.setBounds(340, 180, 120, 31);
+        jRadioButton1.setBounds(340, 180, 140, 31);
 
         jRadioButton2.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jRadioButton2.setText("Consultar");
         jRadioButton2.setOpaque(false);
         getContentPane().add(jRadioButton2);
-        jRadioButton2.setBounds(340, 140, 120, 31);
+        jRadioButton2.setBounds(340, 140, 140, 31);
 
         jRadioButton3.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jRadioButton3.setText("Agregar");
         jRadioButton3.setOpaque(false);
         getContentPane().add(jRadioButton3);
-        jRadioButton3.setBounds(340, 100, 100, 31);
+        jRadioButton3.setBounds(340, 100, 140, 31);
 
         jRadioButton4.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jRadioButton4.setText("Eliminar");
         jRadioButton4.setOpaque(false);
         getContentPane().add(jRadioButton4);
-        jRadioButton4.setBounds(340, 220, 100, 23);
+        jRadioButton4.setBounds(340, 220, 140, 23);
 
         jLabelNombre4.setBackground(new java.awt.Color(0, 153, 153));
         jLabelNombre4.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
@@ -186,9 +186,9 @@ public class PCRUDMisProductos extends javax.swing.JFrame {
 
         jLabelTitulo.setBackground(new java.awt.Color(0, 153, 153));
         jLabelTitulo.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jLabelTitulo.setText("CRUD Inventarios");
+        jLabelTitulo.setText("CRU Mis productos");
         getContentPane().add(jLabelTitulo);
-        jLabelTitulo.setBounds(330, 10, 220, 40);
+        jLabelTitulo.setBounds(330, 10, 170, 40);
 
         jpMenu.setBackground(new java.awt.Color(204, 255, 255));
 
@@ -301,11 +301,11 @@ public class PCRUDMisProductos extends javax.swing.JFrame {
                 .addComponent(rbtnCRUDUsr)
                 .addGap(18, 18, 18)
                 .addComponent(rbtnCRUDInv)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(17, 17, 17)
                 .addComponent(rbtnCRUDPM)
                 .addGap(18, 18, 18)
                 .addComponent(rbtnCRUDHor)
-                .addContainerGap(68, Short.MAX_VALUE))
+                .addContainerGap(54, Short.MAX_VALUE))
         );
 
         getContentPane().add(jpMenu);
