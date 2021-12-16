@@ -38,7 +38,7 @@ public class PLogin extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Login");
-        setLocation(new java.awt.Point(500, 300));
+        setLocation(new java.awt.Point(200, 150));
         setMinimumSize(new java.awt.Dimension(1048, 589));
         addComponentListener(new java.awt.event.ComponentAdapter() {
             public void componentResized(java.awt.event.ComponentEvent evt) {

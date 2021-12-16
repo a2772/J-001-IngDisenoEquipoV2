@@ -55,7 +55,7 @@ public class PCRUDInventarios extends javax.swing.JFrame {
         jLBackground = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setLocation(new java.awt.Point(500, 300));
+        setLocation(new java.awt.Point(30, 40));
         setMinimumSize(new java.awt.Dimension(1252, 652));
         getContentPane().setLayout(null);
 

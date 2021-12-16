@@ -64,7 +64,7 @@ public class PAgregarAlCarrito extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setLocation(new java.awt.Point(500, 300));
+        setLocation(new java.awt.Point(30, 40));
         setMaximumSize(new java.awt.Dimension(1252, 683));
         setMinimumSize(new java.awt.Dimension(1252, 683));
         setSize(new java.awt.Dimension(1252, 683));
