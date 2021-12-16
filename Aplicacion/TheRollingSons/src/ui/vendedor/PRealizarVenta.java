@@ -337,7 +337,7 @@ public class PRealizarVenta extends javax.swing.JFrame {
                 //obtenemos el total
                 float total = 0;
                 for (Articulo ar : this.carrito.getlArticulo()) {
-                    total += ar.getCatProducto().getPrecio() * ar.getInventario().getCantidad();
+                    total += ar.getCatProducto().getPrecio() * ar.getCantidad();
                 }
                 venta.setTotal(total);
                 venta.setIva((float) ((total / 1.16) * 0.16));
@@ -403,7 +403,11 @@ public class PRealizarVenta extends javax.swing.JFrame {
         PCRUDUsuarios p = new PCRUDUsuarios();
         //Iniciamos el primer formulario, si es Encargado
         p.setPersonal(personal);
-        p.preCarga();
+        try {
+            p.preCarga();
+        } catch (ClassNotFoundException | SQLException | DAOInitializationException ex) {
+            Logger.getLogger(PRealizarVenta.class.getName()).log(Level.SEVERE, null, ex);
+        }
         p.setVisible(true);
         dispose();
     }//GEN-LAST:event_rbtnCRUDUsrActionPerformed

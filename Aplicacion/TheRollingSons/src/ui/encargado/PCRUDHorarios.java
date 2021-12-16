@@ -329,7 +329,11 @@ public class PCRUDHorarios extends javax.swing.JFrame {
         PCRUDUsuarios p = new PCRUDUsuarios();
         //Iniciamos el primer formulario, si es Encargado
         p.setPersonal(personal);
-        p.preCarga();
+        try {
+            p.preCarga();
+        } catch (ClassNotFoundException | SQLException | DAOInitializationException ex) {
+            Logger.getLogger(PCRUDHorarios.class.getName()).log(Level.SEVERE, null, ex);
+        }
         p.setVisible(true);
         dispose();
     }//GEN-LAST:event_rbtnCRUDUsrActionPerformed

@@ -1,14 +1,22 @@
 package ui.encargado;
 
+import business.GetById;
 import business.GetListas;
 import clases.CatCategoria;
 import clases.CatMarca;
+import clases.CatPerfil;
 import clases.CatProducto;
 import clases.CatSexo;
 import ui.vendedor.*;
 import clases.Personal;
 import dao.DAOInitializationException;
 import java.sql.SQLException;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.ZoneOffset;
+import java.time.format.DateTimeFormatter;
+import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -19,9 +27,11 @@ import ui.PLogin;
 public class PCRUDUsuarios extends javax.swing.JFrame {
 
     private Personal personal;
+    private int vRbtn;
 
     public PCRUDUsuarios() {
         initComponents();
+        vRbtn = 1;
     }
 
     @SuppressWarnings("unchecked")
@@ -34,17 +44,17 @@ public class PCRUDUsuarios extends javax.swing.JFrame {
         rbtnAgregar = new javax.swing.JRadioButton();
         rbtnEliminar = new javax.swing.JRadioButton();
         jLabelNombre4 = new javax.swing.JLabel();
-        jTextFieldPriApellido = new javax.swing.JTextField();
+        txtApPat = new javax.swing.JTextField();
         jLabelNombre2 = new javax.swing.JLabel();
-        jButtonAplicar = new javax.swing.JButton();
+        btnAplicar = new javax.swing.JButton();
         jButtonSalir1 = new javax.swing.JButton();
-        jButtonLimpiar = new javax.swing.JButton();
+        btnLimpiar = new javax.swing.JButton();
         jLabelNombre5 = new javax.swing.JLabel();
-        jTextFieldCURP = new javax.swing.JTextField();
+        txtCurp = new javax.swing.JTextField();
         jLabelNombre6 = new javax.swing.JLabel();
-        jTextFieldEmail = new javax.swing.JTextField();
-        jTextFieldSegApellido = new javax.swing.JTextField();
-        jTextFieldTelefono = new javax.swing.JTextField();
+        txtCorreo = new javax.swing.JTextField();
+        txtApMat = new javax.swing.JTextField();
+        txtTel = new javax.swing.JTextField();
         jLabelNombre8 = new javax.swing.JLabel();
         cboTipoPerfil = new javax.swing.JComboBox<>();
         jLabelNombre9 = new javax.swing.JLabel();
@@ -53,11 +63,11 @@ public class PCRUDUsuarios extends javax.swing.JFrame {
         jLabelNombre11 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jtPersonal = new javax.swing.JTable();
-        jTextFieldNombre = new javax.swing.JTextField();
-        jTextFieldID = new javax.swing.JTextField();
+        txtNombre = new javax.swing.JTextField();
+        txtId = new javax.swing.JTextField();
         jLabelID = new javax.swing.JLabel();
         jLabelTitulo = new javax.swing.JLabel();
-        jDateChooser1 = new com.toedter.calendar.JDateChooser();
+        dtpFechNac = new com.toedter.calendar.JDateChooser();
         jpMenu = new javax.swing.JPanel();
         lblMss1 = new javax.swing.JLabel();
         rbtnVenta = new javax.swing.JRadioButton();
@@ -131,8 +141,8 @@ public class PCRUDUsuarios extends javax.swing.JFrame {
         jLabelNombre4.setText("Primer Apellido");
         getContentPane().add(jLabelNombre4);
         jLabelNombre4.setBounds(480, 140, 130, 30);
-        getContentPane().add(jTextFieldPriApellido);
-        jTextFieldPriApellido.setBounds(620, 140, 180, 30);
+        getContentPane().add(txtApPat);
+        txtApPat.setBounds(620, 140, 180, 30);
 
         jLabelNombre2.setBackground(new java.awt.Color(0, 153, 153));
         jLabelNombre2.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
@@ -140,12 +150,17 @@ public class PCRUDUsuarios extends javax.swing.JFrame {
         getContentPane().add(jLabelNombre2);
         jLabelNombre2.setBounds(480, 180, 120, 30);
 
-        jButtonAplicar.setBackground(new java.awt.Color(0, 204, 51));
-        jButtonAplicar.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        jButtonAplicar.setText("Aplicar");
-        jButtonAplicar.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        getContentPane().add(jButtonAplicar);
-        jButtonAplicar.setBounds(1060, 180, 90, 40);
+        btnAplicar.setBackground(new java.awt.Color(0, 204, 51));
+        btnAplicar.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        btnAplicar.setText("Aplicar");
+        btnAplicar.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        btnAplicar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAplicarActionPerformed(evt);
+            }
+        });
+        getContentPane().add(btnAplicar);
+        btnAplicar.setBounds(1050, 310, 90, 40);
 
         jButtonSalir1.setBackground(new java.awt.Color(204, 0, 0));
         jButtonSalir1.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
@@ -157,59 +172,59 @@ public class PCRUDUsuarios extends javax.swing.JFrame {
             }
         });
         getContentPane().add(jButtonSalir1);
-        jButtonSalir1.setBounds(330, 380, 90, 40);
+        jButtonSalir1.setBounds(330, 330, 90, 40);
 
-        jButtonLimpiar.setBackground(new java.awt.Color(0, 255, 255));
-        jButtonLimpiar.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        jButtonLimpiar.setText("Limpiar");
-        jButtonLimpiar.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        jButtonLimpiar.addActionListener(new java.awt.event.ActionListener() {
+        btnLimpiar.setBackground(new java.awt.Color(0, 255, 255));
+        btnLimpiar.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        btnLimpiar.setText("Limpiar");
+        btnLimpiar.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        btnLimpiar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonLimpiarActionPerformed(evt);
+                btnLimpiarActionPerformed(evt);
             }
         });
-        getContentPane().add(jButtonLimpiar);
-        jButtonLimpiar.setBounds(900, 180, 90, 40);
+        getContentPane().add(btnLimpiar);
+        btnLimpiar.setBounds(910, 310, 90, 40);
 
         jLabelNombre5.setBackground(new java.awt.Color(0, 153, 153));
         jLabelNombre5.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabelNombre5.setText("CURP");
         getContentPane().add(jLabelNombre5);
-        jLabelNombre5.setBounds(480, 220, 110, 30);
-        getContentPane().add(jTextFieldCURP);
-        jTextFieldCURP.setBounds(620, 220, 180, 30);
+        jLabelNombre5.setBounds(840, 210, 110, 30);
+        getContentPane().add(txtCurp);
+        txtCurp.setBounds(960, 210, 160, 30);
 
         jLabelNombre6.setBackground(new java.awt.Color(0, 153, 153));
         jLabelNombre6.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabelNombre6.setText("Correo Electronico");
         getContentPane().add(jLabelNombre6);
-        jLabelNombre6.setBounds(480, 260, 120, 30);
-        getContentPane().add(jTextFieldEmail);
-        jTextFieldEmail.setBounds(620, 260, 180, 30);
-        getContentPane().add(jTextFieldSegApellido);
-        jTextFieldSegApellido.setBounds(620, 180, 180, 30);
-        getContentPane().add(jTextFieldTelefono);
-        jTextFieldTelefono.setBounds(630, 300, 170, 30);
+        jLabelNombre6.setBounds(480, 230, 120, 30);
+        getContentPane().add(txtCorreo);
+        txtCorreo.setBounds(620, 240, 180, 30);
+        getContentPane().add(txtApMat);
+        txtApMat.setBounds(620, 190, 180, 30);
+        getContentPane().add(txtTel);
+        txtTel.setBounds(960, 160, 160, 30);
 
         jLabelNombre8.setBackground(new java.awt.Color(0, 153, 153));
         jLabelNombre8.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabelNombre8.setText("Teléfono");
         getContentPane().add(jLabelNombre8);
-        jLabelNombre8.setBounds(480, 300, 120, 30);
+        jLabelNombre8.setBounds(840, 160, 120, 30);
 
         cboTipoPerfil.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         getContentPane().add(cboTipoPerfil);
-        cboTipoPerfil.setBounds(960, 110, 130, 30);
+        cboTipoPerfil.setBounds(960, 110, 160, 30);
 
         jLabelNombre9.setBackground(new java.awt.Color(0, 153, 153));
         jLabelNombre9.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabelNombre9.setText("Fecha de nacimiento");
         getContentPane().add(jLabelNombre9);
-        jLabelNombre9.setBounds(480, 340, 170, 30);
+        jLabelNombre9.setBounds(480, 290, 140, 30);
 
         cboSexo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         getContentPane().add(cboSexo);
-        cboSexo.setBounds(960, 60, 130, 30);
+        cboSexo.setBounds(960, 60, 160, 30);
 
         jLabelNombre10.setBackground(new java.awt.Color(0, 153, 153));
         jLabelNombre10.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
@@ -223,14 +238,19 @@ public class PCRUDUsuarios extends javax.swing.JFrame {
         getContentPane().add(jLabelNombre11);
         jLabelNombre11.setBounds(840, 110, 110, 30);
 
+        jtPersonal.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jtPersonalMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(jtPersonal);
 
         getContentPane().add(jScrollPane1);
-        jScrollPane1.setBounds(310, 482, 900, 140);
-        getContentPane().add(jTextFieldNombre);
-        jTextFieldNombre.setBounds(620, 100, 180, 30);
-        getContentPane().add(jTextFieldID);
-        jTextFieldID.setBounds(620, 60, 180, 30);
+        jScrollPane1.setBounds(310, 412, 900, 210);
+        getContentPane().add(txtNombre);
+        txtNombre.setBounds(620, 100, 180, 30);
+        getContentPane().add(txtId);
+        txtId.setBounds(620, 60, 180, 30);
 
         jLabelID.setBackground(new java.awt.Color(0, 153, 153));
         jLabelID.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
@@ -243,8 +263,8 @@ public class PCRUDUsuarios extends javax.swing.JFrame {
         jLabelTitulo.setText("CRUD Usuarios");
         getContentPane().add(jLabelTitulo);
         jLabelTitulo.setBounds(320, 10, 220, 40);
-        getContentPane().add(jDateChooser1);
-        jDateChooser1.setBounds(630, 340, 170, 30);
+        getContentPane().add(dtpFechNac);
+        dtpFechNac.setBounds(630, 290, 170, 30);
 
         jpMenu.setBackground(new java.awt.Color(204, 255, 255));
 
@@ -422,9 +442,18 @@ public class PCRUDUsuarios extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jButtonSalir1ActionPerformed
 
-    private void jButtonLimpiarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonLimpiarActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButtonLimpiarActionPerformed
+    private void btnLimpiarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimpiarActionPerformed
+        txtId.setText("");
+        txtNombre.setText("");
+        txtApPat.setText("");
+        txtApMat.setText("");
+        txtCorreo.setText("");
+        txtCurp.setText("");
+        txtTel.setText("");
+        cboSexo.setSelectedIndex(0);
+        cboTipoPerfil.setSelectedIndex(0);
+        dtpFechNac.setDate(Date.from(LocalDateTime.now().toInstant(ZoneOffset.UTC)));
+    }//GEN-LAST:event_btnLimpiarActionPerformed
 
     private void rbtnConsProdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbtnConsProdActionPerformed
         PConsultaProductos p = new PConsultaProductos();
@@ -455,40 +484,115 @@ public class PCRUDUsuarios extends javax.swing.JFrame {
     private void rbtnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbtnAgregarActionPerformed
         disRbtn();
         this.rbtnAgregar.setSelected(true);
+        enableAll();
+        this.vRbtn=1;
     }//GEN-LAST:event_rbtnAgregarActionPerformed
 
     private void rbtnConsultarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbtnConsultarActionPerformed
         disRbtn();
+        this.vRbtn=2;
         this.rbtnConsultar.setSelected(true);
         try {
             consulta();
         } catch (ClassNotFoundException | SQLException | DAOInitializationException ex) {
             Logger.getLogger(PCRUDUsuarios.class.getName()).log(Level.SEVERE, null, ex);
         }
+        disableAll();
     }//GEN-LAST:event_rbtnConsultarActionPerformed
 
     private void rbtnActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbtnActualizarActionPerformed
         disRbtn();
+        this.vRbtn=3;
         this.rbtnActualizar.setSelected(true);
+        disableAll();
     }//GEN-LAST:event_rbtnActualizarActionPerformed
 
     private void rbtnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbtnEliminarActionPerformed
         disRbtn();
+        this.vRbtn=4;
         this.rbtnEliminar.setSelected(true);
+        disableAll();
     }//GEN-LAST:event_rbtnEliminarActionPerformed
 
-    private void disRbtn(){//eshabilita todos los rbtn de opciones Agrega, consultar, etc.
+    private void jtPersonalMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jtPersonalMouseClicked
+        if (vRbtn == 3) {
+            enableAll();
+        }
+        //Llenamos valores
+        int sel = jtPersonal.rowAtPoint(evt.getPoint());
+        /*
+        modelo.addColumn("Id personal");
+        modelo.addColumn("Nombre");
+        modelo.addColumn("Ap. paterno");
+        modelo.addColumn("Ap. Materno");
+        modelo.addColumn("Sexo");
+        modelo.addColumn("CURP");
+        modelo.addColumn("Teléfono");
+        modelo.addColumn("Fecha de Nac.");
+        modelo.addColumn("E-mail");
+        modelo.addColumn("Tipo Perfil");
+        */
+        txtId.setText(String.valueOf(jtPersonal.getValueAt(sel, 0)));
+        txtNombre.setText(String.valueOf(jtPersonal.getValueAt(sel, 1)));
+        txtApPat.setText(String.valueOf(jtPersonal.getValueAt(sel, 2)));
+        txtApMat.setText(String.valueOf(jtPersonal.getValueAt(sel, 3)));
+        //No 4
+        txtCurp.setText(String.valueOf(jtPersonal.getValueAt(sel, 5)));
+        txtTel.setText(String.valueOf(jtPersonal.getValueAt(sel, 6)));
+        txtCorreo.setText(String.valueOf(jtPersonal.getValueAt(sel, 8)));
+        
+        //Obtenemos el producto por id para [4 y 9]
+        GetById getById = new GetById();
+        Personal p = new Personal();
+        try {
+            p = getById.getPersonalById(Integer.parseInt(txtId.getText()));
+        } catch (ClassNotFoundException | SQLException | DAOInitializationException ex) {
+            Logger.getLogger(PCRUDMisProductos.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        cboSexo.setSelectedIndex(p.getCatSexo().getIdSexo());
+        cboTipoPerfil.setSelectedIndex(p.getCatPerfil().getIdCPerfil());
+        
+        dtpFechNac.setDate(Date.from(p.getFechaNac().atStartOfDay(ZoneId.systemDefault()).toInstant()));
+        if (vRbtn == 3) {
+            enableAll();
+        }
+    }//GEN-LAST:event_jtPersonalMouseClicked
+
+    private void btnAplicarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAplicarActionPerformed
+        //if()
+    }//GEN-LAST:event_btnAplicarActionPerformed
+
+    private void enableAll() {
+        txtNombre.setEditable(true);
+        txtApPat.setEditable(true);
+        txtApMat.setEditable(true);
+        txtCurp.setEditable(true);
+        txtCorreo.setEditable(true);
+        txtTel.setEditable(true);
+    }
+
+    private void disableAll() {
+        txtNombre.setEditable(false);
+        txtApPat.setEditable(false);
+        txtApMat.setEditable(false);
+        txtCurp.setEditable(false);
+        txtCorreo.setEditable(false);
+        txtTel.setEditable(false);
+    }
+
+    private void disRbtn() {//eshabilita todos los rbtn de opciones Agrega, consultar, etc.
         this.rbtnAgregar.setSelected(false);
         this.rbtnActualizar.setSelected(false);
         this.rbtnConsultar.setSelected(false);
         this.rbtnEliminar.setSelected(false);
     }
+
     private void consulta() throws ClassNotFoundException, SQLException, DAOInitializationException {//Se usa en actualización y en consulta
         //Hacemos consulta llenando los desplegables con filtros
         //Cada que se invoque, actualiza la tabla de productos
         GetListas getListas = new GetListas();
         List<Personal> lista = getListas.fillLPersonal();
-        
+
         DefaultTableModel modelo = new DefaultTableModel();
 
         modelo.addColumn("Id personal");
@@ -513,33 +617,34 @@ public class PCRUDUsuarios extends javax.swing.JFrame {
             registro[4] = String.valueOf(p.getCatSexo().getSexo());
             registro[5] = String.valueOf(p.getCurp());
             registro[6] = String.valueOf(p.getTel());
-            registro[7] = String.valueOf(p.getFechaNac().getDayOfMonth() + "/" + p.getFechaNac().getMonth() + "/"+p.getFechaNac().getYear());
+            registro[7] = String.valueOf(p.getFechaNac().getDayOfMonth() + "/" + p.getFechaNac().getMonth() + "/" + p.getFechaNac().getYear());
             registro[8] = String.valueOf(p.getCorreo());
             registro[9] = String.valueOf(p.getCatPerfil().getPerfil());
-            
+
             modelo.addRow(registro);
         }
         jtPersonal.setModel(modelo);
     }
-    
+
     private void fillSexo() throws ClassNotFoundException, SQLException, SQLException, DAOInitializationException {
         List<CatSexo> lista;
         GetListas getListas = new GetListas();
         lista = getListas.fillLCatSexo();
-        cboMar.removeAllItems();
-        cboMar.addItem(" ");
+        cboSexo.removeAllItems();
+        cboSexo.addItem(" ");
         for (int i = 0; i < lista.size(); i++) {
-            cboMar.addItem(lista.get(i).getMarca());
+            cboSexo.addItem(lista.get(i).getSexo());
         }
     }
+
     private void fillCatPerfil() throws ClassNotFoundException, SQLException, SQLException, DAOInitializationException {
-        List<CatMarca> lista;
+        List<CatPerfil> lista;
         GetListas getListas = new GetListas();
-        lista = getListas.fillLCatMarca();
-        cboMar.removeAllItems();
-        cboMar.addItem(" ");
+        lista = getListas.fillLCatPerfil();
+        cboTipoPerfil.removeAllItems();
+        cboTipoPerfil.addItem(" ");
         for (int i = 0; i < lista.size(); i++) {
-            cboMar.addItem(lista.get(i).getMarca());
+            cboTipoPerfil.addItem(lista.get(i).getPerfil());
         }
     }
     /*public static void main(String args[]) {
@@ -552,12 +657,12 @@ public class PCRUDUsuarios extends javax.swing.JFrame {
     }*/
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnAplicar;
+    private javax.swing.JButton btnLimpiar;
     private javax.swing.JComboBox<String> cboSexo;
     private javax.swing.JComboBox<String> cboTipoPerfil;
-    private javax.swing.JButton jButtonAplicar;
-    private javax.swing.JButton jButtonLimpiar;
+    private com.toedter.calendar.JDateChooser dtpFechNac;
     private javax.swing.JButton jButtonSalir1;
-    private com.toedter.calendar.JDateChooser jDateChooser1;
     private javax.swing.JLabel jLBackground;
     private javax.swing.JLabel jLabelID;
     private javax.swing.JLabel jLabelNombre;
@@ -571,13 +676,6 @@ public class PCRUDUsuarios extends javax.swing.JFrame {
     private javax.swing.JLabel jLabelNombre9;
     private javax.swing.JLabel jLabelTitulo;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTextField jTextFieldCURP;
-    private javax.swing.JTextField jTextFieldEmail;
-    private javax.swing.JTextField jTextFieldID;
-    private javax.swing.JTextField jTextFieldNombre;
-    private javax.swing.JTextField jTextFieldPriApellido;
-    private javax.swing.JTextField jTextFieldSegApellido;
-    private javax.swing.JTextField jTextFieldTelefono;
     private javax.swing.JPanel jpMenu;
     private javax.swing.JTable jtPersonal;
     private javax.swing.JLabel lblMss1;
@@ -593,6 +691,13 @@ public class PCRUDUsuarios extends javax.swing.JFrame {
     private javax.swing.JRadioButton rbtnConsultar;
     private javax.swing.JRadioButton rbtnEliminar;
     private javax.swing.JRadioButton rbtnVenta;
+    private javax.swing.JTextField txtApMat;
+    private javax.swing.JTextField txtApPat;
+    private javax.swing.JTextField txtCorreo;
+    private javax.swing.JTextField txtCurp;
+    private javax.swing.JTextField txtId;
+    private javax.swing.JTextField txtNombre;
+    private javax.swing.JTextField txtTel;
     // End of variables declaration//GEN-END:variables
 
     public Personal getPersonal() {
@@ -612,7 +717,7 @@ public class PCRUDUsuarios extends javax.swing.JFrame {
         rbtnCRUDUsr.setSelected(false);
     }
 
-    public void preCarga() {//Datos previos a mostrar el JFRAME pero posteriores al constructor
+    public void preCarga() throws ClassNotFoundException, SQLException, DAOInitializationException {//Datos previos a mostrar el JFRAME pero posteriores al constructor
         int spndt = 0;
         String txt = "            ¡Bienvenid";
         if (this.personal.getCatSexo().getIdSexo() != 1) {
@@ -644,5 +749,9 @@ public class PCRUDUsuarios extends javax.swing.JFrame {
             rbtnCRUDUsr.setVisible(false);
             jpMenu.setSize(270, 305);
         }
+        txtId.setEditable(false);
+        //Cats
+        fillSexo();
+        fillCatPerfil();
     }
 }
