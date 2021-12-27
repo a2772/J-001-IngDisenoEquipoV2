@@ -38,7 +38,7 @@ public class PRealizarVenta extends javax.swing.JFrame {
         btnSalir = new javax.swing.JButton();
         btnIrCarrito1 = new javax.swing.JButton();
         btnBorrar1 = new javax.swing.JButton();
-        jLabel2 = new javax.swing.JLabel();
+        lblTitulo = new javax.swing.JLabel();
         jspCarrito = new javax.swing.JScrollPane();
         jtCarrito = new javax.swing.JTable();
         jpMenu = new javax.swing.JPanel();
@@ -88,7 +88,7 @@ public class PRealizarVenta extends javax.swing.JFrame {
 
         btnIrCarrito1.setBackground(new java.awt.Color(0, 255, 204));
         btnIrCarrito1.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
-        btnIrCarrito1.setText("Cambiar Carrito");
+        btnIrCarrito1.setText("Gestionar Carrito");
         btnIrCarrito1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnIrCarrito1ActionPerformed(evt);
@@ -109,12 +109,12 @@ public class PRealizarVenta extends javax.swing.JFrame {
         getContentPane().add(btnBorrar1);
         btnBorrar1.setBounds(370, 530, 200, 70);
 
-        jLabel2.setBackground(new java.awt.Color(255, 153, 51));
-        jLabel2.setFont(new java.awt.Font("DialogInput", 3, 36)); // NOI18N
-        jLabel2.setText("       Carrito Actual     ");
-        jLabel2.setOpaque(true);
-        getContentPane().add(jLabel2);
-        jLabel2.setBounds(390, 40, 600, 60);
+        lblTitulo.setBackground(new java.awt.Color(255, 153, 51));
+        lblTitulo.setFont(new java.awt.Font("DialogInput", 3, 36)); // NOI18N
+        lblTitulo.setText("         Carrito Actual     ");
+        lblTitulo.setOpaque(true);
+        getContentPane().add(lblTitulo);
+        lblTitulo.setBounds(410, 40, 640, 60);
 
         jtCarrito.setBackground(new java.awt.Color(102, 255, 204));
         jtCarrito.setModel(new javax.swing.table.DefaultTableModel(
@@ -441,13 +441,13 @@ public class PRealizarVenta extends javax.swing.JFrame {
     private javax.swing.JButton btnSalir;
     private javax.swing.JLabel jLBackground;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jpMenu;
     private javax.swing.JScrollPane jspCarrito;
     private javax.swing.JTable jtCarrito;
     private javax.swing.JLabel lblMss1;
     private javax.swing.JLabel lblMss2;
     private javax.swing.JLabel lblMss3;
+    private javax.swing.JLabel lblTitulo;
     private javax.swing.JRadioButton rbtnCRUDHor;
     private javax.swing.JRadioButton rbtnCRUDInv;
     private javax.swing.JRadioButton rbtnCRUDPM;
@@ -467,7 +467,7 @@ public class PRealizarVenta extends javax.swing.JFrame {
     public void preCarga() {//Datos previos a mostrar el JFRAME pero posteriores al constructor
         int spndt = 0;
         String txt = "            ¡Bienvenid";
-        if (this.personal.getCatSexo().getIdSexo() != 1) {
+        if (this.personal.getCatSexo().getIdSexo() == 2) {//Si es mujer
             txt += "a!";
         } else {
             txt += "o!";
@@ -475,16 +475,20 @@ public class PRealizarVenta extends javax.swing.JFrame {
         lblMss1.setText(txt);
 
         txt = "";
-        spndt = (34 - personal.getNombre().length()) / 2;
+        spndt = (32 - personal.getNombre().length()) / 2;
         for (int i = 0; i < spndt; i++) {
             txt += " ";
         }
         lblMss2.setText(txt + personal.getNombre());
         txt = "";
-        for (int i = 0; i < 22; i++) {
+        for (int i = 0; i < 20; i++) {
             txt += " ";
         }
-        lblMss3.setText(txt + personal.getCatPerfil().getPerfil());
+        txt += personal.getCatPerfil().getPerfil();
+        if(personal.getCatSexo().getIdSexo()==2){
+            txt+="a";
+        }
+        lblMss3.setText(txt);
 
         //Segun el tipo de Usuario
         if (personal.getCatPerfil().getIdCPerfil() == 1) {
@@ -497,7 +501,12 @@ public class PRealizarVenta extends javax.swing.JFrame {
             jpMenu.setSize(270, 305);
         }
         if (this.carrito != null) {
+            this.jspCarrito.setVisible(true);
+            this.lblTitulo.setText("         Carrito Actual");
             reloadCarrito();
+        }else{
+            this.jspCarrito.setVisible(false);
+            this.lblTitulo.setText("         ¡Carrito Vacío!");
         }
     }
 

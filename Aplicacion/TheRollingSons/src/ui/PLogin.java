@@ -256,7 +256,14 @@ public class PLogin extends javax.swing.JFrame {
                 personal = getById.getPersonalById(setId.setIdPersonal(usuario));
                 //JOptionPane.showMessageDialog(null, "¡Bienveni@ " + setId.setIdPersonal(usuario)+ "!");
                 //Mensaje de bienvenida
-                JOptionPane.showMessageDialog(null, "¡Bienveni@ " + personal.getCatPerfil().getPerfil()+ " " + personal.getNombre() + "!");
+                String mensaje = "¡Bienvenid";
+                if(personal.getCatSexo().getIdSexo()==1){//Si es hombre
+                    mensaje+= "o " + personal.getCatPerfil().getPerfil();
+                }else{//SI es mujer
+                    mensaje+= "a " + personal.getCatPerfil().getPerfil() + "a";
+                }
+                mensaje += " " + personal.getNombre() + "!";
+                JOptionPane.showMessageDialog(null, mensaje);
                 PRealizarVenta prv = new PRealizarVenta();
                 //Iniciamos el primer formulario, si es Encargado
                 prv.setPersonal(personal);
